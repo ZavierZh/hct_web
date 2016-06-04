@@ -1,0 +1,104 @@
+<include file="Common/header" title="{$title}"/>
+	
+
+ 	<!-- 分页插件 -->
+	<script src="__PUBLIC__/common/js/jqPaginator.js"></script>
+	<!-- 下拉框 -->
+	<link rel="stylesheet" href="__PUBLIC__/common/css/select2.min.css">
+	<script src="__PUBLIC__/common/js/select2/select2.full.min.js"></script>
+	<!-- url操作插件 -->
+ 	<script src="__PUBLIC__/common/js/url.min.js"></script>
+	
+	<!-- ajax异步提交 -->
+	<script src="__PUBLIC__/common/js/jquery.form.js"></script>
+ 	<!-- 自定义的一些参数 -->
+ 	<link type="text/css" rel="stylesheet" href="__PUBLIC__/common/css/tipcss.css">
+ 	<script src="__PUBLIC__/common/js/zz.main.js"></script>
+<script src="__PUBLIC__/common/js/admin_index.js"></script>
+<script src="__PUBLIC__/common/js/moment.min.js"></script>
+
+
+<script type="text/javascript">
+var init_opt={};
+init_opt.btn_add = {};
+init_opt.btn_del = {};
+init_opt.table = {};
+init_opt.dialog = {};
+
+init_opt.btn_add.url='{$url}';
+init_opt.btn_add.id = '#btn_add';
+
+init_opt.btn_del.url='{:U("toDebugTrachHandle")}';
+init_opt.btn_del.id = '#btn_del';
+
+init_opt.dialog.id = "#dialog";
+init_opt.dialog.iframe_id = "#iframe_dialog";
+init_opt.dialog.height = 600;
+init_opt.dialog.width = 800;
+
+
+init_opt.edit_url = '{:U("editDebug","",false)}';
+
+init_opt.table.id = "#hct_data";
+init_opt.table.checkbox_id = "#checkallid";
+
+zz.pageopt.normal_url = '{:U("DebugList")}';
+zz.pageopt.search_url = '';
+ $(function() {
+
+ // $("#page_first,#page_second").hctPage({
+	// totalCounts: {$total_counts|default=0},
+	// visiblePages: 10,
+	// pageSize: {$pageSize|default=40},
+	// currentPage: {$pageCurrent|default=1},
+	// onChangePage: zz.page_normal,
+ // });
+
+});
+
+</script>
+</head>
+<body>
+  <h3 style="text-align:center;">{$title}</h3>
+
+  <a href="{:U('addDebug')}" id="btn_add" class="button">添加</a>
+  <button id="btn_del">删除</button>
+	<p><span id="message" style="color:green"></span></p>
+		<div class="users-contain ui-widget">
+			<table class="ui-widget ui-widget-content">
+				<thead>
+					<tr class="ui-widget-header ">
+						<th width="40px;"><input name="" type="checkbox" value="" checked="checked"><label for="checkbox">全选</label></th>
+						<th>ID</th>
+						<th>任务标题</th>
+						<th>项目</th>
+						<th>状态</th>
+						<th>内容</th>
+						<th>临时版本路径</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<foreach name='data' item='v'>
+					<tr>
+						<td><input name="" type="checkbox" value=""></td>
+						<td>{$v.id}</td>
+						<td>{$v.name}</td>
+						<td>{$v.email}</td>
+						<td>{:$sector[$v['sector_id']]}</td>
+						<td>{$v.phone}</td>
+						<td>{$v.login_name}</td>
+						<td>
+							<a href="#">编辑</a>|
+							<a href="#">删除</a>
+						</td>
+					</tr>
+					</foreach>
+				</tbody>
+			</table>
+		</div>
+
+  <div style="display:none;overflow:hidden;padding:3px" id="dialog"><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" name="iframe_dialog" id="iframe_dialog" width="100%" height="100%"></iframe></div>
+
+</body>
+</html>

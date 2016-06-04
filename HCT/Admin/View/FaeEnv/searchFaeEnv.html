@@ -1,0 +1,41 @@
+<include file="Common/header" title="{$title}"/>
+
+
+</head>
+<body>
+	<form method="post" action="{:U('searchHandle')}">
+		<div id="users-contain" class="ui-widget">
+			<table  class="ui-widget ui-widget-content">
+				<tbody>
+					<tr>
+						<th colspan="2">{$title}</th>
+					</tr>
+					<tr>
+						<td>机器名</td>
+						<td><input name="faepc" type="text" id="faePC"></td>
+					</tr>
+					<tr>
+						<td>项目名</td>
+						<td><input name="sub" type="text" ></td>
+					</tr>
+					<tr>
+						<td>使用者</td>
+						<td><input name="user_id" type="text"></td>
+					</tr>
+					<tr>
+						<td>日期</td>
+						<td><input name="data" type="text"><input type="button" value="选择区间"></td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center">
+							<input  type="submit" id="submit" value="搜索" />
+							<input type="reset" value="重置" />
+							<input type="button"  id="cancl" value="返回" onClick="dialog_child_close('{:U('FaePC')};"/>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</form>	
+</body>
+</html>

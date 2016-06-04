@@ -1,0 +1,21 @@
+<div class='top-nav-wrap'>
+	<ul class='nav-lv1'>
+		<li class='nav-lv1-li'>
+			<a href="{:U('/Blog/Index/index')}" class='top-cate'>博客首页</a>
+		</li>
+		<foreach name="nav_cate" item="v">
+			<li class='nav-lv1-li'>
+				<a href="{:U('Blog/List/index',array('id'=>$v['id']))}" class="top-cate">{$v.name}</a>
+				<if condition="!empty($v['child'])">
+					<ul>
+					<foreach name="v.child" item="two">
+						<li>
+							<a href="{:U('Blog/List/index',array('id'=>$v['id']))}">{$two.name}</a>
+						</li>
+					</foreach>
+					</ul>
+				</if>
+			</li>
+		</foreach>
+	</ul>
+</div>

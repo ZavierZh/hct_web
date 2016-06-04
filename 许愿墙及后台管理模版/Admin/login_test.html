@@ -1,0 +1,63 @@
+	<head>
+		<style type="text/css">
+			*{padding:0px;margin: 0px;font-size:14px;}
+
+			table,th,td{ border-collapse: collapse;background:#fff;}
+			th{ text-align: right;}
+			th,td{padding:8px 8px;}
+			table,th,td{border:solid 0px #dcdcdc;				background: #F1F1F1;
+			}
+			th{width:80px; font-size: 12px;}
+			.submit{background:#255E9C;height:30px;padding:0px 30px;line-height:1.8em;color:#fff;font-size:16px; cursor: pointer;}
+			input,button{ border:solid 1px #dcdcdc;height:30px;padding:3px 6px;color:#999;background:#fff; vertical-align: middle;}
+
+			.login{
+				background: #F1F1F1;
+				width:600px;border:
+				solid 1px #ccc;padding:20px;
+				margin:0px auto;
+				margin-top:30px;
+			}
+			.len100{width:100px;}
+			.len150{width:159px;}
+			.len200{width:200px;}
+			.len250{width:250px;}
+			.len300{width:300px;}
+			.len350{width:350px;}
+			.len400{width:400px;}
+		</style>
+	</head>
+	<body>
+
+		<div class="login">	
+
+			<form action="#" method="post" id="login">
+				<div class="title">
+					后盾网 | 登录后台
+				</div>
+				<table border="1" width="100%">
+					<tr>
+						<th>管理员帐号:</th>
+						<td>
+							<input type="username" name="username" class="len250"/>
+						</td>
+					</tr>
+					<tr>
+						<th>密码:</th>
+						<td>
+							<input type="password" class="len250" name="password"/>
+						</td>
+					</tr>
+					<tr>
+						<th>验证码:</th>
+						<td>
+							<input type="code" class="len250" name="code"/> <img src="#" id="code"/> <a href="javascript:void(change_code(this));">看不清</a>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" style="padding-left:160px;"> <input type="submit" class="submit" value="登录"/></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</body>

@@ -1,0 +1,100 @@
+		<div id="more_search" style="display:none;">
+			  <div id="search_form">
+			  <table>
+			      <tr><td> FAE区
+						{~W('Common/faepc',array(400,true,'可多选'))}
+						<input type="button" id="faepc_clear" value="清空此项"/>
+					</td></tr>
+					<tr><td>
+			        发布人
+						{~W('Common/user',array(400,true,'可多选'))}
+						<input type="button" id="user_clear" value="清空此项"/>
+					</td></tr>
+					<tr><td>
+					<label for="date_start">起始日期:</label> <input type="text" id="date_start" size="8" name="date_start"/>  
+					<label for="date_end">结束日期:</label> <input type="text" id="date_end" size="8" name="date_end"/>
+					<label for="month">快速选择月份:</label>
+					<select>
+						<option></option>					
+						<option>2015</option>
+						<option selected="">2016</option>						
+					</select>
+					<select id="month">
+						<option value=""></option>
+						<option value="01">一月</option>
+						<option value="02">二月</option>
+						<option value="03">三月</option>
+						<option value="04">四月</option>
+						<option value="05">五月</option>
+						<option value="06">六月</option>
+						<option value="07">七月</option>
+						<option value="08">八月</option>
+						<option value="09">九月</option>
+						<option value="10">十月</option>
+						<option value="11">十一月</option>
+						<option value="12">十二月</option>
+					</select>
+					<input type="button" onclick="$('#date_start,#date_end,#month').val('');" value="清空此项"/>
+			     </td></tr>
+			      <tr><td>项目关键字
+			        <input type="text" name="path" size="40" onkeyup="if(event.keyCode==13){search_prj('#search_form');}"/>
+			        <input type="button" onclick="$(this).prev().val('');" value="清空此项"/>
+			    </td></tr>
+			</table>
+			</div>
+		</div>
+<script type="text/javascript">
+$(document).ready(function() {
+  $(".js-example-basic-multiple").val([]);
+  var faepc_slt = $("#faepc_id").select2();
+  var user_slt = $("#user_id").select2();
+  $("#faepc_clear").click(function(){
+  		faepc_slt.val(null).trigger("change");
+  		$("#faepc_id").val([]);
+  });
+    $("#user_clear").click(function(){
+  		user_slt.val(null).trigger("change");
+  		$("#user_id").val([]);
+  });
+
+ $("#month").change(function(){
+ 	var month = $(this);
+ 	var year = month.prev();
+ 	if(year.val() == "") {
+ 		zz.tip.toptip("没有选中年份",2);
+ 		return;
+ 	}
+	var d = moment(year.val()+"-"+month.val(),"YYYY-MM"); //按照指定的年月字符串和格式解析出一个moment的日期对象
+	var firstDate = d.startOf("month").format("YYYY-MM-DD"); //通过startOf函数指定取月份的开始即第一天
+	var lastDate = d.endOf("month").format("YYYY-MM-DD"); //通过startOf函数指定取月份的末尾即最后一天
+	//alert(firstDate+"   "+lastDate);
+	$("#date_start").val(firstDate);
+	$("#date_end").val(lastDate);
+ });
+//日期选择的对话框
+
+ $("#date_start").datepicker({changeMonth: true,
+ 	changeYear: true,
+ 	showButtonPanel: true,
+ 	defaultDate: "+1w",
+ 	dateFormat: 'yy-mm-dd',
+ 	onClose: function( selectedDate ) {
+        $( "#date_end" ).datepicker( "option", "minDate", selectedDate );
+      }
+ });
+
+ $("#date_end").datepicker({changeMonth: true,
+ 	changeYear: true,
+ 	showButtonPanel: true,
+ 	defaultDate: "+1w",  //"+1w" 表示这周
+ 	dateFormat: 'yy-mm-dd',
+	onClose: function( selectedDate ) {
+	    $( "#date_start" ).datepicker( "option", "maxDate", selectedDate );
+	}
+ });
+
+});
+
+
+
+</script>

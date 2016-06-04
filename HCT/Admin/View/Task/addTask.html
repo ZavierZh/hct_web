@@ -1,0 +1,199 @@
+<include file="Common/header" title="{$title}"/>
+
+	<link rel="stylesheet" href="__PUBLIC__/common/css/select2.min.css">
+	<script src="__PUBLIC__/common/js/select2/select2.full.min.js"></script>
+ 	<link type="text/css" rel="stylesheet" href="__PUBLIC__/common/css/tipcss.css">
+ 	<script src="__PUBLIC__/common/js/zz.main.js"></script>
+<!-- <script src="__PUBLIC__/common/js/admin_index.js"></script> -->
+
+
+<script type="text/javascript">
+window.UMEDITOR_HOME_URL = '__ROOT__/umeditor/';
+var editor=null;
+window.onload = function (){
+        //	window.UMEDITOR_CONFIG.imagePath:URL + "php/";
+ 			editor = UM.getEditor('content');
+ 			editor.setWidth("90%");
+ 			editor.setHeight(300);
+ 		}
+$(function() {
+
+    $('#dialog').dialog({
+		autoOpen: false,
+		modal: true,
+		height: 500,
+		width: 600,
+    });
+    
+	$("#btn_env").click(function() {
+	    $("#message").text("正在加载..");
+	    $('#dialog').dialog('option',{height:400,width:500});
+	    $('#iframe_dialog').attr('src','{:U("Other/Gitweb/seach")}');
+	    $("#iframe_dialog").load(function(){
+	      	$("#message").text("");
+	        $("#dialog").dialog("open");
+	    });
+	  });
+	
+	$(".js-example-placeholder-single").select2();
+
+ });
+
+function ch_prjt(str,base){
+	$('#sub').val(str);
+	if (base) $('#base').val(base);
+	$("#dialog").dialog('close');
+}
+//因为使用 select2,无法普通的重置表单
+function reset_form(){
+	//顺序不能倒
+	document.getElementById("form").reset(); 
+	$('.js-example-placeholder-single').select2().change();
+	editor.setContent($("#content").val());
+}
+
+function submit_form(){
+
+	var form = $("#form");
+	if (form.find('[name="title"]').val().length <8){
+		zz.tip.toptip('标题 太少',2);
+		return false;
+	}
+	if (form.find('[name="sub"]').val().length <8){
+		zz.tip.toptip('项目名 太少',2);
+		return false;
+	}
+	if (form.find('[name="user_id"]').val() == ''){
+		zz.tip.toptip('发布者 不能为空',2);
+		return false;
+	}
+	if (form.find('[name="content"]').val().length <8){
+		zz.tip.toptip('内容 太少',2);
+		return false;
+	}
+
+	var len=0;
+	$('[name="tasktype[]"]:checked').each(function(){
+		len += $(this).next().text().length + 1;
+	});
+	len += $("#title").val().length;
+	var strsub = 35 - len;
+	if(strsub>0)
+		form.find('[name="view"]').val(editor.getContentTxt().substring(0,strsub));
+	return true;
+}
+
+</script>
+ 
+ <link href="__ROOT__/umeditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
+
+<script type="text/javascript" charset="utf-8" src="__ROOT__/umeditor/umeditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="__ROOT__/umeditor/umeditor.min.js"></script>
+<script type="text/javascript" src="__ROOT__/umeditor/lang/zh-cn/zh-cn.js"></script>
+
+
+</head>
+<body>
+	<form method="post" action="{$url}" id="form" onsubmit="return submit_form();" >
+		<div class="users-contain ui-widget">
+			<table  class="ui-widget ui-widget-content">
+				<tr>
+					<th colspan="2">{$title}</th>
+				</tr>
+				<tr>
+					<td width="50px">标题</td>
+					<td><input type="text" name="title" id="title" size="60">
+					<span></span>
+					</td>
+				</tr>
+				<tr>
+					<td>项目</td>
+					<td><input type="text" name="sub" id="sub" size="60">
+					<input type="button" id="btn_env" value="手动选择" />
+					</td>
+				</tr>
+				<tr>
+					<td>分支</td>
+					<td><input type="text" name="base" id="base" value="" size="40">
+					</td>
+				</tr>
+				<tr>
+					<td>FAE环境</td>
+					<td>
+						
+						<input type="button" id="btn_faeenv" value="手动选择" />
+						<input type="text" 	id="faeenv" value="FAE10: /media/Disk2/code/t93bc-hd-f4593b-fwvga-64g8g-bom78-logicom" size="60" />
+						<input type="hidden" name="faeenv_id">
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" >
+						<span style="margin-right:10px;">发布者:</span>
+						{~W('Common/user')}
+						<span style="margin-left:20px;margin-right:10px;">状态</span>
+						<select name="status">
+							<foreach name="type1" item="v">
+								<option value="{$v.id}">{$v.type}</option>
+							</foreach>
+						</select>
+						<span style="margin-left:20px;margin-right:10px;">bugfree id</span><input type="number" name="bugfree_id" min="1" title="必须为数字">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span style="margin-right:10px;">类别</span>
+						</td><td>
+
+						<foreach name='type2' item='v'>
+							<label style="margin-right: 10px;">
+								<input name="tasktype[]" value="{$v.id}" type="checkbox"/>	&nbsp;<span style="color:{$v.color|default='inherit'}"> {$v.type}</span>
+							</label>
+						</foreach>
+					</td></tr>
+					<tr><td>
+					标签
+						</td><td>
+						<foreach name='type4' item='v'>
+							<label style="margin-right: 10px;">
+								<input name="tasktype[]" value="{$v.id}" type="checkbox"/>	&nbsp;<span style="color:{$v.color}">{$v.type}</span>
+							</label>
+						</foreach>
+							
+					</td>
+				</tr>
+				<tr>
+					<td>模块</td>
+					<td>
+						<foreach name='type3' item='v'>
+							<label style="margin-right: 10px;">
+								<input name="tasktype[]" value="{$v.id}" type="checkbox"/>	&nbsp;<span style="color:{$v.color}">{$v.type}</span>
+							</label>
+						</foreach>
+					</td>
+				</tr>
+			<tr>
+				<td>附件</td>
+				<td><button type="button">添加附件</button></td>
+			</tr>
+			<tr>
+				<td valign="top">内容</td>
+				<td><textarea name="content" id="content" style="width:90%;margin:auto;height:300px;"></textarea></td>
+			</tr>
+			<tr>
+				<td valign="top">注释</td>
+				<td><textarea type="text" name="comment" id="comment" rows="3" style="width:80%;"></textarea></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<input type="hidden" name="view" value="">
+					<input type="submit" value="增加" />
+					<input type="reset" value="重置" onclick="reset_form();" />
+					<input type="button" value="返回" onClick="dialog_child_close('{:U('index')}');"/>
+				</td>
+			</tr>
+		</table>
+	</div>
+</form>	
+  <div style="display:none;overflow:hidden;padding:3px" id="dialog"><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" name="iframe_dialog" id="iframe_dialog" width="100%" height="100%"></iframe></div>
+</body>
+</html>

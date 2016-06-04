@@ -1,0 +1,132 @@
+
+ 	<!-- 分页插件 -->
+	<script src="__PUBLIC__/common/js/jqPaginator.js"></script>
+	<!-- 下拉框 -->
+	<link rel="stylesheet" href="__PUBLIC__/common/css/select2.min.css">
+	<script src="__PUBLIC__/common/js/select2/select2.full.min.js"></script>
+	<!-- url操作插件 -->
+ 	<script src="__PUBLIC__/common/js/url.min.js"></script>
+	
+	<!-- ajax异步提交 -->
+	<script src="__PUBLIC__/common/js/jquery.form.js"></script>
+ 	<!-- 自定义的一些参数 -->
+ 	<link type="text/css" rel="stylesheet" href="__PUBLIC__/common/css/tipcss.css">
+ 	<script src="__PUBLIC__/common/js/zz.main.js"></script>
+<script src="__PUBLIC__/common/js/admin_index.js"></script>
+<script src="__PUBLIC__/common/js/moment.min.js"></script>
+
+
+<script type="text/javascript">
+var init_opt={};
+init_opt.btn_add = {};
+init_opt.btn_del = {};
+init_opt.table = {};
+init_opt.dialog = {};
+
+init_opt.btn_add.url='{$url}';
+init_opt.btn_add.id = '#btn_add';
+
+init_opt.btn_del.url='{:U("toTaskTrachHandle")}';
+init_opt.btn_del.id = '#btn_del';
+
+init_opt.dialog.id = "#dialog";
+init_opt.dialog.iframe_id = "#iframe_dialog";
+init_opt.dialog.height = 600;
+init_opt.dialog.width = 800;
+
+init_opt.edit_url = '{:U("editTask","",false)}';
+
+init_opt.table.id = "#hct_data";
+init_opt.table.checkbox_id = "#checkallid";
+
+zz.pageopt.normal_url = '{:U("TaskList")}';
+zz.pageopt.search_url = '';
+
+ $(function() {
+
+ $("#page_first,#page_second").hctPage({
+	totalCounts: {$total_counts|default=0},
+	visiblePages: 10,
+	pageSize: {$pageSize|default=40},
+	currentPage: {$pageCurrent|default=1},
+	onChangePage: zz.page_normal,
+ });
+
+});
+
+
+</script>
+
+<body>
+	<!-- 详细搜索的具体内容 -->
+
+	<a class="btn" href="{:U('Task/addTask')}">发布任务</a>
+	<div class="tool_nav">
+		
+		<div id="search_less" class="header-top-search fl">
+			<input name="sub" type="text" class="fl" placeholder="搜索项目">
+			<button class="clear fr" onclick="$('#search_less').find('[name]').val('')">清空</button>
+			<button class="search fr" onclick="search_prj('#search_less');"></button>
+		</div>
+	</div>
+
+	<!-- 消息提示 -->
+	<span id="search_rslt"></span>
+	<p><span id="message" style="color:green"></span></p>
+
+	<div  id="loading" style="display:none;position: fixed; top: 50%; left: 40%; overflow: hidden; z-index: 1111;"><img id="myloading" src="__PUBLIC__/common/images/loadingnew.gif" style="display: inline;"></div>
+
+
+	<div id="page_first" class="tool_nav"></div>
+	<!-- 数据部分 -->
+
+	<div class="users-contain ui-widget"  style="margin-top:10px;">
+		<p><span id="message" style="color:green"></span></p>
+		<table class="ui-widget ui-widget-content task_list">
+			<thead>
+				<tr class="ui-widget-header">
+					<th width="20px;"> </th>
+					<th width="60%" style="text-align:left;">
+						<a href="" style="color:#5CA3CB">全部任务</a>
+						<foreach name="type[1]" item="v">
+							&nbsp;<a href="" id="menu_{$v.id}">{$v.type}</a>
+						</foreach>
+						<span class="menu_more">
+							<span>更多</span>
+							<ul class="menu_more_list">
+								<li>
+									<span>排序:</span>
+									<a>发布时间</a>|
+									<a>回复时间</a>
+								</li>
+								<li>
+									<span>时间:</span>
+									<a>一天</a>|
+									<a>两天</a>|
+									<a>一个月</a>
+								</li>
+							</ul>
+						</span>
+					</th>
+					<th width="30%">项目</th>
+					<th width="40px;">附件</th>
+					<th width="58px;">回复</th>
+					<th width="45px;">操作</th>
+				</tr>
+			</thead>
+			<tbody id="hct_data" >
+			<tr >
+				<td >无数据</td>
+			</tr>
+
+			</tbody>
+		</table>
+	</div>
+
+	<div id="page_second" class="tool_nav"></div>
+	
+  	<div style="display:none;overflow:hidden;padding:3px" id="dialog"><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" name="iframe_dialog" id="iframe_dialog" width="100%" height="100%"></iframe></div>
+		<!-- 返回顶部 -->
+	<include file="Common/goto_top"/>
+</body>
+</html>

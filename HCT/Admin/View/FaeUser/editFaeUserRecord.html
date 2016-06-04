@@ -1,0 +1,88 @@
+<include file="Common/header" title="{$title}"/>
+
+ 	<script type="text/javascript">
+	  	$(function() {
+		    $('#dialog').dialog({
+				autoOpen: false,
+				modal: true,
+				height: 500,
+				width: 600,
+		    });
+
+			$("#btn_add").button()
+			.click(function() {
+			    $("#message").text("正在加载..");
+			    $('#iframe_test').attr('src','{:U(MODULE_NAME."/".CONTROLLER_NAME."/addFaeUser",array("method"=>"dialog","return"=>"id"))}');
+			    $("#iframe_test").load(function(){
+			      	$("#message").text("");
+			        $( "#dialog" ).dialog( "open" );
+			    });
+			  });
+			$("#change_btn").button();
+	  	});
+	</script>
+</head>
+<body>
+
+	<form method="post" action="{$url}">
+		<div id="users-contain" class="ui-widget">
+			<table  class="ui-widget ui-widget-content">
+				<tbody>
+					<tr>
+						<th colspan="2">{$title}</th>
+					</tr>
+					<tr>
+						<td>姓名</td>
+						<td><input type="text" name="name" value="{$data.name}">
+						<input type="button" id="change_btn" value="重新选择">
+						<input type="button" id="btn_add" value="新增">
+						</td>
+					</tr>
+					<tr>
+						<td>调试种类</td>
+						<td>
+							<select id="sector_id" name='sector_id'>
+							<option selected=""></option>
+							<foreach name='sector' item='v'>
+							<option value="{$v.id}">{$v.sector}</option>
+							</foreach>
+							</select>
+							<script type="text/javascript">
+								$("#sector_id option[value='{$data.sector_id}']").attr("selected",true);
+							</script>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<span><input type="checkbox" name='lunch'
+							{$data['lunch'])?"checked=''":''}
+							/>是否定中饭</span>
+							<span><input type="checkbox" name='dinner'
+							{$data['dinner'])?"checked=''":''}
+							/>是否定晚餐</span>
+
+						</td>
+					<tr>
+						<td>调试项目</td>
+						<td><textarea type="text" name="project" id="project" rows="3" cols="40"></textarea></td>
+					</tr>
+					</tr>
+					<tr>
+						<td valign="top">注释</td>
+						<td><textarea type="text" name="comment" id="comment" rows="3" cols="40">{$data.comment}</textarea></td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center">
+							<input type="hidden" name="id" value="{$data.id}">
+							<input  type="submit" id="submit" value="保存" />
+							<input type="reset" value="重置" />
+							<input type="button"  id="cancl" value="返回" onClick="dialog_child_close('{:U('FaeUserRecord')};"/>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</form>
+	<div style="display:none;overflow:hidden;padding:3px" id="dialog"><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" name="iframe_test" id="iframe_test" width="100%" height="100%"></iframe></div>
+</body>
+</html>

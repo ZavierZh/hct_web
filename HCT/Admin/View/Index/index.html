@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<script type="text/javascript" src="__PUBLIC__/admin/Js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/Js/index.js"></script>
+<link rel="stylesheet" href="__PUBLIC__/admin/Css/public.css" />
+<link rel="stylesheet" href="__PUBLIC__/admin/Css/index.css" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<base target="iframe"/>
+<title>HCT管理系统</title>
+<script type="text/javascript">
+	$(function() {
+		$('#left a').click(function(){
+			//alert($(this).attr('href'));
+			window.location.search='?target='+$(this).attr('href');
+			// history.replaceState(stateObject,title,newUrl);
+		});
+	});
+</script>
+</head>
+<body>
+	<div id="top">
+		<div class="menu">
+			<a href="#">首页</a>
+			<a href="#">系统概况</a>
+		</div>
+		<div class="exit">
+			<span>{$name}</span>&nbsp;&nbsp;&nbsp;
+			<a href="{:U(MODULE_NAME.'/Login/loginout')}" target="_self">退出</a>
+		</div>
+	</div>
+	<div id="left">
+		<dl>
+			<dt>欢迎</dt>
+			<dd><a href="{:U('Summary')}">系统概况</a></dd>
+		</dl>
+
+		<dl>
+			<dt>成员管理</dt>
+			<dd><a href="{:U(MODULE_NAME.'/User/index')}">成员列表</a></dd>
+			<dd><a href="{:U(MODULE_NAME.'/User/auditUser')}">审核注册用户</a></dd>
+			<dd><a href="{:U(MODULE_NAME.'/User/addUser')}">添加成员</a></dd>
+			<dd><a href="{:U(MODULE_NAME.'/User/Sector')}">部门列表</a></dd>
+			<dd><a href="{:U(MODULE_NAME.'/User/addSector')}">增加部门</a></dd>
+		</dl>
+		<dl>
+			<dt>权限管理</dt>
+			<dd><a href="{:U('AuthManage/index')}">权限列表</a></dd>
+			<dd><a href="{:U('AuthManage/addNode')}">添加节点</a></dd>
+		</dl>
+		<dl>
+			<dt>FAE来访管理</dt>
+			<dd><a href="{:U(MODULE_NAME.'/FaeUser/index')}">FAE成员列表</a></dd>
+			<dd><a href="{:U(MODULE_NAME.'/FaeUser/addFaeUser')}">添加FAE成员</a></dd>
+			<dd><a href="{:U(MODULE_NAME.'/FaeUser/FaeUserRecord')}">FAE来访记录</a></dd>
+			<dd><a href="{:U(MODULE_NAME.'/FaeUser/addFaeUserRecord')}">添加FAE来访记录</a></dd>
+
+		</dl>
+		<dl>
+			<dt>gitweb查看</dt>
+			<dd><a href="{:U('Other/Gitweb/index')}">gitweb</a></dd>
+			<dd><a href="{:U('Other/Gitweb/seach')}">gitweb查找</a></dd>
+		</dl>
+		<dl>
+			<dt>FAE环境管理</dt>
+			<dd><a href="{:U(MODULE_NAME.'/FaeEnv/index')}">FAE环境列表</a></dd>
+			<dd><a href="{:U(MODULE_NAME.'/FaeEnv/addFaeEnv')}">增加FAE环境</a></dd>
+			<dd><a href="{:U(MODULE_NAME.'/FaeEnv/FaePC')}">FAE机器列表</a></dd>
+			<dd><a href="{:U(MODULE_NAME.'/FaeEnv/addFaePC')}">增加FAE机器</a></dd>
+			<dd><a href="{:U(MODULE_NAME.'/FaeEnv/FaeEnvTrach')}">FAE环境回收站</a></dd>
+		</dl>
+		<dl>
+			<dt>任务管理</dt>
+			<dd><a href="{:U(MODULE_NAME.'/Task/index')}">任务列表</a></dd>
+			<dd><a href="{:U(MODULE_NAME.'/Task/addTask')}">发布任务</a></dd>
+			<dd><a href="{:U(MODULE_NAME.'/TaskType/index')}">任务分类列表</a></dd>
+			<dd><a href="{:U(MODULE_NAME.'/TaskType/addTaskType')}">添加任务分类</a></dd>
+		</dl>
+		<dl>
+			<dt>系统管理</dt>
+			<dd><a>设置</a></dd>
+			<dd><a>系统查看</a></dd>
+		</dl>
+	</div>
+	<div id="right">
+		<iframe name="iframe" id="iframe" src="{$url}"></iframe>
+	</div>
+</body>
+</html>

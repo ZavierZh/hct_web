@@ -1,0 +1,101 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+ <html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+ 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+ 	<!-- <link rel="stylesheet" href="__PUBLIC__/admin/Css/public.css" /> -->
+ 	<!-- <script type="text/javascript" src="__PUBLIC__/common/Js/jquery-1.7.2.min.js"></script> -->
+ 	<link rel="stylesheet" href="__PUBLIC__/common/css/jquery-ui/jquery-ui.min.css">
+ 	<script src="__PUBLIC__/common/js/jquery.min.js"></script>
+ 	<script src="__PUBLIC__/common/js/jquery-ui.min.js"></script>
+ 	<title>admin</title>
+  	<link rel="stylesheet" href="__PUBLIC__/common/css/hct.css">
+	
+ 		<script type="text/javascript">
+		  $(function() {
+		    $('#dialog').dialog({
+				autoOpen: false,
+				modal: true,
+				height: 500,
+				width: 600,
+				buttons: {
+				"关闭": function() {
+				  $( this ).dialog( "close" );
+				}
+				},
+				overflow:{
+					overflow:'auto'
+				},
+		    });
+
+			$("#add_faeenv").button()
+			.click(function() {
+			    $("#message").text("正在加载..");
+			    $('#iframe_test').attr('src','{$url}');
+			    $("#iframe_test").load(function(){
+			      	$("#message").text("");
+			        $("#dialog").dialog("open");
+			    });
+			  });
+			$("#chang_faeenv").button()
+			.click(function() {
+			    $("#message").text("正在加载..");
+			    $('#iframe_test').attr('src','date.html');
+			    $("#iframe_test").load(function(){   
+			      	$("#message").text("");
+			        $("#dialog").dialog("open");
+			    });
+		  	});
+	  	});
+		  function close_dialog(dialog){
+		  	if (!dialog){
+		  		dialog = '#dialog';
+		  	}
+		  	$(dialog).dialog('close');
+		  }
+</script>
+</head>
+<body>
+	<h3 style="text-align:center;">FAE人员列表</h3>
+
+  <button id="add_faeenv">添加</button>
+  <button id="chang_faeenv">修改</button>
+	<p><span id="message" style="color:green"></span></p>
+	<form action="{:U(MODULE_NAME)}" method="post">
+		<div id="users-contain" class="ui-widget">
+			<table class="ui-widget ui-widget-content">
+				<thead>
+					<tr  class="ui-widget-header ">
+						<th width="40px;"><input name="" type="checkbox" value="" checked="checked"><label for="checkbox">全选</label></th>
+						<th>ID</th>
+						<th>姓名</th>
+						<th>公司</th>
+						<th>邮箱</th>
+						<th>电话</th>
+						<th>登记时间</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<foreach name='data' item='v'>
+					<tr>
+						<td><input name="" type="checkbox" value=""></td>
+						<td>{$v.id}</td>
+						<td>{$v.name}</td>
+						<td>{$v.company}</td>
+						<td>{$v.email}</td>
+						<td>{$v.phone}</td>
+						<td>{$v.time}</td>
+						<td>
+							<a href="#">编辑</a>|
+							<a href="#">删除</a>
+						</td>
+					</tr>
+					</foreach>
+				</tbody>
+			</table>
+		</div>
+	</form>
+  <div style="display:none;overflow:hidden;padding:3px" id="dialog"><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" name="iframe_test" id="iframe_test" width="100%" height="100%"></iframe></div>
+
+</body>
+</html>

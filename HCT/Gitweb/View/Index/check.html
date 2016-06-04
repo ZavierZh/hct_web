@@ -1,0 +1,150 @@
+<include file="Common/header" title="项目配置查询"/>
+
+ 	<!-- 下拉框 -->
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/common/css/tipcss.css">
+ 	<link rel="stylesheet" href="__PUBLIC__/common/css/select2.min.css">
+ 	<script src="__PUBLIC__/common/js/select2/select2.full.min.js"></script>
+ 	<script src="__PUBLIC__/common/js/zz.main.js"></script>
+
+ 	<script type="text/javascript">
+
+ 		$(function(){
+			$("#select").change(function(){
+				var base = $(this).val();
+				if (base=="") {
+					Url.updateSearchParam('base');
+					$("#hct_data").html("");
+					return;
+				}
+				Url.updateSearchParam('base',base);
+				$.ajax({
+					url: '{:U("getCheckBase")}',
+					data: {'base': base},
+					type: 'get',
+					dataType: 'text',
+					success: function(data){
+						$("#hct_data").html(data);
+					},
+				});
+			});
+			var base=Url.queryString('base');
+			if (base == "") base="all";
+ 			$("#select").val(base);
+ 			$("#select").change();
+
+ 		});
+ 		function search(obj){
+ 			var input = $("#search_id").val();
+ 			var type = $('#type').val();
+ 			if (input == '') return;
+			var base = $('#select').val();
+			if (base=="") {
+				zz.tip.toptip('请选择base',2);
+				return;
+			}
+			var tmp_data={};
+			tmp_data['base']=base;
+			tmp_data['type']=type;
+			tmp_data[type]=input;
+ 			$.ajax({
+ 				url: '{:U("searchCheckBase")}',
+ 				data: tmp_data,
+ 				type: 'get',
+ 				success: function(data){
+ 					$("#hct_data").html(data);
+ 				},
+ 			});
+ 		}
+
+ 		function normal(){
+			var base = $("#select").val();
+			if (base=="") {
+				$("#hct_data").html("");
+				return;
+			}
+			$("#search_id").val('');
+			$.ajax({
+				url: '{:U("getCheckBase")}',
+				data: {'base': base},
+				type: 'get',
+				dataType: 'text',
+				success: function(data){
+					$("#hct_data").html(data);
+				},
+			});	
+ 		}
+
+ 	</script>	
+<style type="text/css">
+.md5{
+	font-family: monospace;
+}
+.check_list{
+	background-color: #C0E4E2;
+}
+input[type="checkbox"]{
+	vertical-align: middle;
+}
+label{
+	vertical-align: middle;
+}
+</style>
+ </head>
+ <body>
+<include file="Common/user"/>
+
+
+ 	<div class="context_mian">
+
+ 		<h3 style="text-align:center;">base选择({$last_date})</h3>
+ 		<p><span id="message" style="color:green"></span></p>
+ 		<div class="users-contain ui-widget">
+ 			<table class="ui-widget ui-widget-content">
+ 				<tbody>
+ 					<tr>
+ 						<td>base</td>
+ 						<td>
+ 							<select  id="select" style="width: 350px;">
+								<option value="all">全部</option>
+ 								<foreach name="base" item="v" key="k">
+ 									<option value="{$v}">{$v}</option>
+ 								</foreach>
+ 							</select>
+ 						</td>
+ 					<td>
+ 					<!-- <input type="checkbox" id="regular"/><label for="regular"> 正则</label> -->
+ 						&nbsp;&nbsp;&nbsp;
+ 						<select id="type" style="width:50px;">
+ 							<!-- <option value="sub">项目</option> -->
+ 							<option value="uid">模组</option>
+ 							<option value="ic">IC</option>
+ 						</select>
+ 						&nbsp;&nbsp;&nbsp;
+ 						<input id="search_id" value=""/>
+ 						<button onclick="search(this);">搜索</button>
+ 						<button onclick="normal();">清空</button>
+ 					</td></tr>
+ 					</tbody>
+ 			</table>
+ 		</div>
+ 		<div class="users-contain ui-widget">
+ 			<table class="ui-widget ui-widget-content">
+	 			<thead>
+	 				<tr>
+						<th>类型</th>
+						<th>ic</th>	
+						<th>模组</th>
+						<th>md5</th>
+	 				</tr>
+	 			</thead>
+ 				<tbody id="hct_data">
+
+ 				</tbody>
+ 			</table>
+ 		</div>
+ 	</div>
+
+	<include file="Common/goto_top"/>
+
+</body>
+</html>

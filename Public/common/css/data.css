@@ -1,0 +1,8 @@
+#hct_data a.title:first-child{
+	font-size:14px;
+}
+
+#hct_data a.title:last-child{
+	font-size:13px;
+	color:#A2A0AE;
+}

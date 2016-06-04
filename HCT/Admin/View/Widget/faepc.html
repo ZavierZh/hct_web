@@ -1,0 +1,6 @@
+<select style="width:{$width}px;" name="{$id}" id="{$id}" {$class} {$str}>
+	<option selected="" value="">无</option>
+	<foreach name='data' item='v'>
+		<option value="{$v.id}">{$v.faepc}</option>
+	</foreach>
+</select>

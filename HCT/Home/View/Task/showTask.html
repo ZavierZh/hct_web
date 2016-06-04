@@ -1,0 +1,280 @@
+<include file="Common/header" title="{$task.title}"/>
+
+<!-- 分页插件 -->
+<script src="__PUBLIC__/common/js/jqPaginator.js"></script>
+<!-- 下拉框 -->
+<link rel="stylesheet" href="__PUBLIC__/common/css/select2.min.css">
+<script src="__PUBLIC__/common/js/select2/select2.full.min.js"></script>
+
+<!-- ajax异步提交 -->
+<script src="__PUBLIC__/common/js/jquery.form.js"></script>
+<!-- 自定义的一些参数 -->
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/common/css/tipcss.css">
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/common/css/show.css">
+<script src="__PUBLIC__/common/js/zz.main.js"></script>
+<script src="__PUBLIC__/common/js/admin_index.js"></script>
+<script src="__PUBLIC__/common/js/moment.min.js"></script>
+
+<script type="text/javascript">
+var init_opt={};
+
+init_opt.dialog = {};
+
+init_opt.dialog.id = "#dialog";
+init_opt.dialog.iframe_id = "#iframe_dialog";
+init_opt.dialog.height = 600;
+init_opt.dialog.width = 900;
+
+init_opt.edit_url = '{:U("Debug/addDebug","",false)}';
+
+function change_env(faeenv_id,faepc,path){
+	jConfirm('确定选择 '+faepc+" : "+path+" ?", '消息提示', function(r) {
+		if(r == true){
+			zz.sendto({
+				url:"{:U('Home/FaeEnv/changeEnvHandle')}",
+				data:{
+					"task_id":{$task.id},
+					"faeenv_id":faeenv_id,
+				}
+			});
+		}
+	});
+	$(init_opt.dialog.id).dialog('close');
+}
+
+
+</script>
+
+</head>
+<body>
+<include file="Common/user"/>
+
+	<div class="context_mian">
+
+		<!-- 标题 -->
+		<!-- 详细搜索的具体内容 -->
+
+		<div class="tool_nav">
+			
+			<div id="search_less" class="header-top-search fl">
+				<input name="sub" type="text" class="fl" placeholder="搜索项目">
+				<button class="clear fr" onclick="$('#search_less').find('[name]').val('')">清空</button>
+				<button class="search fr" onclick="search_prj('#search_less');"></button>
+			</div>
+		</div>
+		<!-- 消息提示 -->
+		<span id="search_rslt"></span>
+		<p><span id="message" style="color:green"></span></p>
+
+		<div class="main">
+			<!-- 按钮 -->
+			<div>
+				<a href="javascript:history.back(-1);" class="button"> 返回任务列表</a>
+				<!-- <button class="blue" onclick="edit_data({$task.id})">回复此任务</button> -->
+				<if condition="($_SESSION['id'] eq $task['user_id']) AND isAuth('Home/Task/editTask')">
+					<button>增加新需求</button>
+				</if>
+			</div>
+			<div class='main-conent'>
+				<div class="title">
+					<div><a href="{:U('index')}">任务列表</a> &nbsp;\&nbsp;{$task.title}</div>
+				</div>
+				<table>
+					<tbody>
+						<tr>
+							<td class="info">
+								<ul>
+									<li>发布人: {$user.name}</li>
+									<li>发布于：{:formatTime($task['time'])}</li>
+									<li>电话  : {$user.phone}</li>
+									<li>邮箱  : {$user.email}</li>
+									<li>部门 : {$sector[$user['sector_id']]}</li>
+								</ul>
+							</td>
+
+							<td class='content'>
+								<table cellpadding="0" cellspacing="0" class="cgtl mbm" width="90%"> 
+									<caption>
+										任务信息
+									</caption> 
+									<tbody> 
+										<tr> 
+											<th>项目名:</th><td>{$task.sub}</td> 
+										</tr>
+										<tr>
+											<th>分支</th>
+											<td>{$task.base|default='无'}</td>
+										</tr>
+										<tr>
+											<th>FAE区</th>
+											<td>{$faeenv}</td>
+										</tr> 
+										<tr> 
+											<th>模块:</th>
+											<td>
+												<volist name="tasktype" id="v" empty="无">
+													{$type[$v['tasktype_id']]['type']}&nbsp;&nbsp;
+												</volist>
+											</td> 
+										</tr> 
+										<tr>
+											<th>附件:</th><td>无 </td> 
+										</tr> 
+									</tbody> 
+								</table> 
+								<div class="content">{$task.content}</div>
+
+								<div>
+									<if condition="($_SESSION['id'] eq $task['user_id']) AND isAuth('Home/Task/editTask')">
+									&nbsp;<a href="{:U('editTask')}?id={$task.id}">编辑</a>
+									</if>
+									<if condition="isAuth('FaeEnv/addFaeEnv')">
+									&nbsp;<button id="btn_change_env" href="#">重新选择环境</button>
+									<script type="text/javascript">
+									$(function(){
+										$("#btn_change_env").click(function(){
+											$("#message").text("正在加载..");
+											$("#loading").show();
+											// init_opt.dialog.obj.dialog('option',{
+											// 	height:600,
+											// 	width:900,
+											// });
+											init_opt.dialog.iframe_obj.attr('src',"{:U('FaeEnv/changeEnv')}");
+											init_opt.dialog.iframe_obj.load(function(){
+												$("#message").text("");
+												$("#loading").hide();
+												init_opt.dialog.obj.dialog("open");
+											});
+										});
+									});
+									</script>
+									</if>									
+								</div>
+							</td>
+						</tr>
+						<tr class="ad">
+							<td class="pls">
+							</td>
+							<td class="plc">
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="main-conent">
+				<table>
+					<tbody>
+					<if condition="$faedebug == null">
+						<tr>
+							<td class="info info-sub">
+								
+							</td>				
+							<td class='content' style="padding:20px;">
+								<div style="margin:auto;height:40px;width:90%;border:1px solid #ccc;	line-height: 38px;padding-left:80px;">
+									<h3>暂无数据</h3>
+								</div>
+								<div style="margin-top:20px;margin-left:10%;">
+									<a href="javascript:edit_data({$task.id})" class="button">回复任务</a>
+								</div>
+							</td>
+						</tr>
+					<else />
+						<volist name="faedebug" id="v">
+							<tr>
+								<td class="info info-sub">
+									<ul>
+										<li>FAE: {$v.faename|default='未登记'}</li>
+										<li>回复于：{:formatTime($v['time'])}</li>
+										<li>电话 : {$v.faephone|default='未登记'}</li>
+										<li>邮箱 : {$v.faeemail|default='未登记'}</li>
+										<li>公司 : {$v.faecompany|default='未登记'}</li>
+									</ul>
+								</td>
+								<td class='content'>
+									<table cellpadding="0" cellspacing="0" class="cgtl mbm" width="90%"> 
+										<tbody> 
+											<tr>
+												<th>临时版本</th>
+												<td>{$v.path}</td>
+											</tr>
+											<tr> 
+												<th>附件:</th><td>无 </td> 
+											</tr> 
+
+										</tbody> 
+									</table> 
+
+									<div class="content">
+										{$v.comment|default="无备注"}
+									</div>
+									<div>
+										<if condition="$v['isok']">
+											<div class="content" style="color:blue;">
+											   已经确认此版  <a href="#" id="faedebug_info">详细</a>
+												<script type="text/javascript">
+												$(function(){
+													$("#faedebug_info").click(function(){
+														$("#message").text("正在加载..");
+														$("#loading").show();
+														init_opt.dialog.iframe_obj.attr('src',"{:U('Task/showConfirmTask')}?id={$v.id}");
+														init_opt.dialog.iframe_obj.load(function(){
+															$("#message").text("");
+															$("#loading").hide();
+															init_opt.dialog.obj.dialog("open");
+														});
+													});
+												});
+												</script>
+											</div>
+										<elseif condition="($_SESSION['id'] eq $task['user_id']) AND isAuth('Home/Task/editTask')"/>
+												&nbsp;<button id="btn_confirm" href="#">确认此版</button>
+												<script type="text/javascript">
+												$(function(){
+													$("#btn_confirm").click(function(){
+														$("#message").text("正在加载..");
+														$("#loading").show();
+														init_opt.dialog.iframe_obj.attr('src',"{:U('Task/confirmTask')}?id={$v.id}");
+														init_opt.dialog.iframe_obj.load(function(){
+															$("#message").text("");
+															$("#loading").hide();
+															init_opt.dialog.obj.dialog("open");
+														});
+													});
+												});
+												</script>
+										</if>
+										
+									</div>
+								</td>
+							</tr>
+
+							<tr class="ad ad-sub">
+								<td class="pls">
+								</td>
+								<td class="plc">
+								</td>
+							</tr>
+
+						</volist>
+						<tr>
+							<td class="info info-sub">
+
+							</td>				
+							<td class='content' style="padding:20px;">
+								<div style="margin-top:20px;margin-left:10%;">
+									<a href="javascript:edit_data({$task.id})" class="button">回复任务</a>
+								</div>
+							</td>
+						</tr>
+					</if>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div style="display:none;overflow:hidden;padding:3px" id="dialog"><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" name="iframe_dialog" id="iframe_dialog" width="100%" height="100%"></iframe></div>
+	<!-- 返回顶部 -->
+	<include file="Common/goto_top"/>
+</body>
+</html>

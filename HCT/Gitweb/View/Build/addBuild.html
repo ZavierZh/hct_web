@@ -1,0 +1,46 @@
+<include file="Common/header" title="{$title}"/>
+
+</head>
+<body>
+
+	<form method="post" action="{$url}">
+		<div class="users-contain ui-widget">
+			<table  class="ui-widget ui-widget-content">
+				<tbody>
+					<tr>
+						<th colspan="2">{$title}</th>
+					</tr>
+					<tr>
+						<td>项目</td>
+						<td>
+						<textarea type="text" name="path" id="path" style="width: 486px; height: 79px;">{$data.3}</textarea>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2"> <input type="checkbox" name="urgent" id="urgent" {$data[4] == 0 ? '': 'checked=""'}> <label for="urgent">&nbsp;&nbsp;紧急(当某台编译服务器编译完后会优先编译)</label></td>
+					</tr>
+					<if condition="isset($noemail)">
+					<tr>
+						<td colspan="2" style="color:red;">{$noemail}</td>
+					</tr>
+					</if>
+					<tr>
+						<td colspan="2" align="center">
+							<if condition="isset($data)">
+								<input type="hidden" name="id" value="{$data.0}">
+							</if>
+							<input  type="submit" id="submit" value="{$data?'修改':'增加'}"/>
+							<input type="reset" value="重置" />
+							<if condition="isset($data)">
+							<input type="button"  id="cancel" value="返回" onClick="parent.dialog_edit.dialog('close');"/>
+							<else/>
+							<input type="button"  id="cancel" value="返回" onClick="dialog_child_close('{:U('index')}');"/>
+							</if>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</form>	
+</body>
+</html>

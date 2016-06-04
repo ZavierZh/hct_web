@@ -1,0 +1,25 @@
+<include file="Common/header" title="index"/>
+	<link rel="stylesheet" href="__PUBLIC__/blog/Css/index.css" />
+<include file="Common/navigation"/>
+
+<!--主体-->
+	<div class='main'>
+		<div class='main-left'>
+			<p>后盾博文</p>
+			<foreach name="cate" item='v'>
+				<dl>
+					<dt>{$v.name}<a href="{:U('Blog/List/index',array('id'=>$v['id']))}"> 更多&gt;&gt;</a></dt>
+					
+					<foreach name='v.blog' item='value'>	
+						<dd>
+							<a href="{:U('Blog/Show/index',array('id'=>$value['id']))}">{$value.title}</a>
+							<span>{:date('m-d',$value.time)}</span>
+						</dd>
+					</foreach>
+				</dl>
+			</foreach>
+		</div>
+	<!--主体右侧-->
+	<include file="Common/right"/>
+	</div>
+<include file="Common/bottom"/>

@@ -1,0 +1,192 @@
+[ 2016-01-25T11:46:59+08:00 ] 127.0.0.1 /thinkphp/index.php/Admin/Blog/addBlog.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000203s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000233s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000272s ]
+SQL: SHOW COLUMNS FROM `think_cate` [ RunTime:0.0004s ]
+SQL: SELECT * FROM `think_cate` ORDER BY sort  [ RunTime:0.0001s ]
+SQL: SHOW COLUMNS FROM `think_attr` [ RunTime:0.0003s ]
+SQL: SELECT * FROM `think_attr`  [ RunTime:0.0001s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000036s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000076s ]
+
+[ 2016-01-25T11:48:20+08:00 ] 127.0.0.1 /thinkphp/index.php/Admin/Blog/addBlog.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000006s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000109s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000132s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000154s ]
+SQL: SHOW COLUMNS FROM `think_cate` [ RunTime:0.0003s ]
+SQL: SELECT * FROM `think_cate` ORDER BY sort  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `think_attr` [ RunTime:0.0002s ]
+SQL: SELECT * FROM `think_attr`  [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000020s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000044s ]
+NOTIC: [8] Undefined variable: pid /www/thinkphp/App/Runtime/Cache/Admin/92126ef3a4e70580b9de4538d7f098fd.php 第 60 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.002681s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.002703s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000050s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000068s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000154s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000172s ]
+
+[ 2016-01-25T11:52:42+08:00 ] 127.0.0.1 /thinkphp/index.php/Admin/Blog/runAddBlog.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000006s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000109s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000128s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000151s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000139s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000160s ]
+
+[ 2016-01-25T11:53:07+08:00 ] 127.0.0.1 /thinkphp/index.php/admin
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000008s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000165s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000267s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000312s ]
+NOTIC: [8] Undefined index: name /www/thinkphp/App/Admin/Controller/IndexController.class.php 第 8 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000027s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000063s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.003283s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.003313s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000053s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000073s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000150s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000171s ]
+
+[ 2016-01-25T11:53:07+08:00 ] 127.0.0.1 /thinkphp/index.php/Admin/Category/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000006s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000121s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000130s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000152s ]
+SQL: SHOW COLUMNS FROM `think_cate` [ RunTime:0.0003s ]
+SQL: SELECT * FROM `think_cate` ORDER BY sort ASC  [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000021s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000048s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.002703s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.002729s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000051s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000069s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000142s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000163s ]
+
+[ 2016-01-25T11:53:08+08:00 ] 127.0.0.1 /thinkphp/index.php/Admin/Blog/addBlog.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000006s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000109s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000131s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000154s ]
+SQL: SHOW COLUMNS FROM `think_cate` [ RunTime:0.0007s ]
+SQL: SELECT * FROM `think_cate` ORDER BY sort  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `think_attr` [ RunTime:0.0002s ]
+SQL: SELECT * FROM `think_attr`  [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000028s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000061s ]
+NOTIC: [8] Undefined variable: pid /www/thinkphp/App/Runtime/Cache/Admin/92126ef3a4e70580b9de4538d7f098fd.php 第 66 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.003468s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.003492s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000062s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000086s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000209s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000233s ]
+
+[ 2016-01-25T11:53:16+08:00 ] 127.0.0.1 /thinkphp/index.php/Admin/Blog/runAddBlog.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000007s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000137s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000152s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000178s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000152s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000177s ]
+
+[ 2016-01-25T11:53:44+08:00 ] 127.0.0.1 /thinkphp/index.php/Admin/Blog/runAddBlog.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000008s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000121s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000134s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000160s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000181s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000203s ]
+
+[ 2016-01-25T11:59:13+08:00 ] 127.0.0.1 /thinkphp/index.php/Admin/Blog/runAddBlog.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000006s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000133s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000149s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000174s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000151s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000175s ]
+
+[ 2016-01-25T12:18:33+08:00 ] 127.0.0.1 /thinkphp/index.php/Admin/Blog/runAddBlog.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000008s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000116s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000158s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000197s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000164s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000193s ]
+
+[ 2016-01-25T12:27:09+08:00 ] 127.0.0.1 /thinkphp/index.php/Admin/Blog/runAddBlog.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000006s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000109s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000125s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000147s ]
+NOTIC: [8] Undefined variable: I /www/thinkphp/App/Admin/Controller/BlogController.class.php 第 24 行.
+
+[ 2016-01-25T12:27:30+08:00 ] 127.0.0.1 /thinkphp/index.php/Admin/Blog/runAddBlog.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000008s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000137s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000149s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000175s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000155s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000180s ]
+
+[ 2016-01-25T12:43:34+08:00 ] 127.0.0.1 /thinkphp/index.php/Admin/Blog/runAddBlog.html
+ERR: 1146:Table 'test_thinkphp01.think_blog_relation' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `think_blog_relation`
+
+[ 2016-01-25T12:51:01+08:00 ] 127.0.0.1 /thinkphp/index.php/Admin/Blog/runAddBlog.html
+ERR: 1146:Table 'test_thinkphp01.think_blog_relation' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `think_blog_relation`
+

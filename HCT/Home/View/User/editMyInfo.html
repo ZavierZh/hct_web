@@ -1,0 +1,67 @@
+<include file="Common/header" title="{$title}"/>
+
+</head>
+<body>
+	<form method="post" action="{$url}">
+		<div class="users-contain ui-widget">
+			<table  class="ui-widget ui-widget-content ">
+				<tbody class="ui-widget ui-widget-content ">
+					<tr>
+						<th colspan="2">{$title}</th>
+					</tr>
+					<tr>
+						<td>姓名</td>
+						<td><input type="text" name="name" value="{$data.name}"/></td>
+					</tr>
+<!-- 					<tr>
+						<td>登陆账号</td>
+						<td><input type="text" name="login_name" value="{$data.login_name}" /></td>
+					</tr> -->
+					<tr>
+						<td>密码</td>
+						<td><input type="password" name="login_passwd" value="{$data.login_passwd}" /></td>
+					</tr>
+					<tr>
+						<td>邮箱</td>
+						<td><input type="email" name="email" value="{$data.email}" /></td>
+					</tr>
+					<tr>
+						<td>邮箱密码</td>
+						<td><input type="text" name="email_passwd" value="{$data.email_passwd}" /></td>
+					</tr>
+					<tr>
+						<td>电话</td>
+						<td><input type="text" name="phone" value="{$data.phone}" /></td>
+					</tr>
+<!-- 					<tr>
+						<td>部门</td>
+						<td>
+							<select id="sector_id" name='sector_id'>
+							<option selected=""></option>
+							<foreach name='sector' item='v'>
+							<option value="{$v.id}">{$v.sector}</option>
+							</foreach>
+							</select>
+							<script type="text/javascript">
+							$("#sector_id option[value='{$data.sector_id}").attr("selected",true);
+							</script>
+						</td>
+					</tr> -->		
+
+					<tr>
+						<td valign="top" >个人简介</td>
+						<td><textarea type="text" name="comment" id="comment" rows="3" cols="40">{$data.comment}</textarea></td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center">
+							<input type="submit" value="修改" />
+							<input type="reset" value="重置" />
+							<input type="button" value="返回" onclick="dialog_child_close('{:U('index')}');"/>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</form>	
+</body>
+</html>

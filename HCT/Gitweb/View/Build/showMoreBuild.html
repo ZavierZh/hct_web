@@ -1,0 +1,52 @@
+<include file="Common/header" title="{$title}"/>
+
+</head>
+<body>
+
+	<form method="post" action="{$url}">
+		<div class="users-contain ui-widget">
+			<table  class="ui-widget ui-widget-content">
+				<colgroup width='100'></colgroup>
+				<tbody>
+					<tr>
+						<th colspan="2">{$title}</th>
+					</tr>
+					<tr>
+						<td>项目</td>
+						<td>{$data.path}</td>
+					</tr>
+					<tr>
+						<td>状态</td>
+						<td>{$data['stat']==$PC_TYPE['finish'] ? '成功' : '失败'}</td>
+					</tr>
+					<tr>
+						<td>编译服务器</td>
+						<td>{$data.name}</td>
+					</tr>
+					<tr>
+						<td>编译服务器 IP</td>
+						<td>{:long2ip($data['ip'])}</td>
+					</tr>
+					<tr>
+						<td>开始时间</td>
+						<td>{:date('Y-m-d H:i:s',$data['start_time'])}</td>
+					</tr>
+					<tr>
+						<td>结束时间</td>
+						<td>{:date('Y-m-d H:i:s',$data['end_time'])}</td>
+					</tr>
+					<tr>
+						<td>{$data['stat']==$PC_TYPE['finish']? '路径' : 'LOG'}</td>
+						<td>{$data['more']}</td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center">
+						<input type="button"  id="cancel" value="返回" onClick="dialog_child_close('{:U('index')}');"/>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</form>	
+</body>
+</html>

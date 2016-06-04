@@ -1,0 +1,60 @@
+
+<include file="Common/header" title="{$title}"/>
+
+</head>
+<body>
+	<form method="post" action="{$url}">
+		<div class="users-contain ui-widget">
+			<table  class="ui-widget ui-widget-content">
+			<tr>
+				<th colspan="2" align="center">添加{$type}</th>
+			</tr>
+			<tr>
+				<td align="right">{$type}名称:</td>
+				<td><input type="text" name="name" /></td>
+			</tr>
+			<tr>
+				<td align="right">{$type}描述:</td>
+				<td><input type="text" name="title" /></td>
+			</tr>
+			<tr>
+				<td align="right">是否开启:</td>
+				<td>
+					<label>
+						<input type="radio" name="status" value='1'checked="checked" />&nbsp;开启&nbsp;
+					</label>
+					<label>	<input type="radio" name="status" value='0' />&nbsp;关闭&nbsp;
+					</label>
+				</td>
+			</tr>
+			<tr>
+				<td align="right">是否对没有权限的用户显示:</td>
+				<td>
+					<label>
+						<input type="radio" name="show" value='1'checked="checked" />&nbsp;开启&nbsp;
+					</label>
+					<label>	<input type="radio" name="show" value='0' />&nbsp;关闭&nbsp;
+					</label>
+				</td>
+			</tr>
+			<tr>
+				<td align="right">排序:</td>
+				<td>
+					<input type="text" name="sort" value="10"/>
+				</td>
+			</tr>
+			<tr>
+				<td colspan='2' align="center">
+					<input type="hidden" name="pid" value="{$pid}"/>
+					<input type="hidden" name="level" value="{$level}"/>
+					
+					<input type="submit" value="保存" />
+						<input type="reset" value="重置" />
+						<input type="button" value="返回" onClick="dialog_child_close('{:U('index')}');"/>
+				</td>
+			</tr>
+		</table>
+		</div>
+	</form>
+</body>
+</html>

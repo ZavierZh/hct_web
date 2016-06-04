@@ -1,0 +1,221 @@
+<include file="Common/header" title="{$title}"/>
+
+<!-- 分页插件 -->
+<script src="__PUBLIC__/common/js/jqPaginator.js"></script>
+<!-- 下拉框 -->
+<link rel="stylesheet" href="__PUBLIC__/common/css/select2.min.css">
+<script src="__PUBLIC__/common/js/select2/select2.full.min.js"></script>
+
+<!-- ajax异步提交 -->
+<script src="__PUBLIC__/common/js/jquery.form.js"></script>
+<!-- 自定义的一些参数 -->
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/common/css/tipcss.css">
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/common/css/show.css">
+<script src="__PUBLIC__/common/js/zz.main.js"></script>
+<script src="__PUBLIC__/common/js/admin_index.js"></script>
+<script src="__PUBLIC__/common/js/moment.min.js"></script>
+
+<script type="text/javascript">
+var init_opt={};
+
+init_opt.dialog = {};
+
+init_opt.dialog.id = "#dialog";
+init_opt.dialog.iframe_id = "#iframe_dialog";
+init_opt.dialog.height = 600;
+init_opt.dialog.width = 900;
+
+init_opt.edit_url = '{:U("FaeEnv/addFaeEnvRecord","",false)}';
+
+function search_by_id(){
+	var id = $("#search_by_input_id").val();
+	if (id == '' || id <= 0) return;
+	location.href = "{:U('showFaeEnv')}" + "?id=" +id;
+}
+</script>
+
+</head>
+<body>
+<include file="Common/user"/>
+
+	<div class="context_mian">
+
+		<!-- 标题 -->
+		<!-- 详细搜索的具体内容 -->
+
+		<div class="tool_nav">
+			<input type="number" id="search_by_input_id" min="1" style="margin-left:50px;" onkeyup="if(event.keyCode==13){search_by_id();}">
+			<button onclick="search_by_id()">查询编号</button>
+		</div>
+		<!-- 消息提示 -->
+		<span id="search_rslt"></span>
+		<p><span id="message" style="color:green"></span></p>
+
+		<div class="main">
+			<!-- 按钮 -->
+			<div>
+				<a href="{:U('FaeEnv/index')}" class="button"> 返回环境列表</a>
+				<!-- <button class="blue" onclick="edit_data({$task.id})">回复此任务</button> -->
+				<if condition="isAuth('Home/FaeEnv/addFaeEnv')">
+					<button id="btn_add">增加新环境</button>
+					<script type="text/javascript">
+						init_opt.btn_add = {};
+						init_opt.btn_add.url='{:U("FaeEnv/addFaeEnv")}';
+						init_opt.btn_add.id = '#btn_add';
+					</script>
+					<a href="javascript:edit_data({$env.id})" class="button">添加记录</a>
+				</if>
+			</div>
+			<div class='main-conent'>
+				<div class="title">
+					<div><a href="{:U('index')}">环境列表</a></div>
+				</div>
+				<table>
+					<tbody>
+						<tr>
+							<td class="info">
+								<ul>
+									<li>使用人: {$user.name}</li>
+									<li>邮箱  : {$user.email}</li>
+									<li><br/></li>
+									<li>建立时间：{$env.date}</li>
+								</ul>
+							</td>
+
+							<td class='content'>
+								<table cellpadding="0" cellspacing="0" class="cgtl mbm" width="90%"> 
+									<caption>
+										环境信息
+									</caption> 
+									<tbody>
+										<tr><th>环境编号</th><td>{$env.id}</td></tr>
+										<tr>
+											<th>分支</th>
+											<td>{$env.dists|default='无'}</td>
+										</tr>
+										<tr>
+											<th>FAE区</th>
+											<td>{$faepc}</td>
+										</tr>
+										<tr>
+											<th>路径</th>
+											<td>{$env.path}</td>
+										</tr>
+									</tbody> 
+								</table> 
+								<div class="content"><pre>{$env.comment}</pre></div>
+								<if condition="isAuth('Home/FaeEnv/editFaeEnv')">
+								<div>
+									<button id="btn_edit">编辑</button>
+									<script type="text/javascript">
+										$(function(){
+											btn_open_dialog('#btn_edit',"{:U('FaeEnv/editFaeEnv',array('id'=>$env['id']))}");
+										});
+									</script>
+								</div>
+								</if>
+							</td>
+						</tr>
+						<tr class="ad">
+							<td class="pls">
+							</td>
+							<td class="plc">
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="main-conent">
+				<table>
+					<tbody>
+					<if condition="$faedebug == null">
+						<tr>
+							<td class="info info-sub">
+								
+							</td>				
+							<td class='content' style="padding:20px;">
+								<div style="margin:auto;height:40px;width:90%;border:1px solid #ccc;	line-height: 38px;padding-left:80px;">
+									<h3>暂无数据</h3>
+								</div>
+								<div style="margin-top:20px;margin-left:10%;">
+									<a href="javascript:edit_data({$env.id})" class="button">添加记录</a>
+								</div>
+							</td>
+						</tr>
+					<else />
+						<volist name="faedebug" id="v">
+							<tr>
+								<td class="info info-sub">
+									<ul>
+										<li>回复人: {$v.name}</li>
+										<li>回复于：{:formatTime($v['time'])}</li>
+										<if condition="$v['faeuser_id']">
+										<li><br/></li>
+										<if condition="$v['faename']"><li>FAE: {$v.faename}</li></if>
+										<if condition="$v['phone']"><li>电话 : {$v.phone}</li></if>
+										<if condition="$v['email']"><li>邮箱 : {$v.email}</li></if>
+										<if condition="$v['company']"><li>公司 : {$v.company}</li></if>
+										</if>
+									</ul>
+								</td>
+								<td class='content'>
+									<if condition="$v['path']">
+									<table cellpadding="0" cellspacing="0" class="cgtl mbm" width="90%"> 
+										<tbody> 
+											<tr>
+												<th>临时版本</th>
+												<td>{$v.path}</td>
+											</tr>
+											<!-- <tr> 
+												<th>附件:</th><td>无 </td> 
+											</tr> --> 
+										</tbody> 
+									</table> 
+									</if>
+									<div class="content">
+										<pre>{$v.comment|default="无备注"}</pre>
+									</div>
+									<p>
+									<if condition="$v['isok']">
+										<font color="blue">已发送邮件</font>
+									<elseif condition="$v['path'] != '' AND ($v['user_id'] == $_SESSION['id']) AND isAuth('Home/FaeEnv/addFaeEnv')"/>
+										<a href="javascript:open_dialog('{:U('FaeEnv/sendMail')}?id={$v.id}');">发送邮件</a>
+									</if>
+									<if condition="($v['user_id'] == $_SESSION['id']) AND isAuth('Home/FaeEnv/addFaeEnv')">
+										<a href="javascript:open_dialog('{:U('FaeEnv/editFaeEnvRecord')}?id={$v.id}');">修改</a>
+										<a href="javascript:del_data_url('{:U('FaeEnv/delFaeEnvRecordHandle')}',{$v.id});">删除</a>
+									</if>
+									</p>
+								</td>
+							</tr>
+
+							<tr class="ad ad-sub">
+								<td class="pls">
+								</td>
+								<td class="plc">
+								</td>
+							</tr>
+
+						</volist>
+						<tr>
+							<td class="info info-sub">
+
+							</td>				
+							<td class='content' style="padding:20px;">
+								<div style="margin-top:20px;margin-left:10%;">
+									<a href="javascript:edit_data({$env.id})" class="button">添加记录</a>
+								</div>
+							</td>
+						</tr>
+					</if>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div style="display:none;overflow:hidden;padding:3px" id="dialog"><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" name="iframe_dialog" id="iframe_dialog" width="100%" height="100%"></iframe></div>
+	<!-- 返回顶部 -->
+	<include file="Common/goto_top"/>
+</body>
+</html>

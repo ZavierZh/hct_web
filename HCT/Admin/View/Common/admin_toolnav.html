@@ -1,0 +1,18 @@
+<div class="tool_nav">
+	<span id="detail_search">
+		<button onclick="search_show();">详细搜索</button>
+		<span>
+			<button onclick="search_prj('#search_form');">查询</button>
+			<button onclick="$('#more_search :button').click();">清空</button>
+		</span>
+	</span>
+	<div id="search_less" class="header-top-search fl">
+		<input name="sub" type="text" class="fl" placeholder="搜索">
+		<button class="search fr" onclick="search_prj('#search_less');"></button>
+		<button class="fr" onclick="search_prj('#search_less');"></button>
+	</div>
+	<div class="fr" style="margin-right:20px;">
+		<button id="btn_add">添加</button>
+		<button id="btn_del">删除</button>
+	</div>
+</div>

@@ -1,0 +1,54 @@
+<include file="Common/header" title="出错信息列表"/>
+
+ 	<!-- 下拉框 -->
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/common/css/tipcss.css">
+ 	<link rel="stylesheet" href="__PUBLIC__/common/css/select2.min.css">
+ 	<script src="__PUBLIC__/common/js/select2/select2.full.min.js"></script>
+ 	<script src="__PUBLIC__/common/js/zz.main.js"></script>
+
+<style type="text/css">
+	table{
+		table-layout:fixed;
+	}
+	.hct_data td{
+		word-break:break-all;
+		word-wrap:break-word;
+		/*overflow:visible;*/
+	}
+
+</style>
+
+ </head>
+ <body>
+<include file="Common/user"/>
+
+ 	<div class="context_mian">
+  		<div class="users-contain ui-widget">
+ 			<table class="ui-widget ui-widget-content">
+ 				<tr style="background:#3FB2FF"><td>出错列表({$last_date})</td></tr>
+
+ 				<foreach name="list" item="v">
+					<tr ><td><a href="#err_{$v.1}">{$v.0}</a></td></tr>
+				</foreach>
+			</table>
+ 		</div>
+
+ 		<div class="users-contain ui-widget">
+ 			<table class="ui-widget ui-widget-content">
+ 				<thead><tr><th style="background:#3FB2FF">出错详细信息</th></tr></thead>
+ 				<tbody id="hct_data">
+				<foreach name="data" item="v">
+					<tr style="background:#C0E4E2"><td><a id="err_{$v.2}"></a>{$v.0}</td></tr>
+					<tr>
+						<td><pre>{$v.1}</pre></td>
+					</tr>
+				</foreach>
+ 				</tbody>
+ 			</table>
+ 		</div>
+ 	</div>
+
+	<include file="Common/goto_top"/>
+
+</body>
+</html>

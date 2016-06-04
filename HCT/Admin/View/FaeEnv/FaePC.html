@@ -1,0 +1,122 @@
+<include file="Common/header" title="{$title}"/>
+
+ 	<script src="__PUBLIC__/common/js/zz.main.js"></script>
+
+ 		<script type="text/javascript">
+		  $(function() {
+		    $('#dialog').dialog({
+				autoOpen: false,
+				modal: true,
+				height: 400,
+				width: 600,
+		    });
+
+			$( "#btn_add" ).button()
+			.click(function() {
+			    $("#message").text("正在加载..");
+			    $('#iframe_test').attr('src','{:U(MODULE_NAME.'/'.CONTROLLER_NAME."/addFaePC")}');
+			    $("#iframe_test").load(function(){
+			      	$("#message").text("");
+			        $( "#dialog" ).dialog( "open" );
+			    });
+			  });
+			$("#btn_del").button().click(function (){
+				delDataMul();
+			});
+	  	});
+
+	function editData(id) {
+		$("#message").text("正在加载..");
+		$('#iframe_test').attr('src','{:U(MODULE_NAME."/".CONTROLLER_NAME."/editFaePC","",false)}/id/'+id);
+		$("#iframe_test").load(function(){   
+			$("#message").text("");
+			$( "#dialog" ).dialog( "open" );
+		});
+	}
+
+	function delData(id) {
+		jConfirm('你确定这么做吗?\n这条数据将被删除', '警告', function(r) {
+			if(r == false) return;
+			zz.sendto({
+			url: '{:U(MODULE_NAME."/".CONTROLLER_NAME."/delFaePCHandle")}',
+			data:  {id:""+id},
+			success: function(data){
+				if(data.type == "success"){
+					zz.tip.toptip("操作成功",1);
+				}else{
+					jAlert("删除失败");
+				}
+			}
+			});
+		});
+		return;
+	}
+
+	function delDataMul(){
+        var valArr = new Array;
+        $("#hct_data :checked ").each(function(i){ 
+           		valArr[i] = $(this).val(); 
+        });
+        if (!valArr.length){
+        	jAlert('没有选中任何数据','警告');
+        	return;
+        }
+        var vals = valArr.join(',');
+		jConfirm('确定要删除'+valArr.length+'条内容吗？\n这些数据将移动到回收站','警告',function(r) {
+				if(r == false) return;
+				zz.sendto({
+					url:'{:U(MODULE_NAME."/".CONTROLLER_NAME."/delFaePCHandle")}',
+					data:  {id:""+vals},
+					sendSuccess: function(data){
+						if(data.type == "success"){
+//							zz.tip.toptip("操作成功",1);
+							jAlert("删除失败");
+							location.reload();
+						}else{
+							jAlert("删除失败");
+						}
+					}
+				});
+			});
+	}
+
+</script>
+</head>
+<body>
+  <button id="btn_add">添加</button>
+  <button id="btn_del">删除</button>
+	<p><span id="message" style="color:green"></span></p>
+
+		<div class="users-contain ui-widget">
+			<table class="ui-widget ui-widget-content">
+				<thead>
+					<tr  class="ui-widget-header ">
+						<th width="60px;"> <input type="checkbox" id="checkallid" onclick="checkall(this,$('#hct_data :checkbox'));"></th>
+						<th width="40px;">ID</th>
+						<th width="80px;">FAE机器</th>
+						<th width="60px;">操作</th>
+						<th>注释</th>
+					</tr>
+				</thead>
+				<tbody id="hct_data">
+					<foreach name='data' item='v'>
+					<tr>
+						<td><input name="" type="checkbox" value="{$v.id}"></td>
+						<td>{$v.id}</td>
+						<td>{$v.faepc}</td>
+						<td>
+							<a href="#" onclick="editData({$v.id});">编辑</a>|
+							<a href="#" onclick="delData({$v.id})">删除</a>
+						</td>
+						<td>{$v.comment}</td>
+					</tr>
+					</foreach>
+				</tbody>
+			</table>
+		</div>
+  <div style="display:none;overflow:hidden;padding:3px" id="dialog">
+  <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" name="iframe_test" id="iframe_test" width="100%" height="100%"></iframe>
+  </div>
+
+</body>
+</html>

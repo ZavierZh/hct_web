@@ -1,0 +1,94 @@
+.main {
+	width: 980px;
+	height: auto;
+	margin: 20px auto;
+}
+
+.main .main-conent {
+	margin-top:10px;
+	width: 100%;
+	border: 1px solid #D4D4D4;
+}
+
+.main .main-conent .title {
+	width: 100%;
+	border-bottom: 1px solid #D4D4D4;
+}
+
+.main .main-conent .title ,.main .main-conent .title a{
+	line-height: 34px;
+	font-size: 14px;
+	font-weight: bold;
+	margin-bottom: 0px;
+	background: #f9f9f9;
+}
+.main .main-conent .title a{
+	margin-left: 40px;
+	color: #3361AD;
+}
+
+.main .main-conent .content {
+	padding: 0px 20px;
+	min-width:150px;
+}
+
+.main .main-conent .info {
+	vertical-align:text-top;
+	padding-top: 20px;
+	padding-left: 15px;
+	width:200px;
+	bottom: 0px;
+	background: #E8EFF5;
+	border-right: 1px solid #D4D4D4;
+}
+
+.main .main-conent .info-sub {
+	background:#F5EBE8;
+}
+.main .main-conent table{
+	font: inherit;
+	width: 100%;
+	/*border:1px solid #D4D4D4;*/
+}
+.main .main-conent .content .content{
+	padding: 20px 0px;
+}
+
+.main .main-conent table.cgtl {
+      overflow: hidden;
+    }
+
+.main .main-conent table.cgtl td,.cgtl th,.cgtl caption {
+      padding: 5px;
+      border-bottom: 1px solid #C2D5E3;
+      text-align: left;
+    }
+
+.main .main-conent table.cgtl caption {
+      background: #E5EDF2;
+      border-top: 1px solid #C2D5E3;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+.main .main-conent table.cgtl th {
+      width: 16%;
+    }
+
+.ad .pls {
+	background: #C2D5E3;
+	padding: 0;
+	height: 4px;
+}
+
+.ad .plc {
+	background: #E5EDF2;
+	padding: 0;
+	overflow: hidden;
+}
+.ad-sub .pls{
+	background :#E3CAC2;
+}
+.ad-sub .plc{
+	background:#F5EBE8;
+}

@@ -1,0 +1,103 @@
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<link rel="stylesheet" href="/thinkphp/Public/admin/Css/public.css" />
+	<title>admin</title>
+	<style type="text/css">
+	.add_role{
+		display: inline-block;
+		width: 100px;
+		height: 26px;
+		line-height: center;
+		border: 1px solid blue;
+		border-radius: 4px;
+		margin-left: 20px;
+		cursor: pointer;
+		text-align: center;
+	}
+	</style>
+	<script type="text/javascript" src="/thinkphp/Public/admin/Js/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		$('.add_role').click(
+			function(){
+				var obj = $(this).parents('tr').clone();
+				obj.find('.add_role').html('删除').attr("onclick","removetr(this);");
+				$('#last').before(obj);
+			}
+			);
+		$('span:contains("删除")').click(
+			function(){
+				alert("aaa");
+				$(this).remove();
+			}
+
+			);
+
+	});
+
+	function removetr(obj){
+		if(obj==null) return;
+		var parentTD = obj.parentNode;
+		var parentTR = parentTD.parentNode;
+		var parentTBODY = parentTR.parentNode;
+		parentTBODY.removeChild(parentTR);
+	}
+	</script>
+</head>
+<body>
+	<form action="<?php echo U('Admin/Rbac/addUserHandle');?>" method="post">
+		<table class="table">
+			<tr>
+				<th colspan="2" align="center">添加用户</th>
+			</tr>
+			<tr>
+				<td align="right" width="40%">用户名:</td>
+				<td><input type="text" name="name" /></td>
+			</tr>
+			<tr>
+				<td align="right">昵称:</td>
+				<td><input type="text" name="nickname" /></td>
+			</tr>
+			<tr>
+				<td align="right">密码:</td>
+				<td><input type="password" name="passwd" /></td>
+			</tr>
+			<tr>
+				<td align="right">再次输入:</td>
+				<td><input type="password" name="repasswd" /></td>
+			</tr>
+			<tr>
+				<td align="right">E-mail:</td>
+				<td><input type="email" name="email" /></td>
+			</tr>
+			<tr>
+				<td align="right">电话:</td>
+				<td><input type="tel" name="phone" /></td>
+			</tr>
+			<tr>
+				<td align="right">是否开启:</td>
+				<td><input type="radio" name="status" value='1'
+					checked="checked" />&nbsp;开启&nbsp;<input type="radio" name="status" value='0' />&nbsp;关闭&nbsp;</td>
+			</tr>
+			<tr>
+				<td align="right">所属角色</td>
+				<td>
+					<select name="role_id[]">
+						<option value="">请选择角色</option>
+						<?php if(is_array($role)): foreach($role as $key=>$v): ?><option value="<?php echo ($v['id']); ?>"><?php echo ($v["name"]); ?>(<?php echo ($v["remark"]); ?>)</option><?php endforeach; endif; ?>
+					</select>
+					<span class="add_role">添加一个角色</span>
+				</td>
+			</tr>
+			<tr id="last">
+				<td colspan='2' align="center">
+					<input type="submit" value="保存" />
+					<input type="reset" value="重置" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

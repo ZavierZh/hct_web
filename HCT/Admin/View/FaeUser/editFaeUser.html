@@ -1,0 +1,46 @@
+<include file="Common/header" title="{$title}"/>
+
+</head>
+<body>
+	<form method="post" action="{$url}">
+		<div id="users-contain" class="ui-widget">
+			<table  class="ui-widget ui-widget-content">
+				<tbody>
+					<tr>
+						<th colspan="2">{$title}</th>
+					</tr>
+					<tr>
+						<td>姓名</td>
+						<td><input type="text" name="name" value="{$data.name}"></td>
+					</tr>
+					<tr>
+						<td>公司</td>
+						<td><input type="text" name="company" value="{$data.company}"></td>
+					</tr>
+					<tr>
+						<td>邮箱</td>
+						<td><input type="email" name="email" value="{$data.email}"></td>
+					</tr>
+					<tr>
+						<td>电话</td>
+						<td><input type="text" name="phone" value="{$data.phone}"></td>
+					</tr>
+
+					<tr>
+						<td valign="top">注释</td>
+						<td><textarea type="text" name="comment" id="comment" rows="3" cols="40">{$data.comment}</textarea></td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center">
+							<input type="hidden" name="id" value="{$data.id}">
+							<input  type="submit" id="submit" value="增加" />
+							<input type="reset" value="重置" />
+							<input type="button"  id="cancl" value="返回" onClick="dialog_child_close('{:U('index')}');"/>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</form>	
+</body>
+</html>

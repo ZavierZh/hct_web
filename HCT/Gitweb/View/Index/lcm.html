@@ -1,0 +1,124 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+ <html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+ 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+ 	<!-- <link rel="stylesheet" href="__PUBLIC__/admin/Css/public.css" /> -->
+ 	<!-- <script type="text/javascript" src="__PUBLIC__/common/Js/jquery-1.7.2.min.js"></script> -->
+ 	<link rel="stylesheet" href="__PUBLIC__/common/css/jquery-ui/jquery-ui.min.css">
+  	<link rel="stylesheet" href="__PUBLIC__/common/css/hct.css">
+ 	<script src="__PUBLIC__/common/js/jquery.min.js"></script>
+ 	<script src="__PUBLIC__/common/js/jquery-ui.min.js"></script>
+ 	<title>admin</title>
+ 	<!-- <link type="text/css" rel="stylesheet" href="__PUBLIC__/common/css/chosen.css"> -->
+ 	<style type="text/css">
+ .custom-combobox {
+    position: relative;
+    display: inline-block;
+  }
+  .custom-combobox-toggle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -1px;
+    padding: 0;
+  }
+  .custom-combobox-input {
+    margin: 0;
+    padding: 5px 10px;
+    width: 300px;
+  }
+  .ui-autocomplete {
+  	/*width: 300px;*/
+    max-height: 250px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+  }
+ 	</style>
+	<script src="__PUBLIC__/common/js/zz.main.js"></script>
+	<script type="text/javascript">
+
+ 
+	$(function(){
+		// $('.chosen-select').chosen({
+		// 	allow_single_deselect: true ,
+		// });
+		 //$( "#lcm_select" ).combobox();
+		 $("#lcm_select").change(function(){
+		 	var input = $(this).val();
+		 	console.log($(this).val()+"<<<<<<<<<<,");
+			$.ajax({
+				url: '{:U(MODULE_NAME."/".CONTROLLER_NAME."/getlcm")}',
+				data: {'hct': input},
+				type: 'get',
+				dataType: 'json',
+				success: function(data){
+					$("#hct_data").html('');
+					var html='';
+					var len=data.length;
+					for (var i=0;i<len;){
+						html+="<tr>";
+						for (var j=0;j<4;j++){
+							if(data[i] == null) data[i]='';
+							html+="<td>"+data[i]+"</td>";
+							i++;
+						}
+						html+="</tr>";
+					}
+					$("#hct_data").html(html);
+				},
+			});		 	
+		 });
+	});
+	function search(obj){
+		var input = $(obj).prev().val();
+		if (input == '') return;
+		$.ajax({
+			url: '{:U(MODULE_NAME."/".CONTROLLER_NAME."/getlcm")}',
+			data: {'hct': input},
+			type: 'get',
+			success: function(data){
+				$("#hct_data").html(data);
+			},
+		});
+	}
+
+
+</script>	
+
+</head>
+<body>
+	<div class="context_mian">
+
+		<h3 style="text-align:center;">lcm选择</h3>
+		<p><span id="message" style="color:green"></span></p>
+		<div class="users-contain ui-widget">
+			<table class="ui-widget ui-widget-content">
+				<tbody>
+					<tr>
+						<td></td>
+						<td>
+						<select  id="lcm_select" style="width: 350px;">
+			            <option value=""></option>
+			            <foreach name="hct" item="v" key="k">
+			            	<option value="{$v}">{$v}</option>
+			            </foreach>
+			         	 </select>
+			         	</td>
+			         </tr>
+					<tr><td colspan="2" align="center">
+						<input value="" /> <button onclick="search(this);">搜索</button>
+					</td></tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="users-contain ui-widget">
+			<table class="ui-widget ui-widget-content">
+				<tbody id="hct_data">
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<include file="Common/header" title="{$title}"/>
+
+ 	<!-- 分页插件 -->
+	<script src="__PUBLIC__/common/js/jqPaginator.js"></script>
+	<!-- 下拉框 -->
+	<link rel="stylesheet" href="__PUBLIC__/common/css/select2.min.css">
+	<script src="__PUBLIC__/common/js/select2/select2.full.min.js"></script>
+	<!-- url操作插件 -->
+ 	<script src="__PUBLIC__/common/js/url.min.js"></script>
+	
+	<!-- ajax异步提交 -->
+	<script src="__PUBLIC__/common/js/jquery.form.js"></script>
+ 	<!-- 自定义的一些参数 -->
+ 	<link type="text/css" rel="stylesheet" href="__PUBLIC__/common/css/tipcss.css">
+ 	<script src="__PUBLIC__/common/js/zz.main.js"></script>
+<script src="__PUBLIC__/common/js/admin_index.js"></script>
+<script src="__PUBLIC__/common/js/moment.min.js"></script>
+
+
+<script type="text/javascript">
+var init_opt={};
+init_opt.btn_add = {};
+init_opt.btn_del = {};
+init_opt.table = {};
+init_opt.dialog = {};
+
+init_opt.btn_add.url='{$url}';
+init_opt.btn_add.id = '#btn_add';
+
+init_opt.btn_del.url='{:U("toTaskTrachHandle")}';
+init_opt.btn_del.id = '#btn_del';
+
+init_opt.dialog.id = "#dialog";
+init_opt.dialog.iframe_id = "#iframe_dialog";
+init_opt.dialog.height = 600;
+init_opt.dialog.width = 800;
+
+init_opt.edit_url = '{:U("editTask","",false)}';
+
+init_opt.table.id = "#hct_data";
+init_opt.table.checkbox_id = "#checkallid";
+
+zz.pageopt.normal_url = '{:U("TaskList")}';
+zz.pageopt.search_url = '';
+
+ $(function() {
+
+ $("#page_first,#page_second").hctPage({
+	totalCounts: {$total_counts|default=0},
+	visiblePages: 10,
+	pageSize: {$pageSize|default=40},
+	currentPage: {$pageCurrent|default=1},
+	onChangePage: zz.page_normal,
+ });
+
+});
+
+
+</script>
+<style type="text/css">
+	.ttp {
+margin-bottom: 5px;
+padding-top: 10px;
+border-width: 2px 0 0;
+background: transparent;
+}
+.cl:after {
+content: ".";
+display: block;
+height: 0;
+clear: both;
+visibility: hidden;
+}
+ul, menu, dir {
+display: block;
+list-style-type: disc;
+-webkit-margin-before: 1em;
+-webkit-margin-after: 1em;
+-webkit-margin-start: 0px;
+-webkit-margin-end: 0px;
+-webkit-padding-start: 40px;
+}
+</style>
+</head>
+<body>
+<div class="context_mian">
+
+		<!-- 标题 -->
+		<h3 style="text-align:center;">{$title}</h3>
+		<!-- 详细搜索的具体内容 -->
+
+		<div class="tool_nav">
+			
+			<div id="search_less" class="header-top-search fl">
+				<input name="sub" type="text" class="fl" placeholder="搜索项目">
+				<button class="clear fr" onclick="$('#search_less').find('[name]').val('')">清空</button>
+				<button class="search fr" onclick="search_prj('#search_less');"></button>
+			</div>
+			<div class="fr" style="margin-right:20px;">
+				<a class="button" href="{$url}">添加</a>
+				<!-- <button id="btn_add">添加</button> -->
+				<button id="btn_del">删除</button>
+			</div>
+		</div>
+
+
+		<!-- 消息提示 -->
+		<span id="search_rslt"></span>
+		<p><span id="message" style="color:green"></span></p>
+
+		<div  id="loading" style="display:none;position: fixed; top: 50%; left: 40%; overflow: hidden; z-index: 1111;"><img id="myloading" src="__PUBLIC__/common/images/loadingnew.gif" style="display: inline;"></div>
+
+		<foreach name='type[2]' item='v'>
+			<label style="margin-right: 10px;">
+				<input name="tasktype[]" value="{$v.id}" type="checkbox"/>	&nbsp;<span style="color:{$v.color|default='inherit'}"> {$v.type}</span>
+			</label>
+		</foreach><br/>
+<!-- 		<foreach name='type[3]' item='v'>
+			<label style="margin-right: 10px;">
+				<input name="tasktype[]" value="{$v.id}" type="checkbox"/>	&nbsp;<span style="color:{$v.color|default='inherit'}"> {$v.type}</span>
+			</label>
+		</foreach>	 -->
+		<div>
+			<ul id="thread_types" class="pagination pagination-sm page_two">
+				<li><a href="#">全部</a></li>
+				<foreach name="status" item="v">
+					<li><a href="" id="menu_{$v.id}" style="color:{$v.color|default='inherit'}">{$v.type}</a></li>
+				</foreach>
+			</ul>
+		</div>
+
+		<div id="page_first" class="tool_nav"></div>
+		<!-- 数据部分 -->
+
+		<div class="users-contain ui-widget"  style="margin-top:10px;">
+			<p><span id="message" style="color:green"></span></p>
+			<table class="ui-widget ui-widget-content task_list">
+				<thead>
+					<tr class="ui-widget-header">
+						<th width="20px;"><input type="checkbox" id="checkallid" onclick="checkall(this,$('#hct_data :checkbox'));"></th>
+						<th width="60%" style="text-align:left;">
+							<a href="" style="color:#5CA3CB">全部任务</a>
+							<foreach name="type[1]" item="v">
+								&nbsp;<a href="" id="menu_{$v.id}">{$v.type}</a>
+							</foreach>
+							<span class="menu_more">
+								<span>更多</span>
+								<ul class="menu_more_list">
+									<li>
+										<span>排序:</span>
+										<a>发布时间</a>|
+										<a>回复时间</a>
+									</li>
+									<li>
+										<span>时间:</span>
+										<a>一天</a>|
+										<a>两天</a>|
+										<a>一个月</a>
+									</li>
+								</ul>
+							</span>
+						</th>
+						<th width="30%">项目</th>
+						<th width="65px;">发布人</th>
+						<th width="40px;">附件</th>
+						<th width="58px;">操作</th>
+					</tr>
+				</thead>
+				<tbody id="hct_data" >
+				<tr >
+					<td><input type="checkbox" value=""></td>
+					<td>
+					<b>[<a style="color:red;" href="#">新问题</a>]</b>
+					[<a style="color:red;" href="#">新建环境</a>]
+					[<a style="color:red;" href="#">LCM</a>]
+					[<a style="color:red;" href="#">CAM</a>]
+					&nbsp;
+					<a href="#" class="title">
+						<span>t525需要调试cam,调试ddd</span>&nbsp;
+						<span>需要新建环境</span>
+					</a>
+					</td>
+
+					<td class="show_len">t93bb-jx-t51-33mgc-qhd-32g4g-alios</td>
+					<td >
+						<a class="blue1" href="#">张三</a>
+					<span style="display:block;">2016-01-01</span>
+					</td>
+					<td style="text-align:center;">无</td>
+					<td style="text-align:center;">
+						<a href="javascript:edit_data({$v.id});">编辑</a>|
+						<a href="javascript:del_data({$v.id});">删除</a>
+					</td>
+				</tr>
+
+				</tbody>
+			</table>
+		</div>
+
+		<div id="page_second" class="tool_nav"></div>
+	
+  <div style="display:none;overflow:hidden;padding:3px" id="dialog"><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" name="iframe_dialog" id="iframe_dialog" width="100%" height="100%"></iframe></div>
+</div>
+		<!-- 返回顶部 -->
+		<include file="Common/goto_top"/>
+</body>
+</html>

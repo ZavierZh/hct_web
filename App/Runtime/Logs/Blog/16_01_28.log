@@ -1,0 +1,639 @@
+[ 2016-01-28T10:38:49+08:00 ] 127.0.0.1 /thinkphp/index.php/Blog/Show/index/id/26.html
+ERR: 1054:Unknown column 'contetn' in 'field list'
+ [ SQL语句 ] : SELECT `title`,`time`,`click`,`contetn`,`cid` FROM `think_blog` WHERE `id` = 26 LIMIT 1  
+
+[ 2016-01-28T14:07:23+08:00 ] 127.0.0.1 /thinkphp/index.php/Blog/c/3
+ERR: 无法加载控制器:C
+
+[ 2016-01-28T14:25:26+08:00 ] 127.0.0.1 /thinkphp/index.php/Blog/c
+ERR: 无法加载控制器:C
+
+[ 2016-01-28T14:25:37+08:00 ] 127.0.0.1 /thinkphp/index.php/blog/c
+ERR: 无法加载控制器:C
+
+[ 2016-01-28T14:26:33+08:00 ] 127.0.0.1 /thinkphp/index.php/blog/c/id/2
+ERR: 无法加载控制器:C
+
+[ 2016-01-28T14:38:11+08:00 ] 127.0.0.1 /thinkphp/index.php/blog/c/2
+ERR: 无法加载控制器:C
+
+[ 2016-01-28T14:38:18+08:00 ] 127.0.0.1 /thinkphp/index.php/Blog/c/2
+ERR: 无法加载控制器:C
+
+[ 2016-01-28T14:39:57+08:00 ] 127.0.0.1 /thinkphp/index.php/Blog/my
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T14:58:17+08:00 ] 127.0.0.1 /thinkphp/index.php/Blog/my
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T14:58:20+08:00 ] 127.0.0.1 /thinkphp/index.php/Blog/my
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T15:00:00+08:00 ] 127.0.0.1 /thinkphp/index.php/Blog/my
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T15:00:00+08:00 ] 127.0.0.1 /thinkphp/index.php/Blog/my
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T15:00:21+08:00 ] 127.0.0.1 /thinkphp/index.php/Blog/my
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T15:00:22+08:00 ] 127.0.0.1 /thinkphp/index.php/Blog/my
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T15:00:46+08:00 ] 127.0.0.1 /thinkphp/index.php/blog/my
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T15:01:05+08:00 ] 127.0.0.1 /thinkphp/index.php/my
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T15:01:11+08:00 ] 127.0.0.1 /thinkphp/index.php/my/2
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T15:01:28+08:00 ] 127.0.0.1 /thinkphp/index.php/my/2
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T15:01:29+08:00 ] 127.0.0.1 /thinkphp/index.php/my/2
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T15:01:35+08:00 ] 127.0.0.1 /thinkphp/index.php/blog/2
+ERR: 无法加载控制器:2
+
+[ 2016-01-28T15:01:40+08:00 ] 127.0.0.1 /thinkphp/index.php/blog/my
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T15:04:09+08:00 ] 127.0.0.1 /thinkphp/index.php/blog/my
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T15:06:19+08:00 ] 127.0.0.1 /thinkphp/index.php/blog/my
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T15:06:20+08:00 ] 127.0.0.1 /thinkphp/index.php/blog/my
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T15:06:20+08:00 ] 127.0.0.1 /thinkphp/index.php/blog/my
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T15:06:20+08:00 ] 127.0.0.1 /thinkphp/index.php/blog/my
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T15:06:21+08:00 ] 127.0.0.1 /thinkphp/index.php/blog/my
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T15:06:21+08:00 ] 127.0.0.1 /thinkphp/index.php/blog/my
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T15:06:27+08:00 ] 127.0.0.1 /thinkphp/index.php/blog/my
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T15:06:28+08:00 ] 127.0.0.1 /thinkphp/index.php/blog/my
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T15:12:40+08:00 ] 127.0.0.1 /thinkphp/index.php/blog/my
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T15:12:40+08:00 ] 127.0.0.1 /thinkphp/index.php/blog/my
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T15:12:42+08:00 ] 127.0.0.1 /thinkphp/index.php/blog/my
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T15:12:42+08:00 ] 127.0.0.1 /thinkphp/index.php/blog/my
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T15:12:42+08:00 ] 127.0.0.1 /thinkphp/index.php/blog/my
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T15:12:59+08:00 ] 127.0.0.1 /thinkphp/index.php/blog/c
+ERR: 无法加载控制器:C
+
+[ 2016-01-28T15:13:16+08:00 ] 127.0.0.1 /thinkphp/index.php/blog/c
+ERR: 无法加载控制器:C
+
+[ 2016-01-28T15:13:19+08:00 ] 127.0.0.1 /thinkphp/index.php/blog/my
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T15:13:46+08:00 ] 127.0.0.1 /thinkphp/index.php/blog/my
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T15:13:48+08:00 ] 127.0.0.1 /thinkphp/index.php/blog/my
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T15:26:21+08:00 ] 127.0.0.1 /thinkphp/index.php/blog/my.html
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T15:26:59+08:00 ] 127.0.0.1 /thinkphp/index.php/blog/my.html
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T15:27:02+08:00 ] 127.0.0.1 /thinkphp/index.php/my.html
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T15:27:04+08:00 ] 127.0.0.1 /thinkphp/index.php/my.html
+ERR: 无法加载控制器:My
+
+[ 2016-01-28T16:18:49+08:00 ] 127.0.0.1 /thinkphp/index.php/i
+ERR: 无法加载控制器:I
+
+[ 2016-01-28T16:18:55+08:00 ] 127.0.0.1 /thinkphp/i
+ERR: 无法加载控制器:I
+
+[ 2016-01-28T16:20:58+08:00 ] 127.0.0.1 /thinkphp/i
+ERR: 无法加载控制器:I
+
+[ 2016-01-28T16:21:05+08:00 ] 127.0.0.1 /thinkphp/u
+ERR: 无法加载控制器:U
+
+[ 2016-01-28T16:22:01+08:00 ] 127.0.0.1 /thinkphp/u
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000006s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000110s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000130s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000150s ]
+ERR: 无法加载控制器:U
+
+[ 2016-01-28T16:22:02+08:00 ] 127.0.0.1 /thinkphp/u
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000006s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000106s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000157s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000178s ]
+ERR: 无法加载控制器:U
+
+[ 2016-01-28T16:22:02+08:00 ] 127.0.0.1 /thinkphp/u
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000006s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000108s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000127s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000148s ]
+ERR: 无法加载控制器:U
+
+[ 2016-01-28T16:22:05+08:00 ] 127.0.0.1 /thinkphp/u
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000013s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000273s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000342s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000396s ]
+ERR: 无法加载控制器:U
+
+[ 2016-01-28T16:22:05+08:00 ] 127.0.0.1 /thinkphp/u
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000006s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000109s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000128s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000148s ]
+ERR: 无法加载控制器:U
+
+[ 2016-01-28T16:22:06+08:00 ] 127.0.0.1 /thinkphp/u
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000007s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000113s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000130s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000153s ]
+ERR: 无法加载控制器:U
+
+[ 2016-01-28T16:22:06+08:00 ] 127.0.0.1 /thinkphp/u
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000005s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000105s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000126s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000204s ]
+ERR: 无法加载控制器:U
+
+[ 2016-01-28T16:22:06+08:00 ] 127.0.0.1 /thinkphp/u
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000007s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000147s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000180s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000208s ]
+ERR: 无法加载控制器:U
+
+[ 2016-01-28T16:22:06+08:00 ] 127.0.0.1 /thinkphp/u
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000007s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000114s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000160s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000182s ]
+ERR: 无法加载控制器:U
+
+[ 2016-01-28T16:22:06+08:00 ] 127.0.0.1 /thinkphp/u
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000005s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000107s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000128s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000148s ]
+ERR: 无法加载控制器:U
+
+[ 2016-01-28T16:22:06+08:00 ] 127.0.0.1 /thinkphp/u
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000006s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000106s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000127s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000148s ]
+ERR: 无法加载控制器:U
+
+[ 2016-01-28T16:22:08+08:00 ] 127.0.0.1 /thinkphp/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000007s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000122s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000131s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000152s ]
+NOTIC: [2048] Declaration of Blog\Controller\IndexController::show() should be compatible with that of Think\Controller::show() /www/thinkphp/App/Blog/Controller/IndexController.class.php 第 50 行.
+
+[ 2016-01-28T16:22:37+08:00 ] 127.0.0.1 /thinkphp/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000008s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000146s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000172s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000200s ]
+NOTIC: [2048] Declaration of Blog\Controller\IndexController::show() should be compatible with that of Think\Controller::show() /www/thinkphp/App/Blog/Controller/IndexController.class.php 第 49 行.
+
+[ 2016-01-28T16:22:37+08:00 ] 127.0.0.1 /thinkphp/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000006s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000107s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000134s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000155s ]
+NOTIC: [2048] Declaration of Blog\Controller\IndexController::show() should be compatible with that of Think\Controller::show() /www/thinkphp/App/Blog/Controller/IndexController.class.php 第 49 行.
+
+[ 2016-01-28T16:22:37+08:00 ] 127.0.0.1 /thinkphp/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000005s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000106s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000127s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000148s ]
+NOTIC: [2048] Declaration of Blog\Controller\IndexController::show() should be compatible with that of Think\Controller::show() /www/thinkphp/App/Blog/Controller/IndexController.class.php 第 49 行.
+
+[ 2016-01-28T16:22:37+08:00 ] 127.0.0.1 /thinkphp/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000008s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000155s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000187s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000217s ]
+NOTIC: [2048] Declaration of Blog\Controller\IndexController::show() should be compatible with that of Think\Controller::show() /www/thinkphp/App/Blog/Controller/IndexController.class.php 第 49 行.
+
+[ 2016-01-28T16:22:38+08:00 ] 127.0.0.1 /thinkphp/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000006s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000107s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000125s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000146s ]
+NOTIC: [2048] Declaration of Blog\Controller\IndexController::show() should be compatible with that of Think\Controller::show() /www/thinkphp/App/Blog/Controller/IndexController.class.php 第 49 行.
+
+[ 2016-01-28T16:22:38+08:00 ] 127.0.0.1 /thinkphp/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000007s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000125s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000141s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000164s ]
+NOTIC: [2048] Declaration of Blog\Controller\IndexController::show() should be compatible with that of Think\Controller::show() /www/thinkphp/App/Blog/Controller/IndexController.class.php 第 49 行.
+
+[ 2016-01-28T16:22:38+08:00 ] 127.0.0.1 /thinkphp/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000007s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000111s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000128s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000155s ]
+NOTIC: [2048] Declaration of Blog\Controller\IndexController::show() should be compatible with that of Think\Controller::show() /www/thinkphp/App/Blog/Controller/IndexController.class.php 第 49 行.
+
+[ 2016-01-28T16:39:00+08:00 ] 127.0.0.1 /thinkphp/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000007s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000112s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000131s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000152s ]
+NOTIC: [2048] Declaration of Blog\Controller\IndexController::show() should be compatible with that of Think\Controller::show() /www/thinkphp/App/Blog/Controller/IndexController.class.php 第 56 行.
+
+[ 2016-01-28T16:39:38+08:00 ] 127.0.0.1 /thinkphp/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000006s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000111s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000129s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000157s ]
+NOTIC: [2048] Declaration of Blog\Controller\IndexController::show() should be compatible with that of Think\Controller::show() /www/thinkphp/App/Blog/Controller/IndexController.class.php 第 55 行.
+SQL: SHOW COLUMNS FROM `think_cate` [ RunTime:0.0005s ]
+SQL: SELECT * FROM `think_cate` WHERE `pid` = 0 ORDER BY sort  [ RunTime:0.0001s ]
+SQL: SELECT * FROM `think_cate` ORDER BY sort  [ RunTime:0.0001s ]
+SQL: SHOW COLUMNS FROM `think_blog` [ RunTime:0.0005s ]
+SQL: SELECT `id`,`title`,`time`,`click` FROM `think_blog` WHERE `cid` IN ('1') ORDER BY time DESC LIMIT 5   [ RunTime:0.0001s ]
+SQL: SELECT `id`,`title`,`time`,`click` FROM `think_blog` WHERE `cid` IN ('2') ORDER BY time DESC LIMIT 5   [ RunTime:0.0001s ]
+SQL: SELECT `id`,`title`,`time`,`click` FROM `think_blog` WHERE `cid` IN ('15','14','16','3') ORDER BY time DESC LIMIT 5   [ RunTime:0.0001s ]
+SQL: SELECT `id`,`title`,`time`,`click` FROM `think_blog` WHERE `cid` IN ('19','4') ORDER BY time DESC LIMIT 5   [ RunTime:0.0001s ]
+SQL: SELECT `id`,`title`,`time`,`click` FROM `think_blog` WHERE `cid` IN ('18','17','5') ORDER BY time DESC LIMIT 5   [ RunTime:0.0001s ]
+SQL: SELECT `id`,`title`,`time`,`click` FROM `think_blog` WHERE `cid` IN ('13','12','6') ORDER BY time DESC LIMIT 5   [ RunTime:0.0001s ]
+SQL: SELECT `id`,`title`,`time`,`click` FROM `think_blog` WHERE `cid` IN ('20','21','22','7') ORDER BY time DESC LIMIT 5   [ RunTime:0.0001s ]
+SQL: SHOW COLUMNS FROM `think_attr` [ RunTime:0.0004s ]
+SQL: SELECT * FROM `think_attr`  [ RunTime:0.0001s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000031s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000073s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000021s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.001771s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.001787s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.001822s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000070s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000099s ]
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+SQL: SELECT `id`,`title`,`click` FROM `think_blog` ORDER BY click DESC LIMIT 5   [ RunTime:0.0001s ]
+SQL: SELECT `id`,`title`,`click` FROM `think_blog` ORDER BY time DESC LIMIT 5   [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000020s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.004648s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.001422s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.001249s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000006s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.002600s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.001499s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.001249s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000004s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.002672s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000212s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000240s ]
+
+[ 2016-01-28T16:42:41+08:00 ] 127.0.0.1 /thinkphp/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000193s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000230s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000267s ]
+NOTIC: [2048] Declaration of Blog\Controller\IndexController::show() should be compatible with that of Think\Controller::show() /www/thinkphp/App/Blog/Controller/IndexController.class.php 第 57 行.
+NOTIC: [8] Undefined variable: list /www/thinkphp/App/Blog/Controller/IndexController.class.php 第 42 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000033s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000077s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000012s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.001980s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.001724s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.001753s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000047s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000064s ]
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000012s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.003686s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.001023s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.000536s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000004s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.001513s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.001075s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.000536s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000003s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.001560s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000142s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000161s ]
+
+[ 2016-01-28T16:42:42+08:00 ] 127.0.0.1 /thinkphp/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000006s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000106s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000125s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000145s ]
+NOTIC: [2048] Declaration of Blog\Controller\IndexController::show() should be compatible with that of Think\Controller::show() /www/thinkphp/App/Blog/Controller/IndexController.class.php 第 57 行.
+NOTIC: [8] Undefined variable: list /www/thinkphp/App/Blog/Controller/IndexController.class.php 第 42 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000018s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000039s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000031s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.001594s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.002358s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.002398s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000112s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000151s ]
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000030s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.005833s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.002537s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.001320s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000010s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.003752s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.002669s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.001320s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000007s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.003870s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000221s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000246s ]
+
+[ 2016-01-28T16:42:44+08:00 ] 127.0.0.1 /thinkphp/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000007s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000126s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000151s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000175s ]
+NOTIC: [2048] Declaration of Blog\Controller\IndexController::show() should be compatible with that of Think\Controller::show() /www/thinkphp/App/Blog/Controller/IndexController.class.php 第 57 行.
+NOTIC: [8] Undefined variable: list /www/thinkphp/App/Blog/Controller/IndexController.class.php 第 42 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000021s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000046s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000014s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.001405s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.001459s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.001484s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000051s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000075s ]
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000014s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.003324s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.001152s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.000603s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000004s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.001701s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.001213s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.000603s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000003s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.001757s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000163s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000183s ]
+
+[ 2016-01-28T16:42:44+08:00 ] 127.0.0.1 /thinkphp/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000228s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000281s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000327s ]
+NOTIC: [2048] Declaration of Blog\Controller\IndexController::show() should be compatible with that of Think\Controller::show() /www/thinkphp/App/Blog/Controller/IndexController.class.php 第 57 行.
+NOTIC: [8] Undefined variable: list /www/thinkphp/App/Blog/Controller/IndexController.class.php 第 42 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000021s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000049s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000012s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.001283s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.001326s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.001347s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000046s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000062s ]
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000012s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.002989s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.001059s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.000525s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000004s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.001540s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.001111s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.000525s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000003s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.001598s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000143s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000161s ]
+

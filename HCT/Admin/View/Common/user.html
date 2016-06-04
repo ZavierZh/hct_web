@@ -1,0 +1,94 @@
+<div class='top-list-wrap'>
+	<div class='top-list'>
+		<ul class='l-list'>
+			<li><a href='{:U("Home/Index/index")}' >首页</a></li>
+		</ul>
+
+		<ul class='r-list'>
+		<if condition="isset($_SESSION['id'])" >
+			<li>
+				<ul class="username">
+					<li class="account-wrap">
+						<a href="#">{$_SESSION['user']}<i class="arrow-down"></i></a>
+
+						<ol class="account-panel">
+							<li><a href="{:U('Home/User/index')}">{$_SESSION['user']}</a></li>
+							<li><a href="{:U('Home/User/index')}">个人中心</a></li>
+							<li><a href='{:U("Home/Index/loginoutHandle")."?url=".urlencode("__SELF__")}'>退出</a></li>
+						</ol>
+					</li>
+				</ul>
+			</li>
+			
+	<!-- 		<li><a href="{:U('Home/User/index').'?btn=myTask'}"> 我的任务 </a></li> -->
+			<li><a href="{:U('Home/User/index').'?btn=myMsg'}"> 消息 </a></li>
+			<li><a href='{:U("Home/Index/loginoutHandle")."?url=".urlencode("__SELF__")}'> 退出</a></li>
+		<else/>
+			<li><a href='{:U("Home/Index/login")."?url=".urlencode("__SELF__")}'> 登陆</a></li>
+			<li><a href='{:U("Home/Index/register")."?url=".urlencode("__SELF__")}'> 注册</a></li>
+		</if>
+		</ul>
+	</div>
+</div>
+
+
+<div class='top-nav-wrap'>
+	<ul class='nav-lv1'>
+		<li class='nav-lv1-li'>
+			<a href="{:U('Home/Index/index')}" class='top-cate'>首页</a>
+		</li>
+		<li class='nav-lv1-li'>
+			<a href="{:U('Gitweb/Index/index')}" class='top-cate'>分支列表</a>
+			<ul>
+				<li><a href="{:U('Gitweb/Index/check')}">项目配置查询</a></li>
+				<li><a href="{:U('Gitweb/Index/checkError')}">出错信息列表</a></li>
+			</ul>
+		</li>		
+<!-- 		<li class='nav-lv1-li'>
+			<a href="{:U('Home/Task/index')}" class='top-cate'>任务</a>
+			<ul>
+				<li><a href="{:U('Home/Task/index')}">任务列表</a></li>
+				<li><a href="{:U('Home/Task/addTask')}">发布任务</a></li>
+			</ul>
+		</li> -->
+		<li class='nav-lv1-li'>
+			<a href="{:U('Home/FaeEnv/index')}" class='top-cate'>FAE环境</a>
+			<ul>
+				<li><a href="{:U('Home/FaeEnv/index')}">环境列表</a></li>
+				<li><a href="{:U('Home/FaeEnv/addFaeEnv')}">新增环境</a></li>
+				<li><a href="{:U('Home/FaeEnv/FaeEnvTrach')}">已删除</a></li>
+			</ul>
+		</li>
+		<if condition="isAuth('Home/UserManage/index')">
+		<li class='nav-lv1-li'>
+			<a href="{:U('Home/UserManage/index')}" class='top-cate'>用户管理</a>
+<!-- 			<ul>
+				<li><a href="{:U('Home/User/index')}">用户管理</a></li>
+			</ul> -->
+		</li>		
+		</if>
+		<if condition="isAuth('Home/FaePC/index')">
+		<li class='nav-lv1-li'>
+			<a href="{:U('Home/FaePC/index')}" class='top-cate'>FAE电脑</a>
+<!-- 			<ul>
+				<li><a href="{:U('Home/FaePC/index')}">FAE电脑</a></li>
+			</ul> -->
+		</li>
+		</if>
+		<li class='nav-lv1-li'>
+			<a href="{:U('Gitweb/Build/index')}" class='top-cate'>编译环境</a>
+		</li>
+<!-- 		<li class='nav-lv1-li'>
+			<a href="" class='top-cate'>其他</a>
+		</li> -->
+	</ul>
+	<script type="text/javascript">
+		$(function () {
+			$('.nav-lv1-li').hover(function () {
+				$(this).find('.top-cate').addClass('cur').next().fadeIn(200);
+			}, function () {
+				$(this).find('.top-cate').removeClass('cur').next().fadeOut(200);
+			});
+		});
+	</script>
+</div>

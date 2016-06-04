@@ -1,0 +1,38 @@
+
+<body>
+	<button onclick="open_dialog('{:U('User/editMyInfo')}')">修改个人信息</button>
+
+	<div class="users-contain ui-widget">
+		<table  class="ui-widget ui-widget-content">
+			<tbody>
+				<tr>
+					<th colspan="2"></th>
+				</tr>
+				<tr>
+					<th>姓名</th>
+					<td>{$data.name}</td>
+				</tr>
+				<tr>
+					<th>e-mail</th>
+					<td>{$data.email}</td>
+				</tr>
+				<tr>
+					<th>电话</th>
+					<td>{$data.phone}</td>
+				</tr>
+				<tr>
+					<th>登陆名</th>
+					<td>{$data.login_name}</td>
+				</tr>
+				<tr>
+					<th>部门</th>
+					<td>{$data.sector}</td>
+				</tr>
+				<tr>
+					<th>个人简介</th>
+					<td><pre>{$data.comment}</pre></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>

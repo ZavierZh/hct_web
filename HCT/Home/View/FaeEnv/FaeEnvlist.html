@@ -1,0 +1,55 @@
+
+<?php if (($data) != null): ?>
+
+<if condition="isset($_GET['edit']) AND isAuth('FaeEnv/index')">
+	<foreach name='data' item='v'>
+		<tr>
+			<td><input type="checkbox" value="{$v.id}"></td>
+			<td>{$v.id}</td>
+			<td>{:$user[$v['user_id']]}</td>
+			<td style="padding:0px;text-align:center;">{$v.date}</td>
+			<td style="padding:0px;text-align:center;">{:$faepc[$v['faepc_id']]}</td>
+			<td><a href="{$showurl}?id={$v.id}">{$v.path}</a></td>
+			<td>{$v.comment}</td>
+			<td>{$v["reply_count"]?:"无"}</td>
+			<td>
+				<a href="javascript:edit_data({$v.id});">编辑</a>|
+				<a href="javascript:del_data({$v.id})">删除</a>
+			</td>
+		</tr>
+	</foreach>
+<else/>
+	<foreach name='data' item='v'>
+		<tr>
+			<td>{$v.id}</td>
+			<td>{:$user[$v['user_id']]}</td>
+			<td style="padding:0px;text-align:center;">{$v.date}</td>
+			<td style="padding:0px;text-align:center;">{:$faepc[$v['faepc_id']]}</td>
+			<td><a href="{$showurl}?id={$v.id}">{$v.path}</a></td>
+			<td>{$v.comment}</td>
+			<td>{$v["reply_count"]?:"无"}</td>
+		</tr>
+	</foreach>
+</if>
+<script type="text/javascript">
+	var return_opts={
+		type:"success",
+		totalCounts:{$total_counts|default=0},
+		login:{$_SESSION['id']?1:0},
+	};
+</script>
+
+<?php else: ?>
+	<tr>
+		<td colspan="8">
+			<h3 style="text-align:center;">没有数据</h3>
+		</td>
+	</tr>
+	<script type="text/javascript">
+	var return_opts={
+		type:"error",
+		context:"No data",
+	};
+
+	</script>
+<?php endif ?>

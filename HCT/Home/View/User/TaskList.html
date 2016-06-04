@@ -1,0 +1,45 @@
+
+<?php if (($data) != null): ?>
+
+	<foreach name='data' item='v'>
+		<tr>
+			<td><img src="__PUBLIC__/common/images/folder_common.gif"></td>
+			<td>
+				<b>[<a style="color:{$type1[$v['status']]['color']|default='inherit'};" href="#">{$type1[$v['status']]['type']}</a>]</b>
+				&nbsp;
+				<a href="{:U('Home/Task/showTask',array('id'=>$v['id']))}" class="title">
+					<span>{$v.title}</span>&nbsp;
+					<span>{$v.view}</span>
+				</a>
+			</td>
+
+			<td class="show_len">{$v.sub}</td>
+			<td style="text-align:center;">{$v.isattachment?"无":"有"}</td>
+			<td style="text-align:center;">
+				2
+			</td>
+			<td><a href="{:U('Task/editTask',array('id'=>$v['id']))}">编辑</a></td>
+		</tr>
+	</foreach>
+
+	<script type="text/javascript">
+		var return_opts={
+			type:"success",
+			totalCounts:{$total_counts},
+		};
+	</script>
+
+<?php else: ?>
+	<tr>
+		<td colspan="8">
+			<h3 style="text-align:center;"> 没有数据</h3>
+		</td>
+	</tr>
+	<script type="text/javascript">
+	var return_opts={
+		type:"error",
+		context:"No data",
+	};
+
+	</script>
+<?php endif ?>

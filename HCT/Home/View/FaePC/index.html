@@ -1,0 +1,74 @@
+<include file="Common/header" title="{$title}"/>
+ 	<link type="text/css" rel="stylesheet" href="__PUBLIC__/common/css/tipcss.css">
+ 	<script src="__PUBLIC__/common/js/zz.main.js"></script>
+
+<script src="__PUBLIC__/common/js/admin_index.js"></script>
+
+<script type="text/javascript">
+var init_opt={};
+
+init_opt.dialog = {};
+init_opt.dialog.id = "#dialog";
+init_opt.dialog.iframe_id = "#iframe_dialog";
+init_opt.dialog.height = 300;
+
+init_opt.btn_add = {};
+init_opt.btn_add.url='{$url}';
+init_opt.btn_add.id = '#btn_add';
+
+init_opt.btn_del = {};
+init_opt.btn_del.url='{:U("delFaePCHandle")}';
+init_opt.btn_del.id = '#btn_del';
+
+init_opt.edit_url = '{:U("editFaePC","",false)}';
+
+init_opt.table = {};
+init_opt.table.id = "#hct_data";
+init_opt.table.checkbox_id = "#checkallid";
+
+</script>
+
+</head>
+<body>
+<include file="Common/user"/>
+<div class="context_mian">
+
+  <button id="btn_add">添加</button>
+  <button id="btn_del">删除</button>
+	<p><span id="message" style="color:green"></span></p>
+
+		<div class="users-contain ui-widget">
+			<table class="ui-widget ui-widget-content">
+				<thead>
+					<tr  class="ui-widget-header ">
+						<th width="60px;"> <input type="checkbox" id="checkallid"></th>
+						<th width="40px;">ID</th>
+						<th width="80px;">FAE机器</th>
+						<th width="60px;">操作</th>
+						<th>注释</th>
+					</tr>
+				</thead>
+				<tbody id="hct_data">
+					<foreach name='data' item='v'>
+					<tr>
+						<td><input type="checkbox" value="{$v.id}"></td>
+						<td>{$v.id}</td>
+						<td>{$v.faepc}</td>
+						<td>
+							<a href="javascript:edit_data({$v.id});">编辑</a>|
+							<a href="javascript:del_data({$v.id});">删除</a>
+						</td>
+						<td>{$v.comment}</td>
+					</tr>
+					</foreach>
+				</tbody>
+			</table>
+		</div>
+
+</div>
+  <div style="display:none;overflow:hidden;padding:3px" id="dialog">
+  <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" name="iframe_dialog" id="iframe_dialog" width="100%" height="100%"></iframe>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<link rel="stylesheet" href="__PUBLIC__/admin/Css/public.css"/>
+	<link rel="stylesheet" href="__PUBLIC__/admin/Css/node.css"/>
+	<title>admin</title>
+</head>
+<body>
+	<div id="wrap">
+	<a href="{:U('Admin/Rbac/addNode')}" class="add_app">添加应用</a>
+		<foreach name="node" item='app'>
+			<div class='app'>
+				<p>
+					<strong>{$app.title}</strong>
+					[<a href="{:U('Admin/Rbac/addNode',array('pid'=>$app['id'],'level'=>2))}">
+					添加控制器</a>]
+					[<a href="">修改</a>]
+					[<a href="">删除</a>]
+				</p>
+				<foreach name="app.child" item="action">
+					<dl>
+						<dt>
+							<strong>{$action.title}</strong>
+							[<a href="{:U('Admin/Rbac/addNode',array('pid'=>$action['id'],'level'=>3))}">添加方法</a>]
+							[<a href="">修改</a>]
+							[<a href="">删除</a>]
+							<foreach name="action.child" item="method">
+								<dd>
+									<span>{$method.title}</span>
+									[<a href="{:U('Admin/Rbac/addNode',array('pid'=>$method['id'],'level'=>4))}">修改</a>]
+									[<a href="">删除</a>]
+								</dd>
+							</foreach>
+						</dt>
+					</dl>
+				</foreach>
+			</div>
+		</foreach>
+	</div>
+</body>
+</html>

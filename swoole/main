@@ -1,0 +1,1001 @@
+#!/bin/bash
+
+#  出错以后终止
+set -e
+
+#  记录版本号
+readonly HCT_CONST_FILE_VERSION=' >>> v8.0 @ 2013-12-25 by 李俊义 <<<'
+
+readonly HCT_CONST_RUN_HINTS=' >>> Now is Running: '
+
+readonly HCT_CONST_HINTS_BEGIN='------------------------------------------------------------------------'
+readonly HCT_CONST_HINTS_END='++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
+
+readonly HCT_CONST_HINTS_ERRORS='ERROR:'
+readonly HCT_CONST_HINTS_ERRORS_PATH_INVALID="${HCT_CONST_HINTS_ERRORS} The PATH is Wrong!"
+readonly HCT_CONST_HINTS_ERRORS_FILE_NOT_EXIST="${HCT_CONST_HINTS_ERRORS} File is NOT Exist!"
+readonly HCT_CONST_HINTS_ERRORS_PROJECT_NOT_EXIST="${HCT_CONST_HINTS_ERRORS} Project input is NOT exist!"
+readonly HCT_CONST_HINTS_ERRORS_UNSUPPORT="${HCT_CONST_HINTS_ERRORS}: Unsupport COMMAND!"
+readonly HCT_CONST_HINTS_ERRORS_UNKNOWN="${HCT_CONST_HINTS_ERRORS}: Unkown reason!"
+########################################################################
+###################  Begin 脚本参数定义开始，支持的功能  ####################
+########################################################################
+#  -h 打印帮助
+readonly HCT_CONST_FLAG_HELP='-h'
+
+#  --clean 清理代码同刚 sync 下来一样
+readonly HCT_CONST_FLAG_CODE_CLEAN='--clean'
+
+#  --update 同步代码，并 merge
+readonly HCT_CONST_FLAG_CODE_UPDATE='--update'
+readonly HCT_CONST_FLAG_CODE_ALL_BRANCH='--all'
+readonly HCT_CONST_FLAG_CODE_CUSTOM_BRANCH='--br'
+
+#  -p 指定项目名称
+readonly HCT_CONST_FLAG_PROJECT_ASSIGN='-p'
+
+#  --auto，自动编译 release 版本
+readonly HCT_CONST_FLAG_RELEASE_AUTO='--auto'
+
+#  --mtk MTK 原生命令支持,
+readonly HCT_CONST_FLAG_MTK_ACTION1='--mtk'
+readonly HCT_CONST_FLAG_MTK_ACTION2='--mtkt'
+
+#  -b ROM 打包
+readonly HCT_CONST_FLAG_ROM_BACKUP='-b'
+readonly HCT_CONST_FLAG_SIGNROM='--sign'
+
+#  关于 local_manifest.xml 的操作
+readonly HCT_CONST_FLAG_PROJECT_ADD='--add'
+readonly HCT_CONST_FLAG_PROJECT_INIT='--init'
+readonly HCT_CONST_FLAG_PROJECT_LIST='--listp'
+
+# 经过 sign 以后创建文件夹标记
+readonly HCT_CONST_FOLDER_SIGNROM='sign'
+
+#
+readonly HCT_CONST_DIR_REPO=".repo"
+readonly HCT_CONST_DIR_MANIFESTS="manifests"
+
+readonly HCT_CONST_FILE_MANIFEST_LOCAL="local_manifest.xml"
+
+readonly HCT_CONST_FILE_MANIFEST_SRC="${HCT_CONST_DIR_REPO}/${HCT_CONST_DIR_MANIFESTS}/${HCT_CONST_FILE_MANIFEST_LOCAL}"
+readonly HCT_CONST_FILE_MANIFEST_DST="${HCT_CONST_DIR_REPO}/${HCT_CONST_FILE_MANIFEST_LOCAL}"
+########################################################################
+########################  End 脚本参数定义结束  ###########################
+########################################################################
+#  日志文件：写入一些有用的信息
+readonly HCT_CONST_LOG_BUILD='dists.log'
+readonly HCT_CONST_LOG_SIGNROM="signrom.log"
+########################################################################
+#  项目工程的目录结构：相对路径
+#  dists/target/ 目录下
+#
+#  hct_custom
+#  PROJECT/share
+#  PROJECT/SUB_01
+readonly HCT_CONST_DIR_PROJECT_CUSTOM='hct_custom'
+
+readonly HCT_CONST_DIR_PROJECT_SUB_PUBLIC='share'
+
+#  Project Make 文件相关
+readonly HCT_CONST_DIR_PROJECT_FLAG='device/haocheng'
+readonly HCT_CONST_FILE_PROJECT_MAKEFILE='ProjectConfig.mk'
+########################################################################
+
+########################################################################
+#  版本同步时候的一些重要文件(名)或标志文件
+readonly HCT_CONST_FILE_CMD='repo'
+
+#  branches
+readonly HCT_CONST_BRANCH_DEFAULT='release'
+readonly HCT_CONST_BRANCH_DEVELOP=('develop' 'patch');
+########################################################################
+#  压缩打包的文件夹名称关键字
+#  文件夹命名规则：
+#     项目名称_版本号_编译方式/calibration
+#     项目名称_版本号_Project
+#  项目相关的一些配置文件
+readonly HCT_CONST_DIR_ROM_INFO='project'
+
+#  项目相关的一些校准文件
+readonly HCT_CONST_DIR_ROM_CALIBRATION='calibration'
+########################################################################
+#  说明：打印加粗的红色的字符串
+#  用法：传入 ${1}，要着重显示的字符串
+function hct_print_red_string() {
+    echo -e "\033[01;31m${*}\033[0m"
+}
+
+#  说明：打印加粗的绿色的字符串
+#  用法：传入 ${1}，要着重显示的字符串
+function hct_print_green_string() {
+    echo -e "\033[01;32m${*}\033[0m"
+}
+
+#  说明：打印加粗的蓝色的字符串
+#  用法：传入 ${1}，要着重显示的字符串
+function hct_print_blue_string() {
+    echo -e "\033[01;34m${*}\033[0m"
+}
+
+#  说明：打印出错提示
+#  用法：传入 ${1}，要着重显示的字符串，必须终止
+function hct_print_errors() {
+    m_errors_info=${*}
+
+    echo
+    hct_print_red_string ${HCT_CONST_HINTS_BEGIN}
+    hct_print_red_string "  ${m_errors_info}"
+    hct_print_red_string ${HCT_CONST_HINTS_BEGIN}
+    echo
+
+    exit 1
+}
+
+#  说明：打印执行提示或者结果
+#  用法：传入 ${1}，要着重显示的字符串，分为执行命令和正常的结果
+function hct_print_hints() {
+    m_hints_info="${*}"
+
+    if [ "${m_hints_info:0:2}" == "./" ]; then
+        m_hints_info="${HCT_CONST_RUN_HINTS} ${m_hints_info}"
+
+        hct_print_green_string "\n${m_hints_info}"
+        hct_print_green_string "${HCT_CONST_HINTS_BEGIN}"
+    else
+        hct_print_green_string "\n${m_hints_info}"
+    fi
+}
+
+#  说明：打印一些警告信息
+#  用法：传入 ${1}，要着重显示的字符串
+function hct_print_warning() {
+    m_warning_info="${*}"
+
+    hct_print_blue_string ${HCT_CONST_HINTS_BEGIN}
+    hct_print_blue_string "${m_warning_info}"
+    hct_print_blue_string ${HCT_CONST_HINTS_BEGIN}
+    echo
+}
+
+#  说明: 打印该命令用法
+#  用法：直接调用
+function hct_print_usage() {
+    echo """
+    用法示例：
+    ----------------
+
+    1 ${HCT_CONST_PARENT_SCRIPT_NAME} ${HCT_CONST_FLAG_CODE_CLEAN} [<${HCT_CONST_FLAG_CODE_ALL_BRANCH}>]
+     --------------------------------------
+    说明：
+        清理所有的临时文件和修改文件
+
+    用法：
+        ${HCT_CONST_PARENT_SCRIPT_NAME} ${HCT_CONST_FLAG_CODE_CLEAN}：清理代码
+        ${HCT_CONST_PARENT_SCRIPT_NAME} ${HCT_CONST_FLAG_CODE_CLEAN} ${HCT_CONST_FLAG_CODE_ALL_BRANCH}：清理代码，最彻底的清理
+
+    2 ${HCT_CONST_PARENT_SCRIPT_NAME} ${HCT_CONST_FLAG_CODE_UPDATE} [<${HCT_CONST_FLAG_CODE_CUSTOM_BRANCH} Branch Name> <${HCT_CONST_FLAG_CODE_ALL_BRANCH}>]
+    -----------------------------------------
+    说明：
+        为编译准备代码
+
+    用法：
+        ${HCT_CONST_FLAG_CODE_UPDATE}：量产代码准备，只有量产分支
+        ${HCT_CONST_FLAG_CODE_UPDATE} ${HCT_CONST_FLAG_CODE_CUSTOM_BRANCH} <Branch Name>：合并 Branch 到 ${HCT_CONST_BRANCH_DEFAULT} 分支
+        ${HCT_CONST_FLAG_CODE_UPDATE} ${HCT_CONST_FLAG_CODE_ALL_BRANCH}：内部版本发布代码准备，全部分支
+
+    3 ${HCT_CONST_PARENT_SCRIPT_NAME} ${HCT_CONST_FLAG_PROJECT_LIST}
+    --------------------------------------
+    说明：
+        列出当前所有的项目 git 库
+
+    用法：
+        ${HCT_CONST_PARENT_SCRIPT_NAME} ${HCT_CONST_FLAG_PROJECT_LIST}
+
+    4 ${HCT_CONST_PARENT_SCRIPT_NAME} ${HCT_CONST_FLAG_PROJECT_INIT} [<Path of Project> <${HCT_CONST_FLAG_CODE_ALL_BRANCH}>]
+    --------------------------------------
+    说明：
+        把 Project 插入到 manifest 文件中
+
+    用法：
+        ${HCT_CONST_PARENT_SCRIPT_NAME} ${HCT_CONST_FLAG_PROJECT_INIT}: 清空项目列表
+        ${HCT_CONST_PARENT_SCRIPT_NAME} ${HCT_CONST_FLAG_PROJECT_INIT} <Path of Project>: 用 Path of Project 初始化项目列表
+        ${HCT_CONST_PARENT_SCRIPT_NAME} ${HCT_CONST_FLAG_PROJECT_INIT} ${HCT_CONST_FLAG_CODE_ALL_BRANCH}: 使用全部项目列表
+
+    5 ${HCT_CONST_PARENT_SCRIPT_NAME} ${HCT_CONST_FLAG_PROJECT_ADD} <Path of Project>
+    --------------------------------------
+    说明：
+        增加 Project 项目
+
+    用法：
+        ${HCT_CONST_PARENT_SCRIPT_NAME} ${HCT_CONST_FLAG_PROJECT_ADD} <Path of Project>
+
+    6 ${HCT_CONST_PARENT_SCRIPT_NAME} ${HCT_CONST_FLAG_PROJECT_ASSIGN} 项目路径 [${HCT_CONST_FLAG_RELEASE_AUTO}]
+    --------------------------------------
+    说明：
+        准备工程，编译，并且把 ROM 文件打包
+
+    用法：
+        ${HCT_CONST_PARENT_SCRIPT_NAME} ${HCT_CONST_FLAG_PROJECT_ASSIGN} 项目路径：复制项目定制化文件到工作目录
+        ${HCT_CONST_PARENT_SCRIPT_NAME} ${HCT_CONST_FLAG_PROJECT_ASSIGN} 项目路径 ${HCT_CONST_FLAG_RELEASE_AUTO}：编译量产版本
+
+    7 ${HCT_CONST_PARENT_SCRIPT_NAME} <[${HCT_CONST_FLAG_MTK_ACTION1}] | [${HCT_CONST_FLAG_MTK_ACTION2}]> [编译参数] <[new], [remake] ...>
+     --------------------------------------
+    说明：
+        MTK 原生命令支持
+
+    用法：
+        ${HCT_CONST_PARENT_SCRIPT_NAME} ${HCT_CONST_FLAG_MTK_ACTION1} new：不显示详细日志，以模块方式显示编译结果
+        ${HCT_CONST_PARENT_SCRIPT_NAME} ${HCT_CONST_FLAG_MTK_ACTION2} new：显示详细的编译结果
+
+    8 ${HCT_CONST_PARENT_SCRIPT_NAME} ${HCT_CONST_FLAG_ROM_BACKUP} [${HCT_CONST_FLAG_SIGNROM}]
+     --------------------------------------
+    说明：
+        ROM 文件编译完成之后的打包
+
+    用法：
+        ${HCT_CONST_PARENT_SCRIPT_NAME} ${HCT_CONST_FLAG_ROM_BACKUP}：ROM 文件打包
+        ${HCT_CONST_PARENT_SCRIPT_NAME} ${HCT_CONST_FLAG_ROM_BACKUP} ${HCT_CONST_FLAG_SIGNROM}：ROM 文件加密以后再打包
+    """
+
+    hct_print_hints "   ${HCT_CONST_FILE_VERSION}\n"
+
+    exit 1
+}
+
+#  说明: 判断当前路径，如果不正确，直接退出
+#  用法：传入参数 ${1} 表示行号
+function hct_exit_if_path_wrong () {
+    ! test -f ${HCT_CONST_FILE_CMD} && hct_print_errors "Line ${1}: ${HCT_CONST_FILE_CMD} ${HCT_CONST_HINTS_ERRORS_FILE_NOT_EXIST}"
+    ! test -f ${HCT_CONST_FILE_MANIFEST_SRC} && hct_print_errors "Line ${1}: ${HCT_CONST_FILE_MANIFEST_SRC} ${HCT_CONST_HINTS_ERRORS_FILE_NOT_EXIST}"
+
+    GLOBAL_HCT_ALL_REPO_LIST=$(./${HCT_CONST_FILE_CMD} list | sed 's/ .*//g' | xargs)
+}
+
+#  说明：判断当前磁盘空间，如果小于某个额定值，不予编译
+#  用法：直接调用
+function hct_check_disk_space() {
+    #  得到当前目录可用空间
+    m_get_space_available=$(df -mh -B G . | tail -1 | awk '{print $4}')
+    test -z "${m_get_space_available}" && hct_print_errors "Line: ${LINENO} ${HCT_CONST_HINTS_ERRORS_UNKNOWN}"
+    m_get_space_available=$(echo ${m_get_space_available} | sed 's/[gG]//g')
+
+    #  如果磁盘空间小于 20G，退出
+    if [ "${m_get_space_available}" -le "30" ]; then
+        hct_print_errors "This action will use 30G space.\nBut you now just have ${m_get_space_available}!"
+    else
+        echo
+        hct_print_green_string ${HCT_CONST_HINTS_END}
+        hct_print_green_string "  OK: available space get ${m_get_space_available}GB."
+        hct_print_green_string ${HCT_CONST_HINTS_END}
+    fi
+}
+
+#  说明：判断当前脚本是否有另外的副本运行，直接退出
+#  用法：直接调用
+function hct_check_process_run() {
+    #  得到目标进程的数目
+    m_get_target_process_no=$(ps -eaf | grep -v grep | grep makeMtk | wc -l)
+
+    if [ "${m_get_target_process_no}" -gt "0" ]; then
+        hct_print_errors "There is another process makeMtk is running, Exit!"
+    fi
+}
+
+#  说明: 工作项目环境初始化
+#  传入参数：项目所在的目录
+function hct_workspace_init() {
+    ENV_HCT_BUILD_PROJECT_PATH="${1}"
+
+    test -z "${ENV_HCT_BUILD_PROJECT_PATH}" && hct_print_errors "Line ${LINENO} hct_workspace_init *PATH* is NULL!"
+    ! test -d "${ENV_HCT_BUILD_PROJECT_PATH}/${HCT_CONST_DIR_PROJECT_FLAG}" && hct_print_errors "${HCT_CONST_HINTS_ERRORS_PROJECT_NOT_EXIST} ${ENV_HCT_BUILD_PROJECT_PATH}"
+
+    ENV_HCT_BUILD_PROJECT_PATH=$(echo ${1} | sed 's/\/$//g')
+    ENV_HCT_BUILD_PROJECT_NAME=$(echo ${ENV_HCT_BUILD_PROJECT_PATH} | awk -F/ '{print $(NF)}')
+    ENV_HCT_BUILD_PROJECT_DIR_PARENT=$(echo ${ENV_HCT_BUILD_PROJECT_PATH} | awk -F/ '{print $(NF-1)}')
+
+    m_hct_build_makefile=$(find ${ENV_HCT_BUILD_PROJECT_PATH}/${HCT_CONST_DIR_PROJECT_FLAG} -name ${HCT_CONST_FILE_PROJECT_MAKEFILE} -print)
+    m_get_config_number=$(echo ${m_hct_build_makefile} | wc -l)
+    if [ "1" -ne "${m_get_config_number}" ]; then
+        hct_print_errors "Line ${LINENO}: There are NOT ONLY one ${HCT_CONST_FILE_PROJECT_MAKEFILE} in ${ENV_HCT_BUILD_PROJECT_PATH}!"
+    fi
+
+    ENV_HCT_BUILD_PLATFORM_NAME=$(echo ${m_hct_build_makefile} | sed "s|.*${HCT_CONST_DIR_PROJECT_FLAG}/||g" | sed 's|/.*||g')
+
+    echo "$(date "+%x %R") Workspace init begin..." | tee ${HCT_CONST_LOG_BUILD}
+    echo "${HCT_CONST_HINTS_BEGIN}" | tee -a ${HCT_CONST_LOG_BUILD}
+    echo "ENV_HCT_BUILD_PROJECT_PATH=${ENV_HCT_BUILD_PROJECT_PATH}" | tee -a ${HCT_CONST_LOG_BUILD}
+    echo "ENV_HCT_BUILD_PROJECT_DIR_PARENT=${ENV_HCT_BUILD_PROJECT_DIR_PARENT}" | tee -a ${HCT_CONST_LOG_BUILD}
+    echo "ENV_HCT_BUILD_PROJECT_NAME=${ENV_HCT_BUILD_PROJECT_NAME}" | tee -a ${HCT_CONST_LOG_BUILD}
+    echo "ENV_HCT_BUILD_PLATFORM_NAME=${ENV_HCT_BUILD_PLATFORM_NAME}" | tee -a ${HCT_CONST_LOG_BUILD}
+    echo "${HCT_CONST_HINTS_BEGIN}"| tee -a ${HCT_CONST_LOG_BUILD}
+    echo "$(date "+%x %R") Workspace init begin ..." | tee -a ${HCT_CONST_LOG_BUILD}
+
+    if [ -e "${ENV_HCT_BUILD_PROJECT_PATH}/${HCT_CONST_DIR_PROJECT_CUSTOM}" ]; then
+        m_run_cmd="$(which bash) ${ENV_HCT_BUILD_PROJECT_PATH}/${HCT_CONST_DIR_PROJECT_CUSTOM}"
+        hct_print_hints "${m_run_cmd}"
+        ${m_run_cmd}
+    fi
+
+    #  注意复制顺序 HCT_CONST_DIR_PROJECT_SUB_PUBLIC > .
+    m_project_init_dir="${ENV_HCT_BUILD_PROJECT_PATH}/../${HCT_CONST_DIR_PROJECT_SUB_PUBLIC}"
+    if [ -d "${m_project_init_dir}" ]; then
+        m_run_cmd="cp -aL ${m_project_init_dir}/* ./"
+        hct_print_hints "${m_run_cmd}"
+        ${m_run_cmd}
+    fi
+
+    m_run_cmd="cp -aL ${ENV_HCT_BUILD_PROJECT_PATH}/* ./"
+    hct_print_hints "${m_run_cmd}"
+    ${m_run_cmd}
+
+    echo
+    echo "$(date "+%x %R") Workspace init complete" | tee -a ${HCT_CONST_LOG_BUILD}
+    echo | tee -a ${HCT_CONST_LOG_BUILD}
+
+    if [ -e "${HCT_CONST_DIR_PROJECT_CUSTOM}" ]; then
+        rm ${HCT_CONST_DIR_PROJECT_CUSTOM}
+    fi
+}
+
+#  说明：HCT 环境变量设置
+#  用法：直接调用，把一些配置放到环境变量里面
+function hct_set_environment(){
+    ! test -f "${HCT_CONST_LOG_BUILD}" && hct_print_errors "${LINENO} ${HCT_CONST_HINTS_ERRORS_FILE_NOT_EXIST} ${HCT_CONST_LOG_BUILD}"
+
+    sed -i 's/[ \t]*=[ \t]*/=/g' "${HCT_CONST_LOG_BUILD}"
+    m_enviroment=$(grep 'ENV_HCT_BUILD.*=.\{1\}' ${HCT_CONST_LOG_BUILD} | uniq)
+    test -z "${m_enviroment}" && hct_print_errors "m_enviroment is NULL."
+
+    for m_args in ${m_enviroment}; do
+        if [ $(echo ${m_args} | grep '=') ]; then
+            m_run_cmd="export ${m_args}"
+            hct_print_green_string "${m_run_cmd}"
+            ${m_run_cmd}
+        fi
+    done
+}
+
+#  说明：HCT 编译过程
+#  用法：${*} MTK 原始的编译参数
+function hct_project_build() {
+    #  检查是否 new，需要现检查磁盘空间
+    m_build_action_is_new=$(echo ${*} | grep -Eo 'n$|new$' | xargs | wc -w)
+    m_repo_xml_number=$(ls *.xml | grep -E "(${HCT_CONST_BRANCH_DEFAULT})" | wc -l)
+
+    hct_set_environment
+
+    test -z "${ENV_HCT_BUILD_PLATFORM_NAME}" && hct_print_errors "ENV_HCT_BUILD_PLATFORM_NAME is not exist in ${HCT_CONST_LOG_BUILD}"
+    readonly m_file_env="build/envsetup.sh"
+    [ ! -f ${m_file_env} ] && hct_print_errors "Error: ${m_file_env} not found!"
+    source ${m_file_env}
+
+    local m_build_action_is_release="1"
+    local m_run_cmd="lunch full_${ENV_HCT_BUILD_PLATFORM_NAME}-user"
+
+    if [ -z ${ENV_HCT_BUILD_PROJECT_ACTION} ]; then
+        m_build_action_is_release="0"
+    elif [ ${ENV_HCT_BUILD_PROJECT_ACTION} == "debug" ]; then
+        m_build_action_is_release="0"
+    fi
+
+    if [ "0" -eq "${m_build_action_is_release}" ]; then
+        m_run_cmd="lunch full_${ENV_HCT_BUILD_PLATFORM_NAME}-eng"
+    fi
+
+    hct_print_hints "${m_run_cmd}"
+    ${m_run_cmd}
+
+    if [ "1" -eq "${m_build_action_is_new}" ]; then
+        #  当前有另外副本运行时候，直接退出
+        hct_check_process_run
+
+        #  磁盘空间小于某个值时候，会报错退出
+        hct_check_disk_space
+
+        test "${m_repo_xml_number}" -lt "1" &&  hct_print_errors "Error: ${HCT_CONST_BRANCH_DEFAULT}.xml not found in $(pwd)!"
+
+        m_project_makefile="${HCT_CONST_DIR_PROJECT_FLAG}/${ENV_HCT_BUILD_PLATFORM_NAME}/${HCT_CONST_FILE_PROJECT_MAKEFILE}"
+
+        if [ "1" -eq "${m_build_action_is_release}" ]; then
+            echo "ENV_HCT_BUILD_PROJECT_ACTION=release" | tee -a ${HCT_CONST_LOG_BUILD}
+        else
+            echo "ENV_HCT_BUILD_PROJECT_ACTION=debug" | tee -a ${HCT_CONST_LOG_BUILD}
+        fi
+
+        echo "$(date "+%x %R") build start..." | tee -a ${HCT_CONST_LOG_BUILD}
+
+        #  根据需求可以修改 release || user, debug || eng
+        if [ "1" -eq "${m_build_action_is_release}" ]; then
+            m_project_build_verno1=$(sed -n '/^[ \t]*MTK_BUILD_VERNO[ \t]*=/p' ${m_project_makefile} | tail -1 | sed 's/.*=//g' | sed 's/[ \t]//g')
+            m_project_build_verno2=$(sed -n '/^[ \t]*CUSTOM_BUILD_VERNO[ \t]*=/p' ${m_project_makefile} | tail -1 | sed 's/.*=//g' | sed 's/[ \t]//g')
+
+            #  发布 release 版本需要版本号都填写进去
+            echo
+            test -z "${m_project_build_verno1}" && hct_print_red_string "Warning: MTK_BUILD_VERNO is NULL!"
+            test -z "${m_project_build_verno2}" && hct_print_red_string "Warning: CUSTOM_BUILD_VERNO is NULL!"
+
+            hct_print_blue_string "${HCT_CONST_HINTS_BEGIN}"
+
+            if [ -z "${m_project_build_verno1}" -o -z "${m_project_build_verno2}" ]; then
+                hct_print_blue_string "Are you sure continue: [y/N]\c"
+                read m_build_choice_action
+                echo -e "\033[0m"
+
+                if [ "y" == "${m_build_choice_action}" ]; then
+                    :
+                else
+                    exit 1
+                fi
+            fi
+        fi
+
+        [ $(set | grep hct_new_modem | wc -l) -ge 1 ] && hct_new_modem
+        m_run_cmd="make -j16"
+        hct_print_hints "${m_run_cmd}"
+        sleep 1
+        ${m_run_cmd} | tee build.log
+
+        echo "$(date "+%x %R") build complete!" | tee -a ${HCT_CONST_LOG_BUILD}
+        echo "${HCT_CONST_HINTS_END}" | tee -a ${HCT_CONST_LOG_BUILD}
+    else
+        m_run_cmd="${*}"
+        hct_print_hints "${m_run_cmd}"
+        ${m_run_cmd}
+    fi
+}
+
+#  说明：ROM 文件打包
+#  用法：无或者传入参数 --sign
+function hct_project_rom_copy_and_tar() {
+    hct_set_environment
+    m_rom_sign_flag=${1}
+
+    test -z "${ENV_HCT_BUILD_PROJECT_NAME}" && hct_print_errors "ENV_HCT_BUILD_PROJECT_NAME is NOT define in ${HCT_CONST_LOG_BUILD}"
+    test -z "${ENV_HCT_BUILD_PLATFORM_NAME}" && hct_print_errors "ENV_HCT_BUILD_PLATFORM_NAME is NOT define in ${HCT_CONST_LOG_BUILD}"
+    test -z "${ENV_HCT_BUILD_PROJECT_ACTION}" && hct_print_errors "ENV_HCT_BUILD_PROJECT_ACTION is NOT define in ${HCT_CONST_LOG_BUILD}"
+
+    # makefile
+    readonly m_path_makefile="${HCT_CONST_DIR_PROJECT_FLAG}/${ENV_HCT_BUILD_PLATFORM_NAME}/${HCT_CONST_FILE_PROJECT_MAKEFILE}"
+
+    ! test -f "${m_path_makefile}" && hct_print_errors "Line: ${LINENO} ${HCT_CONST_HINTS_ERRORS_FILE_NOT_EXIST} ${m_path_makefile}"
+    m_verno=$(sed -n '/^[ \t]*MTK_BUILD_VERNO[ \t]*=/p' ${m_path_makefile} | tail -1 | sed 's/.*=//g' | sed 's/[ \t]//g')
+
+    if [ "${ENV_HCT_BUILD_PROJECT_ACTION}" == "release" ]; then
+        test -z "${m_verno}" && hct_print_red_string "Warning: Release version, But MTK_BUILD_VERNO is NULL!"
+        test "$(echo ${m_verno} | wc -l)" -ne "1" && hct_print_red_string "Warning: Release version, But MTK_BUILD_VERNO define error!"
+        sleep 2
+    fi
+
+    test -z "${m_verno}" && m_verno=$(date +%F)
+
+    readonly m_emmc_support=$(sed -n '/^[ \t]*MTK_EMMC_SUPPORT[ \t]*=/p' ${m_path_makefile} | tail -1 | sed 's/.*=//g' | sed 's/[ \t]//g')
+    test "$(echo ${m_emmc_support} | wc -l)" -ne "1" && hct_print_errors "Line: ${LINENO} MTK_EMMC_SUPPORT MUST BE redifined in ${m_path_makefile}"
+
+    #  创建 ROM Backup 文件夹
+    if [ -z "${m_rom_sign_flag}" ]; then
+        readonly m_dir_back_root="${ENV_HCT_BUILD_PROJECT_NAME}"
+        readonly m_dir_rom="${ENV_HCT_BUILD_PROJECT_NAME}_${m_verno}_${ENV_HCT_BUILD_PROJECT_ACTION}"
+        readonly m_dir_project="${ENV_HCT_BUILD_PROJECT_NAME}_${m_verno}_${HCT_CONST_DIR_ROM_INFO}"
+    else
+        readonly m_dir_back_root="${ENV_HCT_BUILD_PROJECT_NAME}_${HCT_CONST_FOLDER_SIGNROM}"
+        readonly m_dir_rom="${ENV_HCT_BUILD_PROJECT_NAME}_${m_verno}_${ENV_HCT_BUILD_PROJECT_ACTION}_${HCT_CONST_FOLDER_SIGNROM}"
+        readonly m_dir_project="${ENV_HCT_BUILD_PROJECT_NAME}_${m_verno}_${HCT_CONST_DIR_ROM_INFO}_${HCT_CONST_FOLDER_SIGNROM}"
+    fi
+
+    test -d "${m_dir_back_root}" && rm -rf ${m_dir_back_root}
+
+    readonly m_path_rom=${m_dir_back_root}/${m_dir_rom}
+    readonly m_path_project=${m_dir_back_root}/${m_dir_project}
+    readonly m_path_calibration=${m_path_rom}/${HCT_CONST_DIR_ROM_CALIBRATION}
+
+    mkdir -p ${m_path_rom} ${m_path_project} ${m_path_calibration}
+
+    #  1. 复制 ROM 文件
+    hct_print_hints "step 1. Now copy ROM files to ${m_path_rom} ..."
+    hct_print_green_string "${HCT_CONST_HINTS_BEGIN}"
+
+    readonly M_HCT_CONST_DIR_ROM_OUT1="out/target/product/${ENV_HCT_BUILD_PLATFORM_NAME}"
+
+    for m_rom_file_list in ${M_HCT_CONST_DIR_ROM_OUT1}/kernel \
+                           ${M_HCT_CONST_DIR_ROM_OUT1}/logo.bin \
+                           ${M_HCT_CONST_DIR_ROM_OUT1}/lk.bin \
+                           ${M_HCT_CONST_DIR_ROM_OUT1}/preloader_${ENV_HCT_BUILD_PLATFORM_NAME}.bin \
+                           ${M_HCT_CONST_DIR_ROM_OUT1}/trustzone.bin \
+                           ${M_HCT_CONST_DIR_ROM_OUT1}/boot.img \
+                           ${M_HCT_CONST_DIR_ROM_OUT1}/ramdisk.img \
+                           ${M_HCT_CONST_DIR_ROM_OUT1}/ramdisk-recovery.img \
+                           ${M_HCT_CONST_DIR_ROM_OUT1}/recovery.img \
+                           ${M_HCT_CONST_DIR_ROM_OUT1}/system.img \
+                           ${M_HCT_CONST_DIR_ROM_OUT1}/ramdisk-recovery.img \
+                           ${M_HCT_CONST_DIR_ROM_OUT1}/secro.img \
+                           ${M_HCT_CONST_DIR_ROM_OUT1}/userdata.img; do
+        ! test -f "${m_rom_file_list}" && hct_print_errors "${HCT_CONST_HINTS_ERRORS_FILE_NOT_EXIST} ${m_rom_file_list}"
+
+        m_run_cmd="cp -aL ${m_rom_file_list} ${m_path_rom}"
+        hct_print_blue_string "${m_run_cmd}"
+        ${m_run_cmd}
+    done
+
+    M_MTK_PLATFORM="MT6735M"
+    if [ "yes" == "${m_emmc_support}" ]; then
+         for m_rom_file_list in ${M_HCT_CONST_DIR_ROM_OUT1}/cache.img \
+                                ${M_HCT_CONST_DIR_ROM_OUT1}/${M_MTK_PLATFORM}_Android_scatter.txt; do
+            ! test -f "${m_rom_file_list}" && hct_print_errors "${HCT_CONST_HINTS_ERRORS_FILE_NOT_EXIST} ${m_rom_file_list}"
+
+            m_run_cmd="cp -aL ${m_rom_file_list} ${m_path_rom}"
+            hct_print_blue_string "${m_run_cmd}"
+            ${m_run_cmd}
+        done
+    else
+        for m_rom_file_list in ${M_HCT_CONST_DIR_ROM_OUT1}/${M_MTK_PLATFORM}_Android_scatter.txt; do
+            ! test -f "${m_rom_file_list}" && hct_print_errors "${HCT_CONST_HINTS_ERRORS_FILE_NOT_EXIST} ${m_rom_file_list}"
+
+            m_run_cmd="cp -aL ${m_rom_file_list} ${m_path_rom}"
+            hct_print_blue_string "${m_run_cmd}"
+            ${m_run_cmd}
+        done
+    fi
+
+    #  2. 复制一些校准文件
+    hct_print_hints "step 2. Now copy calibration files to ${m_path_calibration} ..."
+    hct_print_blue_string "${HCT_CONST_HINTS_BEGIN}"
+
+    #  校准文件存放目录
+    readonly M_HCT_CONST_DIR_DEBUG_OUT1="out/target/product/${ENV_HCT_BUILD_PLATFORM_NAME}/obj/CGEN/"
+    readonly M_HCT_CONST_DIR_DEBUG_OUT2="vendor/mediatek/proprietary/custom/${ENV_HCT_BUILD_PLATFORM_NAME}/modem"
+
+    # 1
+    readonly M_HCT_CONST_MTK_PLATFORM=$(sed -n '/^[ \t]*MTK_PLATFORM[ \t]*=/p' ${m_path_makefile} | tail -1 | sed 's/.*=//g' | sed 's/[ \t]//g')
+    readonly M_HCT_CONST_MTK_CHIP_VER=$(sed -n '/^[ \t]*MTK_CHIP_VER[ \t]*=/p' ${m_path_makefile} | tail -1 | sed 's/.*=//g' | sed 's/[ \t]//g')
+    readonly M_HCT_CONST_MTK_BRANCH=$(sed -n '/^[ \t]*MTK_BRANCH[ \t]*=/p' ${m_path_makefile} | tail -1 | sed 's/.*=//g' | sed 's/[ \t]//g')
+    readonly M_HCT_CONST_MTK_WEEK_NO=$(sed -n '/^[ \t]*MTK_WEEK_NO[ \t]*=/p' ${m_path_makefile} | tail -1 | sed 's/.*=//g' | sed 's/[ \t]//g')
+
+    readonly m_debug_file1=$(find ${M_HCT_CONST_DIR_DEBUG_OUT1} -maxdepth 1 -name APDB_${M_HCT_CONST_MTK_PLATFORM}_${M_HCT_CONST_MTK_CHIP_VER}_${M_HCT_CONST_MTK_BRANCH}_${M_HCT_CONST_MTK_WEEK_NO} -type f)
+    test $(echo ${m_debug_file1} | wc -w) -ne 1 && hct_print_errors "APDB_ in ${M_HCT_CONST_DIR_DEBUG_OUT1} is not one!"
+
+    m_run_cmd="cp -aL ${m_debug_file1} ${m_path_calibration}"
+    hct_print_blue_string ${m_run_cmd}
+    ${m_run_cmd}
+
+    # 2
+    readonly m_modem_name=$(sed -n "/^[ \t]*CUSTOM_MODEM[ \t]*=/p" ${m_path_makefile} | tail -1 | sed 's/.*=//g')
+    test "$(echo ${m_modem_name} | wc -w)" -lt "1" && hct_print_errors "Line: ${LINENO} CUSTOM_MODEM defined error in ${m_path_makefile}"
+
+    for m_modem_dir in ${m_modem_name}; do
+        ! test -d "${M_HCT_CONST_DIR_DEBUG_OUT2}/${m_modem_dir}" && hct_print_errors "Line: ${LINENO} ${HCT_CONST_HINTS_ERRORS_FILE_NOT_EXIST} ${M_HCT_CONST_DIR_DEBUG_OUT2}/${m_modem_dir}"
+        hct_print_hints "Get modem name CUSTOM_MODEM = ${m_modem_dir}"
+
+        m_modem_debug_file=$(find ${M_HCT_CONST_DIR_DEBUG_OUT2}/${m_modem_dir} -maxdepth 1 -name BPLGUInfoCustomAppSrcP* -type f)
+        test $(echo ${m_modem_debug_file} | wc -w) -ne 1 && hct_print_errors "BPLGUInfoCustomAppSrcP* in ${M_HCT_CONST_DIR_DEBUG_OUT2}/${m_modem_dir} is not one!"
+
+        $(mkdir -p ${m_path_calibration}/${m_modem_dir})
+        ! test -d "${m_path_calibration}/${m_modem_dir}" && hct_print_errors "Line: ${LINENO} ${m_path_calibration}/${m_modem_dir} create error!"
+
+        m_run_cmd="cp -aL ${m_modem_debug_file} ${m_path_calibration}/${m_modem_dir}"
+        hct_print_blue_string ${m_run_cmd}
+        ${m_run_cmd}
+    done
+
+    #  复制一些项目文件 ProjectConfig.mk, build.prop, vmlinux, *.xml
+    hct_print_hints "step 3. Now copy Project files to ${m_path_project} ..."
+    hct_print_blue_string "${HCT_CONST_HINTS_BEGIN}"
+
+    readonly m_system_build_file="out/target/product/${ENV_HCT_BUILD_PLATFORM_NAME}/system/build.prop"
+    readonly m_debug_file_kernel="out/target/product/${ENV_HCT_BUILD_PLATFORM_NAME}/obj/KERNEL_OBJ/vmlinux"
+
+    for m_file in ${m_path_makefile} \
+                  ${m_system_build_file} \
+                  ${m_debug_file_kernel}; do
+        ! test -f "${m_file}" && hct_print_errors "${HCT_CONST_HINTS_ERRORS_FILE_NOT_EXIST} ${m_file}"
+
+        m_run_cmd="cp -aL ${m_file} ${m_path_project}"
+        hct_print_blue_string ${m_run_cmd}
+        ${m_run_cmd}
+    done
+
+    mkdir -p ${m_path_project}/manifest
+    for m_file_xml in *.xml; do
+        m_run_cmd="cp -aL ${m_file_xml} ${m_path_project}/manifest/${ENV_HCT_BUILD_PROJECT_NAME}_${m_verno}_${m_file_xml}"
+        hct_print_blue_string ${m_run_cmd}
+        ${m_run_cmd}
+    done
+
+    # ROM 加密过程
+    if [ "${m_rom_sign_flag}" == "${HCT_CONST_FLAG_SIGNROM}" ]; then
+        ! test -f $(which signrom) && hct_print_errors "signrom is not installed!"
+
+        readonly HCT_FILE_BOOTIMG=`find ${m_path_rom} -name boot.img -type f`
+        readonly HCT_FILE_SYSTEMIMG=`find ${m_path_rom} -name system.img -type f`
+
+        hct_print_hints "Now: md5sum boot.img && system.img ..."
+        md5sum ${HCT_FILE_BOOTIMG} ${HCT_FILE_SYSTEMIMG} | tee -a ${m_path_project}/${HCT_CONST_LOG_SIGNROM}
+        echo ${HCT_CONST_HINTS_BEGIN} | tee -a ${m_path_project}/${HCT_CONST_LOG_SIGNROM}
+        echo " above is Sign ROM before" | tee -a ${m_path_project}/${HCT_CONST_LOG_SIGNROM}
+        echo ${HCT_CONST_HINTS_BEGIN} | tee -a ${m_path_project}/${HCT_CONST_LOG_SIGNROM}
+        hct_print_hints "Now: ROM is signing ..."
+        sudo signrom ${HCT_FILE_BOOTIMG} ${HCT_FILE_SYSTEMIMG} | tee -a ${m_path_project}/${HCT_CONST_LOG_SIGNROM}
+        hct_print_hints "Now: ROM sign complete, you can find detail in file sign.log!"
+        echo ${HCT_CONST_HINTS_BEGIN} | tee -a ${m_path_project}/${HCT_CONST_LOG_SIGNROM}
+        echo " below is Sign ROM after" | tee -a ${m_path_project}/${HCT_CONST_LOG_SIGNROM}
+        echo ${HCT_CONST_HINTS_BEGIN} | tee -a ${m_path_project}/${HCT_CONST_LOG_SIGNROM}
+        md5sum ${HCT_FILE_BOOTIMG} ${HCT_FILE_SYSTEMIMG} | tee -a ${m_path_project}/${HCT_CONST_LOG_SIGNROM}
+        echo ${HCT_CONST_HINTS_BEGIN} | tee -a ${m_path_project}/${HCT_CONST_LOG_SIGNROM}
+    fi
+
+    #  打包
+    hct_print_hints "step 4. Now compress all rom files ..."
+    hct_print_blue_string "${HCT_CONST_HINTS_BEGIN}"
+
+    chmod -R 777 ${m_dir_back_root}
+
+    tar -zcvf ${m_path_rom}.tar.gz  -C ./${m_dir_back_root} ${m_dir_rom}
+    tar -zcvf ${m_path_project}.tar.gz  -C ./${m_dir_back_root} ${m_dir_project}
+
+    hct_print_hints "Ok, All files are compress complete!"
+    hct_print_blue_string "${HCT_CONST_HINTS_END}\n"
+}
+
+#  说明：清理所有临时文件和所有项目分支
+#  用法：直接调用
+function hct_code_cleanup_tmp() {
+    if [ -e "${HCT_CONST_LOG_BUILD}" ]; then
+        hct_set_environment
+
+        hct_print_green_string "Now, cleaning code...\n"
+
+        #  删除一些产生的临时文件
+        for m_tmp in ${ENV_HCT_BUILD_PROJECT_NAME} ${ENV_HCT_BUILD_PROJECT_NAME}_${HCT_CONST_FOLDER_SIGNROM} ${HCT_CONST_DIR_PROJECT_CUSTOM}; do
+            m_run_cmd="rm -rf ${m_tmp}"
+            hct_print_green_string "${m_run_cmd}"
+            ${m_run_cmd}
+        done
+    fi
+
+    for m_tmp in *.log *.xml *.ini out; do
+        m_run_cmd="rm -rf ${m_tmp}"
+        hct_print_green_string "${m_run_cmd}"
+        ${m_run_cmd}
+    done
+
+    #  将已修改文件还原
+    m_run_cmd="./${HCT_CONST_FILE_CMD} forall -c git checkout -f HEAD"
+    hct_print_hints "${m_run_cmd}"
+    ${m_run_cmd}
+
+    #  清理不受 git 控管的文件
+    m_run_cmd="./${HCT_CONST_FILE_CMD} forall -c git clean -df"
+    hct_print_hints "${m_run_cmd}"
+    ${m_run_cmd}
+
+    #  代码同步
+    m_run_cmd="./${HCT_CONST_FILE_CMD} sync"
+    hct_print_hints "${m_run_cmd}"
+    ${m_run_cmd}
+
+    while [ "1" == "$?" ]
+    do
+        hct_print_green_string "Notice: ./${HCT_CONST_FILE_CMD} sync, run agin..."
+        ./${HCT_CONST_FILE_CMD} sync
+    done
+}
+
+#  说明：清理临时文件和非release项目分支
+#  用法：直接调用
+function hct_code_cleanup_all_but() {
+    m_branch_number=`./${HCT_CONST_FILE_CMD} branch | wc -l`
+    test -z ${1} && hct_print_errors "cleanup_all args is NULL."
+
+    if [ "0" -ne "${m_branch_number}" ]; then
+        for m_branch_name in $(./${HCT_CONST_FILE_CMD} branch | grep '|' | sed 's/|.*//g' | sed 's/^[ \t]*//g' | sed 's/[ \t]*$//g' | sed 's/.*[ ]//g' | grep -v ${1} | xargs); do
+            m_run_cmd="./${HCT_CONST_FILE_CMD} abandon ${m_branch_name}"
+            hct_print_hints "${m_run_cmd}"
+            ${m_run_cmd}
+        done
+    fi
+}
+
+function hct_code_cleanup_all() {
+    m_branch_number=`./${HCT_CONST_FILE_CMD} branch | wc -l`
+
+    if [ "0" -ne "${m_branch_number}" ]; then
+        for m_branch_name in $(./${HCT_CONST_FILE_CMD} branch | grep '|' | sed 's/|.*//g' | sed 's/^[ \t]*//g' | sed 's/[ \t]*$//g' | sed 's/.*[ ]//g' | xargs); do
+            m_run_cmd="./${HCT_CONST_FILE_CMD} abandon ${m_branch_name}"
+            hct_print_hints "${m_run_cmd}"
+            ${m_run_cmd}
+        done
+    fi
+}
+
+#  说明：start branch --all
+#  用法：传入参数 ${1}, branch name
+function hct_code_start_branch() {
+    m_branch_name=${1}
+
+    test -z "${m_branch_name}" && hct_print_errors "Line: ${LINENO} Branch Name is NULL in hct_code_start_branch"
+
+    GLOBAL_HCT_ALL_REPO_LIST=$(./${HCT_CONST_FILE_CMD} list | sed 's/ .*//g' | xargs)
+
+    m_run_cmd="./${HCT_CONST_FILE_CMD} start ${m_branch_name} --all"
+    hct_print_hints "${m_run_cmd}"
+    ${m_run_cmd}
+}
+
+#  说明：代码下载
+#  用法：传入参数 ${1}, branch name
+function hct_code_download() {
+    m_branch_name=${1}
+
+    test -z "${m_branch_name}" && hct_print_errors "Line: ${LINENO} Branch Name is NULL in hct_code_download"
+
+    for m_repo_name in ${GLOBAL_HCT_ALL_REPO_LIST}; do
+        m_run_cmd="./${HCT_CONST_FILE_CMD} download ${m_repo_name} -m"
+
+        hct_print_hints "${m_run_cmd} << Current branch is ${m_branch_name}"
+        ${m_run_cmd}
+    done
+
+    m_run_cmd="./${HCT_CONST_FILE_CMD} manifest -r -o ${m_branch_name}.xml"
+    hct_print_hints "${m_run_cmd}"
+    ${m_run_cmd}
+}
+
+#  说明：代码合并
+#  用法：传入参数 ${1}, branch name
+function hct_code_merge() {
+    m_branch_name=${1}
+
+    test -z "${m_branch_name}" && hct_print_errors "Line: ${LINENO} Branch Name is NULL in hct_code_merge"
+
+    for m_repo_name in ${GLOBAL_HCT_ALL_REPO_LIST[@]}; do
+        m_run_cmd="./${HCT_CONST_FILE_CMD} download ${m_repo_name} --br ${m_branch_name} -m"
+
+        hct_print_hints "${m_run_cmd} << ${m_branch_name} merge to ${HCT_CONST_BRANCH_DEFAULT}"
+        ${m_run_cmd}
+    done
+}
+
+#  说明：项目同步 && download
+#  用法：传入参数 ${*}, dists/targets 里面的目录
+function hct_project_init_and_download() {
+    m_project_name=${1}
+
+    test -z "${m_project_name}" && hct_print_errors "Line: ${LINENO} Projects Name is NULL in hct_project_init_and_download"
+
+    hct_print_green_string ${HCT_CONST_HINTS_BEGIN}
+    hct_print_green_string "Now, project ${m_project_name} init ..."
+    hct_print_green_string ${HCT_CONST_HINTS_BEGIN}
+
+    ./${HCT_CONST_FILE_CMD} start develop ${m_project_name}
+    ./${HCT_CONST_FILE_CMD} download ${m_project_name} -m
+
+    m_git_log=$(git --git-dir=${m_project_name}/.git/ log --no-merges --pretty=oneline -1 | sed 's/ .*//g')
+    m_git_log="<project name=\"${m_project_name}.git\" path=\"${m_project_name}\" revision=\"${m_git_log}\"\/>"
+
+    test -f "${HCT_CONST_BRANCH_DEFAULT}.xml" && sed -i "s#${m_project_name}#${m_project_name////|}#p" "${HCT_CONST_BRANCH_DEFAULT}.xml"
+    test -f "${HCT_CONST_BRANCH_DEFAULT}.xml" && sed -i "/${m_project_name////|}/d" "${HCT_CONST_BRANCH_DEFAULT}.xml"
+    test -f "${HCT_CONST_BRANCH_DEFAULT}.xml" && sed -i "/<\/manifest>/i\  ${m_git_log}" "${HCT_CONST_BRANCH_DEFAULT}.xml"
+}
+
+#  说明：代码合并结果粗略检查
+#  用法：传入参数 ${*}，branch name
+function hct_code_result_check() {
+    test -z "${1}" && hct_print_errors "Line: ${LINENO} args is NULL in hct_code_result_check"
+
+    m_repo_number=`echo ${GLOBAL_HCT_ALL_REPO_LIST} | xargs | wc -w`
+
+    echo
+    ./${HCT_CONST_FILE_CMD} branch
+    echo
+}
+
+#  说明：功能入口
+#  用法：需要参数，全部传入
+function main() {
+    #  空 或者 -h：打印帮助
+    if [ "0" -eq "${#}" -o "${1}" == "${HCT_CONST_FLAG_HELP}" ]; then
+        hct_print_usage
+    fi
+
+    hct_exit_if_path_wrong "${LINENO}"
+
+    hct_print_hints "${HCT_CONST_PARENT_SCRIPT_NAME} ${*}"
+    sleep 1
+
+    ## --clean
+    if [ "${1}" == "${HCT_CONST_FLAG_CODE_CLEAN}" ]; then
+        hct_code_cleanup_tmp
+        hct_code_cleanup_all
+
+        ## --clean --all, ok
+        if [ "${2}" == "${HCT_CONST_FLAG_CODE_ALL_BRANCH}" -a "2" -eq "${#}" ]; then
+            m_dir_remove=`ls | grep -v ${HCT_CONST_FILE_CMD} | xargs`
+
+            for m_dir in ${m_dir_remove}; do
+                m_run_cmd="rm -rf ${m_dir}"
+                hct_print_blue_string "${m_run_cmd}"
+                ${m_run_cmd}
+            done
+
+            #  代码同步
+            m_run_cmd="./${HCT_CONST_FILE_CMD} sync"
+            hct_print_hints "${m_run_cmd}"
+            ${m_run_cmd}
+
+            while [ "1" == "$?" ]
+            do
+                hct_print_green_string "Notice: ./${HCT_CONST_FILE_CMD} sync, run agin..."
+                ./${HCT_CONST_FILE_CMD} sync
+            done
+        fi
+    ## --update --all
+    elif [ "${1}" == "${HCT_CONST_FLAG_CODE_UPDATE}" -a "${2}" == "${HCT_CONST_FLAG_CODE_ALL_BRANCH}" ]; then
+        hct_code_cleanup_tmp
+
+        for m_branch_name in ${HCT_CONST_BRANCH_DEVELOP[@]}; do
+            hct_code_start_branch ${m_branch_name}
+            hct_code_download ${m_branch_name}
+        done
+
+        hct_code_start_branch ${HCT_CONST_BRANCH_DEFAULT}
+        hct_code_download ${HCT_CONST_BRANCH_DEFAULT}
+
+        for m_branch_name in ${HCT_CONST_BRANCH_DEVELOP[@]}; do
+            hct_code_merge ${m_branch_name}
+        done
+
+        hct_code_result_check ${HCT_CONST_BRANCH_DEFAULT} ${HCT_CONST_BRANCH_DEVELOP[@]}
+    ## --update [<--br branch_name>]
+    elif [ "${1}" == "${HCT_CONST_FLAG_CODE_UPDATE}" ]; then
+        ## --update --br Branch Name
+        if [ "${2}" == "${HCT_CONST_FLAG_CODE_CUSTOM_BRANCH}" -a 3 -eq ${#} ]; then
+            shift
+            shift
+
+            hct_code_cleanup_tmp
+
+            for m_branch_name in ${*}; do
+                m_number=$(echo ${HCT_CONST_BRANCH_DEVELOP[@]} | grep ${m_branch_name} | wc -l)
+                test ${m_number} -eq 0 && hct_print_errors "${m_branch_name} is not a default branch name!"
+
+                hct_code_start_branch ${m_branch_name}
+                hct_code_download ${m_branch_name}
+            done
+
+            hct_code_start_branch ${HCT_CONST_BRANCH_DEFAULT}
+            hct_code_download ${HCT_CONST_BRANCH_DEFAULT}
+
+            for m_branch_name in ${*}; do
+                hct_code_merge ${m_branch_name}
+            done
+
+            hct_code_result_check ${HCT_CONST_BRANCH_DEFAULT} ${*}
+        ## --update
+        elif [ 1 -eq ${#} ]; then
+            hct_code_cleanup_tmp
+            hct_code_cleanup_all_but ${HCT_CONST_BRANCH_DEFAULT}
+
+            hct_code_start_branch ${HCT_CONST_BRANCH_DEFAULT}
+            hct_code_download ${HCT_CONST_BRANCH_DEFAULT}
+
+            m_repo_project=$(./${HCT_CONST_FILE_CMD} list | sed 's/ .*//g' | grep 'dists/targets/' | grep -v ${HCT_CONST_DIR_PROJECT_CUSTOM} | xargs)
+
+            for m_list in ${m_repo_project}; do
+                hct_project_init_and_download ${m_list}
+            done
+
+            hct_code_result_check ${HCT_CONST_BRANCH_DEFAULT}
+        else
+            hct_print_errors "${HCT_CONST_HINTS_ERRORS_UNSUPPORT}"
+        fi
+    ## --listp
+    elif [ "${1}" == "${HCT_CONST_FLAG_PROJECT_LIST}" -a "1" -eq "${#}" ]; then
+        echo
+        hct_print_hints ${HCT_CONST_HINTS_END}
+        cat ${HCT_CONST_FILE_MANIFEST_SRC} | grep -w project | grep -w path | grep -w name | sed 's/.*path=//g' | sed 's/name=.*//g' | sed 's/\"//g' | xargs -n4 | column -t
+        hct_print_hints ${HCT_CONST_HINTS_END}
+        echo
+    ## --init [<--all> <dists/targets/project_A>]
+    elif [ "${1}" == "${HCT_CONST_FLAG_PROJECT_INIT}" ]; then
+        cat ${HCT_CONST_FILE_MANIFEST_SRC}  | grep -Ev 'project|path|name' > ${HCT_CONST_FILE_MANIFEST_DST}
+        hct_print_hints "${HCT_CONST_FILE_MANIFEST_DST} is clean!"
+
+        ## --all
+        if [ "${2}" == "${HCT_CONST_FLAG_CODE_ALL_BRANCH}" -a 2 -eq ${#} ]; then
+            cp -avr ${HCT_CONST_FILE_MANIFEST_SRC} ${HCT_CONST_FILE_MANIFEST_DST}
+
+            m_repo_project=$(./${HCT_CONST_FILE_CMD} list | sed 's/ .*//g' | grep 'dists/targets/' | grep -v ${HCT_CONST_DIR_PROJECT_CUSTOM} | xargs)
+
+            for m_list in ${m_repo_project}; do
+                ./${HCT_CONST_FILE_CMD} sync ${m_list}
+                hct_project_init_and_download ${m_list}
+            done
+        ## Project_A
+        elif [ 2 -eq ${#} ]; then
+            m_repo_path=$(echo ${2} | sed 's/\/$//g')
+            m_project_find_number=$(grep -w ${m_repo_path} -r ${HCT_CONST_FILE_MANIFEST_SRC}  | wc -l)
+            test 1 -ne ${m_project_find_number} && hct_print_errors ${m_repo_path} not find in ${HCT_CONST_FILE_MANIFEST_SRC}!
+
+            m_repo_content=$(cat ${HCT_CONST_FILE_MANIFEST_SRC} | grep -w ${m_repo_path})
+            ! test -z "${m_repo_content}" && sed -i "s,${m_repo_content},,g" ${HCT_CONST_FILE_MANIFEST_DST}
+            sed -i "/<\/manifest>/i${m_repo_content}" ${HCT_CONST_FILE_MANIFEST_DST}
+            hct_print_hints "${m_repo_path} init complete!"
+
+            ./${HCT_CONST_FILE_CMD} sync ${m_repo_path}
+            hct_project_init_and_download ${m_repo_path}
+        elif [ 1 -eq ${#} ]; then
+            :
+        else
+            hct_print_errors "${HCT_CONST_HINTS_ERRORS_UNSUPPORT}"
+        fi
+
+        echo
+    ## --add dists/target/project_B
+    elif [ "${1}" == "${HCT_CONST_FLAG_PROJECT_ADD}" ]; then
+        ! test -e ${HCT_CONST_FILE_MANIFEST_DST} && hct_print_errors "Line ${LINENO} ${HCT_CONST_FILE_MANIFEST_DST} is NOT exist!"
+
+        shift
+
+        for m_project in ${*}; do
+            m_repo_path=$(echo ${m_project} | sed 's/\/$//g')
+            m_project_find_number=$(grep -w ${m_repo_path} -r ${HCT_CONST_FILE_MANIFEST_SRC}  | wc -l)
+            test 1 -ne ${m_project_find_number} && hct_print_errors ${m_repo_path} not find in ${HCT_CONST_FILE_MANIFEST_SRC}!
+
+            m_repo_path_number=$(cat ${HCT_CONST_FILE_MANIFEST_DST} | grep -w ${m_repo_path} | wc -l)
+
+            if [ 0 -eq ${m_repo_path_number} ]; then
+                m_repo_content=$(cat ${HCT_CONST_FILE_MANIFEST_SRC} | grep -w ${m_repo_path})
+                sed -i "/<manifest>/a${m_repo_content}" ${HCT_CONST_FILE_MANIFEST_DST}
+
+                echo
+                hct_print_blue_string "${HCT_CONST_HINTS_BEGIN}"
+                hct_print_blue_string "${m_repo_path} added complete!"
+                hct_print_blue_string "${HCT_CONST_HINTS_BEGIN}"
+
+                ./${HCT_CONST_FILE_CMD} sync ${m_repo_path}
+                hct_project_init_and_download ${m_repo_path}
+            else
+                hct_print_hints "${m_repo_path} is alreay added!"
+            fi
+        done
+
+        echo
+    ## -p dists/target/project_C [--auto]
+    elif [ "${1}" == "${HCT_CONST_FLAG_PROJECT_ASSIGN}" ]; then
+        hct_workspace_init ${2}
+
+        if [ "str${3}" == "str${HCT_CONST_FLAG_RELEASE_AUTO}" ]; then
+            ENV_HCT_BUILD_PROJECT_ACTION="release"
+            hct_project_build "new"
+        fi
+    ## --mtk/--mtkt
+    elif [ "${1}" == "${HCT_CONST_FLAG_MTK_ACTION1}" -o "${1}" == "${HCT_CONST_FLAG_MTK_ACTION2}" ]; then
+        shift
+
+        m_args_list=${*}
+        test -z "${m_args_list}" && hct_print_errors "Line: ${LINENO} After ${m_mtk_action} is NULL!"
+
+        hct_project_build ${m_args_list}
+    ## -b [--sign] ok
+    elif [ "${1}" == "${HCT_CONST_FLAG_ROM_BACKUP}" ]; then
+        if [ 2 -eq ${#} -a "${2}" == "${HCT_CONST_FLAG_SIGNROM}" ]; then
+            hct_project_rom_copy_and_tar ${2}
+        else
+            hct_project_rom_copy_and_tar
+        fi
+    else
+        hct_print_errors "${HCT_CONST_HINTS_ERRORS_UNSUPPORT}"
+    fi
+}
+
+#  获得调用脚本的名称
+if  [ ! -z "${1}" -a ! -z "${2}" -a "${1}" = "-n" ]; then
+    export HCT_CONST_PARENT_SCRIPT_NAME="${2}"
+
+    #  过滤前面的两个参数
+    shift
+    shift
+
+    main ${*}
+fi

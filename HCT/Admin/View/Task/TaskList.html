@@ -1,0 +1,54 @@
+
+<?php if (($data) != null): ?>
+
+	<foreach name='data' item='v'>
+		<tr>
+			<td><input type="checkbox" value="{$v.id}"></td>
+			<td>
+				<b>[<a style="color:{$type1[$v['status']]['color']|default='inherit'};" href="#">{$type1[$v['status']]['type']}</a>]</b>
+
+	<!-- 			<?php foreach ($type_arr[$v['id']] as $value): ?>
+					[<a style="color:{$value.color|default='inherit'};" href="#">
+					{$value.type}</a>]
+				<?php endforeach ?> -->
+				&nbsp;
+				<a href="{:U('showTask',array('id'=>$v['id']))}" class="title">
+					<span>{$v.title}</span>&nbsp;
+					<span>{$v.view}</span>
+				</a>
+			</td>
+
+			<td class="show_len">{$v.sub}</td>
+			<td class="user">
+				<a href="#">{$user[$v['user_id']]}</a>
+				<div>{:formatTime($v['time'])}</div>
+			</td>
+			<td style="text-align:center;">无</td>
+			<td style="text-align:center;">
+				<a href="javascript:edit_data({$v.id});">编辑</a>|
+				<a href="javascript:del_data({$v.id});">删除</a>
+			</td>
+		</tr>
+	</foreach>
+
+	<script type="text/javascript">
+		var return_opts={
+			type:"success",
+			totalCounts:{$total_counts},
+		};
+	</script>
+
+<?php else: ?>
+	<tr>
+		<td colspan="8">
+			<h3 style="text-align:center;"> 没有数据</h3>
+		</td>
+	</tr>
+	<script type="text/javascript">
+	var return_opts={
+		type:"error",
+		context:"No data",
+	};
+
+	</script>
+<?php endif ?>

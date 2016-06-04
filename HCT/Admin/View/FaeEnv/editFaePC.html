@@ -1,0 +1,33 @@
+<include file="Common/header" title="{$title}"/>
+
+</head>
+<body>
+	<form method="post" action="{$url}">
+		<div id="users-contain" class="ui-widget">
+			<table  class="ui-widget ui-widget-content">
+				<tbody>
+					<tr>
+						<th colspan="2">{$title}</th>
+					</tr>
+					<tr>
+						<td>机器名</td>
+						<td><input name="faepc" type="text" id="faePC" value="{$data.faepc}"></td>
+					</tr>
+					<tr>
+						<td valign="top" >注释</td>
+						<td><textarea type="text" name="comment" id="comment" rows="3" cols="40">{$data.comment}</textarea></td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center">
+							<input type="hidden" value="{$data.id}" name="id">
+							<input  type="submit" value="保存" />
+							<input type="reset" value="重置" />
+							<input type="button" value="返回" onClick="dialog_child_close('{:U('FaePC')}');"/>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</form>	
+</body>
+</html>

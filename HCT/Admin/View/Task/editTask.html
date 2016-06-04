@@ -1,0 +1,92 @@
+<include file="Common/header" title="{$title}"/>
+
+
+</head>
+<body>
+	<form method="post" action="{$url}">
+		<div id="users-contain" class="ui-widget">
+			<table  class="ui-widget ui-widget-content">
+				<tr>
+					<th colspan="2">{$title}</th>
+				</tr>
+				<tr>
+					<td>标题</td>
+					<td><input type="text" name="title" value="{$data.title}"></td>
+				</tr>
+				<tr>
+					<td>项目</td>
+					<td><input type="text" name="sub" value="{$data.sub}"></td>
+				</tr>
+				<tr style="margin:0px;padding:0px;">
+					<td colspan="2" style="margin:0px;padding:0px;">
+						<table style="margin:0px;padding:0px;border: 0px;">
+							<tr>
+								<td>发布者</td>
+								<td>
+									<select name="user_id" id="user_id">
+									<option selected=""></option>
+									<foreach name='user' item='v'>
+									<option value="{$v.id}">{$v.name}</option>
+									</foreach>
+									</select>
+								</td>
+								<script type="text/javascript">
+								$("#user_id option[value='{$data.user_id}']").attr("selected",true);
+								</script>
+								<td>bugfree id</td>
+								<td><input type="number" name="bugfree_id" value="{$data.bugfree_id}"></td>
+								<td>状态</td>
+								<td><input type="text" name="status" value="{$data.status}"></td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr style="margin:0px;padding:0px;">
+					<td colspan="2" style="margin:0px;padding:0px;">
+					<table style="margin:0px;padding:0px;border: 0px;">
+						<tr>
+							<td>类别</td>
+							<td>
+								<select name='type1' id="type1">
+								<option selected=""></option>
+								<foreach name='type1' item='v'>
+									<option value="{$v.id}">{$v.type}</option>
+								</foreach>
+								</select>
+							</td>
+								<script type="text/javascript">
+								$("#type1 option[value='{$data.type1}']").attr("selected",true);
+								</script>							
+							<td>子类别</td>
+							<td>
+								<select name='type2' id="type2">
+								<option selected=""></option>
+								<foreach name='type2' item='v'>
+									<option value="{$v.id}">{$v.type}</option>
+								</foreach>
+								</select>
+							</td>
+								<script type="text/javascript">
+								$("#type2 option[value='{$data.type2}']").attr("selected",true);
+								</script>	
+						</tr>
+					</table>
+					</td>
+				</tr>				
+			<tr>
+				<td valign="top" >内容</td>
+				<td><div type="text" name="comment" id="comment" rows="3" cols="40">{$data.comment}</div></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<input type="hidden" value="{$data.id}" name="id">
+					<input type="submit" value="增加" />
+					<input type="reset" value="重置" />
+					<input type="button" value="返回" onClick="dialog_child_close('{:U('index')}');"/>
+				</td>
+			</tr>
+		</table>
+	</div>
+</form>	
+</body>
+</html>

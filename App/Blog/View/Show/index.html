@@ -1,0 +1,28 @@
+<include file="Common/header" title="show"/>
+	<link rel="stylesheet" href="__PUBLIC__/blog/Css/show.css" />
+<include file="Common/navigation"/>
+<!--主体-->
+	<div class='main'>
+		<div class='main-left'>
+			<div class='location'>
+				<a href="{:U('Blog/Index/index')}">首页</a>&gt;
+				<php>$last = count($parent) - 1; </php>
+				<foreach name='parent' item='v'>
+					<a href="{:U('Blog/List/index',array('id'=>$v['id']))}">{$v.name}</a><if condition='$key neq $last'>&gt;</if>
+				</foreach>
+			</div>
+			<div class="title">
+				<p>{$blog.title}</p>
+				<div>
+					<span class='fl'>发布时间: {:date('Y-m-d H:i:s',$blog['time'])}</span>
+					<span class='fr'>已被阅读{$blog.click}次</span>
+				</div>
+			</div>
+			<div class='content' style="word-break:break-all;">
+			{$blog.content}
+			</div>
+		</div>
+	<!--主体右侧-->
+	<include file="Common/right"/>
+	</div>
+<include file="Common/bottom"/>

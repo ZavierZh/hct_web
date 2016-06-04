@@ -1,0 +1,46 @@
+<include file="Common/header" title="{$title}"/>
+<!-- 下拉框 -->
+
+</head>
+<body>
+
+		<div  class="users-contain ui-widget"> 
+			<table  class="ui-widget ui-widget-content">
+				<tr>
+					<th colspan="2">{$title}</th>
+				</tr>
+				<tr>
+					<td>时间</td>
+					<td>{:formatTime($data['time'])}</td>
+				</tr>
+				<tr>
+					<td valign="top" >提交人</td>
+					<td>
+						{$to.name} &lt;{$to.email}&gt;
+					</td>
+				</tr>
+				<tr>
+					<td valign="top">抄送</td>
+					<td>
+						<foreach name="cc" item="v">
+						{$v.name} &lt;{$v.email}&gt; ;
+						</foreach>
+					</td>
+				</tr>
+				<tr>
+					<td>备注</td>
+					<td><pre>{$data.comment}</pre></td>
+				</tr>
+				<tr>
+					<td valign="top">分支</td>
+					<td><pre>{$data.subs}</pre></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<input type="button" value="确认" onClick="dialog_child_close('{:U('index')}');"/>
+					</td>
+				</tr>
+			</table>
+		</div>
+</body>
+</html>

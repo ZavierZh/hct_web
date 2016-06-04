@@ -1,0 +1,114 @@
+
+<include file="Common/header" title="{$title}"/>
+	<!-- 下拉框 -->
+	<link rel="stylesheet" href="__PUBLIC__/common/css/select2.min.css">
+	<script src="__PUBLIC__/common/js/select2/select2.full.min.js"></script>
+	
+<script src="__PUBLIC__/common/js/zz.main.js"></script>
+<script src="__PUBLIC__/common/js/admin_index.js"></script>
+<script type="text/javascript">
+	
+	var init_opt={};
+
+	init_opt.dialog = {};
+
+	init_opt.dialog.id = "#dialog";
+	init_opt.dialog.iframe_id = "#iframe_dialog";
+	init_opt.dialog.height = 400;
+	init_opt.dialog.width = 500;
+
+	$(function() {
+		
+		$( "#create_date" ).datepicker({
+			changeMonth: true,
+			changeYear: true,
+			showButtonPanel: true,
+			dateFormat: 'yy-mm-dd',
+		});
+		
+		btn_open_dialog('#btn_env','{:U("Gitweb/Index/seach")}');
+		btn_open_dialog('#add_user','{:U("Home/User/addUserSimple")}');
+
+		$(".js-example-placeholder-single").select2();
+	});
+		/**
+			用于选择环境,子窗口调用
+		*/
+		function ch_env(str){
+			$("#dialog").dialog('close');
+			$("#dists").val(str);
+		}
+
+</script>
+
+</head>
+<body>
+	<form method="post" action="{$url}">
+		<div class="users-contain ui-widget">
+			<table  class="ui-widget ui-widget-content">
+				<tr>
+					<th colspan="2">{$title}</th>
+				</tr>			
+				<tr>
+					<td style="width:auto">时间</td>
+					<td>
+						<input type="text" id="create_date" name='date' value="{$data?$data['date']:date('Y-m-d')}"  readonly/>
+					</td>
+				</tr>
+				<tr>
+					<td>发布人</td>
+					<td>
+						{~W('Common/user')}
+						<input type="button" id="add_user" value="增加用户" >
+						<if condition="$data">
+							<script>
+							$("#user_id option[value='{$data.user_id}']").attr("selected",true);
+							</script>
+						</if>
+					</td>
+				</tr>
+				<tr>
+					<td>FAE区</td>
+					<td>
+						{~W('Common/faepc')}
+						<span class="error">*</span>
+						<if condition="$data">
+							<script>
+							$("#faepc_id option[value='{$data.faepc_id}']").attr("selected",true);
+							</script>
+						</if>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top">路径</td>
+					<td>
+						<textarea type="text" name="path" id="path" rows="2" cols="40">{$data.path}</textarea>
+						<span class="error">*</span>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top" >分支</td>
+					<td><textarea type="text" name="dists" id="dists" rows="2" cols="40">{$data.dists}</textarea>
+					<input type="button" id="btn_env" value="选择" />
+					</td>
+				</tr>
+				<tr>
+					<td valign="top" >注释</td>
+					<td><textarea type="text" name="comment" id="comment" rows="2" cols="40">{$data.comment}</textarea></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<input type="submit" value="{$data?'修改':'增加'}" />
+						<if condition="isset($data)">
+						<input type="hidden" name="id" value="{$data.id}">
+						</if>
+						<input type="reset" value="重置" />
+						<input type="button" value="返回" onClick="dialog_child_close('{:U('index')}');"/>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</form>
+	<div style="display:none;overflow:hidden;padding:3px" id="dialog"><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" name="iframe_dialog" id="iframe_dialog" width="100%" height="100%"></iframe></div>	
+</body>
+</html>

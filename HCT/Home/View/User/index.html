@@ -1,0 +1,94 @@
+ <include file="Common/header" title="{$task.title}"/>
+
+<!-- 分页插件 -->
+<script src="__PUBLIC__/common/js/jqPaginator.js"></script>
+<!-- 下拉框 -->
+<link rel="stylesheet" href="__PUBLIC__/common/css/select2.min.css">
+<script src="__PUBLIC__/common/js/select2/select2.full.min.js"></script>
+<!-- url操作插件 -->
+<script src="__PUBLIC__/common/js/url.min.js"></script>
+
+<!-- ajax异步提交 -->
+<script src="__PUBLIC__/common/js/jquery.form.js"></script>
+<!-- 自定义的一些参数 -->
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/common/css/tipcss.css">
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/common/css/show.css">
+<script src="__PUBLIC__/common/js/zz.main.js"></script>
+<script src="__PUBLIC__/common/js/admin_index.js"></script>
+<script src="__PUBLIC__/common/js/moment.min.js"></script>
+<style type="text/css">
+  .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+    border: 1px solid #C5C5C5;
+    background: #fff none repeat scroll 0% 0%;
+    font-weight: normal;
+    color: inherit;
+    outline: none;
+}
+.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited {
+    color: #000;
+    text-decoration: none;
+    outline: none;
+
+}
+.ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited {
+    color: #000;
+    text-decoration: none;
+    outline: none;
+
+}
+</style>
+<script type="text/javascript">
+var init_opt={};
+
+init_opt.dialog = {};
+
+init_opt.dialog.id = "#dialog";
+init_opt.dialog.iframe_id = "#iframe_dialog";
+init_opt.dialog.height = 500;
+init_opt.dialog.width = 800;
+
+init_opt.edit_url = '{:U("Debug/addDebug","",false)}';
+  $(function() {
+    var tabs=$('#tabs');
+    tabs.tabs({
+      beforeLoad: function( event, ui ) {
+        ui.jqXHR.fail(function() {
+          ui.panel.html(
+            "加载失败" );
+        });
+      },
+      cache: true,
+
+    });
+    tabs.find('li a').click(function(event){
+      // alert(this.id);
+      Url.updateSearchParam('btn',this.id);
+    });
+    var btn=Url.queryString('btn');
+   	if(btn){
+   		$("#"+btn).click();
+   	}
+
+  });
+</script>
+
+</head>
+<body>
+<include file="Common/user"/>
+	<div class="context_mian">
+	<h3 style="text-align:center">个人中心</h3>
+ 
+<div id="tabs">
+  <ul>
+    <li><a href="{:U('myInfo')}" id="myInfo">个人信息</a></li>
+    <!-- <li><a href="{:U('myTask')}" id="myTask">我的任务</a></li> -->
+    <li><a href="{:U('myMsg')}" id="myMsg">消息</a></li>
+  </ul>
+
+</div>
+	</div>
+	<div style="display:none;overflow:hidden;padding:3px" id="dialog"><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" name="iframe_dialog" id="iframe_dialog" width="100%" height="100%"></iframe></div>
+	<!-- 返回顶部 -->
+	<include file="Common/goto_top"/>
+</body>
+</html>

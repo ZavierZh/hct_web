@@ -1,0 +1,101 @@
+<include file="Common/header" title="{$title}"/>
+
+<script type="text/javascript">
+		  $(function() {
+		    $('#dialog').dialog({
+				autoOpen: false,
+				modal: true,
+				height: 500,
+				width: 600,
+				buttons: {
+		    });
+
+			$("#btn_env").button()
+			.click(function() {
+			   	$('#iframe_test').empty();			
+			    $('#iframe_test').attr('src','{:U("Other/Gitweb/seach")}');
+			    $("#iframe_test").load(function(){
+			        $("#dialog").dialog("open");
+			    });
+			  });
+			$("#btn_task").button()
+			.click(function() {
+			   // $("#dialog").dialog( "option",{	height: 350,});				
+			   	$('#iframe_test').empty();		
+			    $('#iframe_test').attr('src','{:U(MODULE_NAME."/Task/index")}');
+			    $("#iframe_test").load(function(){
+			        $( "#dialog" ).dialog( "open" );
+			    });
+			  });
+			$("#add_btn").button()
+			.click(function() {
+			    $("#message").text("正在加载..");
+			    $('#iframe_test').attr('src','{:U(MODULE_NAME."/FaeUser/FaeUserRecord",array("method"=>"dialog","return"=>"id"))}');
+			    $("#iframe_test").load(function(){
+			      	$("#message").text("");
+			        $( "#dialog" ).dialog( "open" );
+			    });
+			  });
+			$("#change_btn").button();
+
+	  	});
+		/**
+			用于选择环境,子窗口调用
+		*/
+		function ch_env(str){
+			$("#dialog").dialog('close');
+			$("#env_id").val(str);
+		}
+</script>
+</head>
+<body>
+	<form method="post" action="{$url}">
+		<div class="users-contain ui-widget">
+			<table  class="ui-widget ui-widget-content">
+				<tbody>
+					<tr>
+						<th colspan="2">{$title}</th>
+					</tr>
+
+					<tr>
+						<td valign="top">临时版本路径</td>
+						<td>
+						<textarea type="text" name="path" id="tmp_path" cols="40"></textarea>
+						<input type="button" onclick=" onclick='javascript: new ActiveXObject("Shell.Application").BrowseForFolder(0, "请选择路径", 0, "")'" value="选择路径" id="btn_tmppath"/>
+						</td>
+					</tr>
+					<tr>
+						<td>附件</td>
+						<td><button type="button">添加附件</button></td>
+					</tr>
+					<tr>
+						<td rowspan="2">FAE信息</td><td>
+							FAE 姓名 <input type="text" name="faename">
+							FAE 电话 <input type="text" name="faephone">
+					</td></tr>
+					<tr><td>
+							FAE 邮箱 <input type="text" name="faeemail">
+							FAE 公司 <input type="text" name="faecompany">
+						</td>
+					</tr>
+
+					<tr>
+						<td valign="top">备注</td>
+						<td><textarea type="text" name="comment" id="comment" cols="40"></textarea></td>
+					</tr>
+
+					<tr>
+						<td colspan="2" align="center">
+							<input type="hidden" name="task_id" value="{$task_id}">
+							<input  type="submit" value="增加"/>
+							<input type="reset" value="重置"/>
+							<input type="button" value="返回" onClick="dialog_child_close('{:U('index')}');"/>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</form>	
+	  <div style="display:none;overflow:hidden;padding:3px" id="dialog"><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" name="iframe_test" id="iframe_test" width="100%" height="100%"></iframe></div>
+</body>
+</html>

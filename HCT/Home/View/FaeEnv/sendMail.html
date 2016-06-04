@@ -1,0 +1,80 @@
+<include file="Common/header" title="{$title}"/>
+<!-- 下拉框 -->
+<link rel="stylesheet" href="__PUBLIC__/common/css/select2.min.css">
+<script src="__PUBLIC__/common/js/select2/select2.full.min.js"></script>
+
+<script type="text/javascript">
+	$(function(){
+		$(".js-example-basic-multiple,.js-example-placeholder-single").val([]);
+  		var user_slt = $("#to").select2();
+  		$("#to").val({$faedebug.user_id}).trigger('change');
+  		$("#cc").select2();
+	});
+</script>
+
+</head>
+<body>
+	<form method="post" action="{$url}">
+		<h3 style="text-align:center;margin-top:10px;">{$title}</h3>
+		<div  class="users-contain ui-widget"> 
+			<table style='table-layout:fixed;' class="ui-widget ui-widget-content">
+				<tr>
+					<td width="50px" valign="top">收件人</td>
+					<td>
+						<select style="width:300px;" name="to" id="to" class='js-example-placeholder-single'>
+							<option selected="" value="">无</option>
+							<foreach name='user_data' item='v'>
+								<option value="{$v.id}">{$v.name} {$v.pinyin} {:$sector[$v['sector_id']]}</option>
+							</foreach>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top">抄送</td>
+					<td>
+						<select style="width:450px;" name="cc[]" id="cc" multiple class='js-example-basic-multiple' data-placeholder="可多选">
+							<option selected=""></option>
+							<foreach name='user_data' item='v'>
+								<option value="{$v.id}">{$v.name} ({$v.pinyin}) {:$sector[$v['sector_id']]}</option>
+							</foreach>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>主题</td>
+					<td><input type="text" name="subject" style="width:500px;" value="【临时版本】【{$user[$faedebug['user_id']]}】{$path}" /></td>
+				</tr>
+				<tr>
+					<td valign="top">内容</td>
+					<td>
+					<div>
+					<h3 style="text-align:center;margin-top:10px;width:70%;">详细信息</h3>
+					<table style='width:70%;table-layout:fixed;' rules='all' border='0'>
+					<tbody>
+						<tr><td width='50px' valign="top">说明</td><td><pre>{$faedebug.comment}</pre></td></tr>
+						<tr><td valign="top">临时版本路径</td><td>{$faedebug.path}</td></tr>
+						<tr>
+							<td valign="top">补充</td>
+							<td><textarea type="text" name="comment" id="comment" rows="3" cols="50"></textarea></td>
+						</tr>
+						<tr>
+							<td>链接</td>
+							<td>192.168.3.109{:U('Home/FaeEnv/showFaeEnv',array('id'=>$faedebug['faeenv_id']))}</td>
+						</tr>
+					</tbody></table>
+
+					</div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<input type="submit" value="发送" />
+						<input type="hidden" name="id" value="{$faedebug.id}">
+						<input type="button" value="返回" onClick="dialog_child_close('{:U('index')}');"/>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</form>
+</body>
+</html>

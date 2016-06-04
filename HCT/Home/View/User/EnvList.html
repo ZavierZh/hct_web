@@ -1,0 +1,35 @@
+
+<?php if (($data) != null): ?>
+<foreach name='data' item='v'>
+<tr>
+	<td>
+	<a href="javascript:change_env({$v.id},'{:$faepc[$v['faepc_id']]}','{$v.path}');" >选择</a>
+	</td>
+	<td>{:$user[$v['user_id']]}</td>
+	<td>{$v.date}</td>
+	<td>{$v.sub}</td>
+	<td class="center">{:$faepc[$v['faepc_id']]}</td>
+	<td>{$v.dists}</td>
+</tr>
+</foreach>
+<script type="text/javascript">
+	var return_opts={
+		type:"success",
+		totalCounts:{$total_counts|default=0},
+	};
+</script>
+
+<?php else: ?>
+	<tr>
+		<td colspan="8">
+			<h3 style="text-align:center;"> 没有数据</h3>
+		</td>
+	</tr>
+	<script type="text/javascript">
+	var return_opts={
+		type:"error",
+		context:"No data",
+	};
+
+	</script>
+<?php endif ?>

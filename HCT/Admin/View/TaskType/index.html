@@ -1,0 +1,110 @@
+<include file="Common/header" title="{$title}"/>
+ 	<link type="text/css" rel="stylesheet" href="__PUBLIC__/common/css/tipcss.css">
+ 	<script src="__PUBLIC__/common/js/zz.main.js"></script>
+<script src="__PUBLIC__/common/js/admin_index.js"></script>
+
+
+
+
+<script type="text/javascript">
+var init_opt={};
+init_opt.btn_add = {};
+init_opt.btn_del = {};
+init_opt.table = {};
+init_opt.dialog = {};
+
+init_opt.btn_add.url='{$url}';
+init_opt.btn_add.id = '#btn_add';
+
+init_opt.edit_url = '{:U("editTaskType","",false)}';
+
+init_opt.btn_del.url='{:U("delTaskTypeHandle")}';
+init_opt.btn_del.id = '#btn_del';
+
+init_opt.table.id = "#hct_data";
+init_opt.table.checkbox_id = "#checkallid";
+
+init_opt.dialog.id = "#dialog";
+init_opt.dialog.iframe_id = "#iframe_dialog";
+
+function sort_data(){
+	var valArr ={};
+	$(init_opt.table.id+" [type='number'][name]").each(function(i){
+		var self = this;
+		if (this.value != this.defaultValue){
+			valArr[this.name.substr(3)] = this.value;
+		}
+	});
+	if ($.isEmptyObject(valArr)){
+		zz.tip.toptip('没有修改任何数据',2);
+		return;
+	}
+	// alert(JSON.stringify(valArr));
+	// var vals = valArr.join(',');
+	zz.sendto({
+		url: "{:U('sortTaskTypeHandle')}",
+		data: valArr,
+	});
+}
+
+</script>
+</head>
+<body>
+	<h3 style="text-align:center;">{$title}</h3>
+
+	<button id="btn_add">添加</button>
+	<button id="btn_del">删除</button>
+
+	<p><span id="message" style="color:green"></span></p>
+	<form action="" method="post">
+		<div class="users-contain ui-widget">
+			<table class="ui-widget ui-widget-content">
+				<thead>
+					<tr  class="ui-widget-header ">
+						<th width="40px;"><input type="checkbox" id="checkallid"></th>
+						<th>ID</th>
+						<th>种类类别</th>
+						<th>种类名</th>
+						<th>排序</th>
+						<th>颜色</th>
+						<th>注释</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody id="hct_data">
+					<foreach name='data' item='v'>
+					<tr>
+						<td><input type="checkbox" value="{$v.id}"></td>
+						<td>{$v.id}</td>
+						<td>{:$type[$v['level']]}</td>
+						<td>{$v.type}</td>
+						<td><input type="number" name="id_{$v.id}" min="1" value="{$v.sort}" size="10" /></td>
+						<td>
+							<if condition="$v.color != ''">
+							<div class="tagbox" style="background:{$v.color};"></div>
+							<span>{$v.color}</span>
+							</if>
+						</td>
+						<td>{$v.comment}</td>
+						<td>
+							<a href="javascript:edit_data({$v.id});">编辑</a>|
+							<a href="javascript:del_data({$v.id});">删除</a>
+						</td>
+					</tr>
+					</foreach>
+
+				</tbody>
+				<tr>
+					<td></td><td></td><td></td><td></td>
+					<td>
+					<input type="button" value="排序" onclick="sort_data();">
+					<input type="reset" value="重置">
+					</td>
+				</tr>
+			</table>
+		</div>
+	</form>
+  <div style="display:none;overflow:hidden;padding:3px" id="dialog"><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" name="iframe_dialog" id="iframe_dialog" width="100%" height="100%"></iframe></div>
+
+</body>
+</html>

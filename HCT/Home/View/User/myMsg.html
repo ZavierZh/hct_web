@@ -1,0 +1,31 @@
+<body>
+  <button id="btn_del">删除</button>
+  <button id="btn_re">标记为已读</button>
+  <button id="btn_rere">全部标记为已读</button>
+  <button id="btn_delre">删除已读消息</button>
+
+	<p><span id="message" style="color:green"></span></p>
+
+		<div class="users-contain ui-widget">
+			<table class="ui-widget ui-widget-content">
+				<thead>
+					<tr  class="ui-widget-header ">
+						<th width="60px;"> <input type="checkbox" id="checkallid" onclick="checkall(this,$('#hct_data :checkbox'));"></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody id="hct_data">
+					<foreach name='data' item='v'>
+					<tr>
+						<td><input name="" type="checkbox" value="{$v.id}"></td>
+						<td>回复:  "<a href="{:U('Task/showTask',array('id'=>$v['task_id']))}">{$v.title}</a>" , <a title="{$v.msg}">{$v.type}</a> <span></span></td>
+					</tr>
+					</foreach>
+				</tbody>
+			</table>
+		</div>
+  <div style="display:none;overflow:hidden;padding:3px" id="dialog">
+  <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" name="iframe_test" id="iframe_test" width="100%" height="100%"></iframe>
+  </div>
+
+</body>

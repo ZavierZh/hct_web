@@ -1,0 +1,157 @@
+<include file="Common/header" title="{$title}"/>
+
+	<link rel="stylesheet" href="__PUBLIC__/common/css/select2.min.css">
+	<script src="__PUBLIC__/common/js/select2/select2.full.min.js"></script>
+
+	<script type="text/javascript">
+
+		function ch_select(turl,opt,slt){
+			$.ajax({
+				type:"GET",
+				url:turl,
+				data:opt,
+			    dataType:"json",
+		        success:function(fieldList){
+		        //	alert(JSON.stringify(fieldList));
+			        if(fieldList != null && fieldList.length > 0){  
+			        	$('<option selected=""></option>').appendTo(slt);
+	                    for(var i = 0; i< fieldList.length; i++){  
+	                        $("<option>"+fieldList[i]+"</option>").appendTo(slt);  
+	                    }
+                	} 
+		        },
+		        error: function(data){
+		        	$('<option selected=""></option>').appendTo(slt);
+		        },
+			});
+		}
+
+		function ch_hct(hct){
+			var slt = $("#slt_main,#slt_sub");
+			slt.empty();
+			slt.select2().val(null);
+			$('#info_hct,#info_main').empty();
+			if (hct.value == '') return;
+			var ip = $(hct).find('[value="'+hct.value+'"]').parent().attr('label');
+			$('#slt_ip').val(ip);
+			ch_select('{:U("getMain")}',
+				{'ip':ip ,
+				'hct': hct.value,
+				}, "#slt_main");
+			$('#rslt').html($('#slt_hct').val());
+		}
+		function ch_main(main){
+			var slt = $("#slt_sub");
+			slt.empty();
+			slt.select2().val(null);
+
+			$('#info_hct,#info_main').empty();
+			if (main == '') return;
+			ch_select('{:U("getSub")}',
+				{'ip':$('#slt_ip').val(),
+				'hct': $('#slt_hct').val(),
+				'main':main,
+				}, "#slt_sub");
+			$('#rslt').html($('#slt_hct').val()+'/dists/targets/'+$('#slt_main').val());
+		}
+		function ch_sub(sub){
+			$('#info_hct,#info_main').empty;
+			$('#rslt').html($('#slt_hct').val()+'/dists/targets/'+$('#slt_main').val()+'/'+sub);
+		}
+		function getrslt(){
+			$('#rslt').html($('#slt_hct').val()+'/dists/targets/'+$('#slt_main').val()+'/'+$('#slt_sub').val());
+		}
+		function ch_env_child(){
+			if ($('#slt_hct').val() == ""){
+				$('#info_hct').html("请选择");
+				return;
+			}
+			if ($('#slt_main').val() == ""){
+				$('#info_main').html("请选择");
+				return;
+			}
+			if(isExitsFunction('parent.ch_env')){
+				parent.ch_env($("#rslt").html());
+			}else if(isExitsFunction('parent.ch_prjt')){
+				var sub = $('#slt_sub');
+				if (sub.val() == ""){
+					$('#info_sub').html("请选择");
+					return;
+				}
+				parent.ch_prjt(sub.val(),$('#slt_hct').val()+'/'+$('#slt_main').val());
+			}
+		}
+		function reset(){
+			$("#slt_main,#slt_sub").empty();
+			$('#info_hct,#info_main,#info_sub').empty();
+			$('#slt_hct,#slt_ip').val('');
+			$(".js-example-placeholder-single").select2().val(null);
+			$("#rslt").empty();
+		}
+		$(function(){
+			 $(".js-example-placeholder-single").select2();
+		});
+	</script>
+
+</script>
+</head>
+<body>
+	<h3 style="text-align:center;">gitweb选择</h3>
+	<p><span id="message" style="color:green"></span></p>
+		<div class="users-contain ui-widget">
+			<table class="ui-widget ui-widget-content">
+				<tbody>
+					<tr>
+						<td></td>
+						<td>
+						<input type="hidden" value="" id="slt_ip"/>
+							<select id="slt_hct" name="slt_hct" onchange="ch_hct(this);" class="js-example-placeholder-single" style="width:300px;">
+								<option value="" selected=""></option>
+								<foreach name='data' item='ip' key="k">
+								<optgroup label="{$k}">
+									<foreach name="ip" item="hct">
+									<option value="{$hct}">{$hct}</option>
+									</foreach>
+								</optgroup>
+								</foreach>
+							</select>
+							<span id="info_hct" style="color:red;"></span>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>
+							<select id="slt_main" name="slt_main" onchange="ch_main(this.value);"  class="js-example-placeholder-single"  style="width:350px;">
+								<option selected=""></option>
+							</select>
+							<span id="info_main" style="color:red;"></span>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>
+							<select id="slt_sub" name="slt_sub" onchange="ch_sub(this.value);"  class="js-example-placeholder-single"  style="width:380px;">
+								<option selected=""></option>
+							</select>
+							<span id="info_sub" style="color:red;"></span>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<button onclick="getrslt();">生成</button>
+							<span style="marign-left:20px;" id='rslt'></span>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center">
+							<input  type="button" value="增加" onclick="ch_env_child();" />
+							<input type="reset" value="重置" onclick="reset();" />
+							<input type="button"  id="cancl" value="返回" onClick="dialog_child_close('{:U('index')}');"/>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+</body>
+</html>

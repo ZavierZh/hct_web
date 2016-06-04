@@ -1,0 +1,130 @@
+<include file="Common/header" title="{$title}"/>
+ 	<!-- 分页插件 -->
+	<script src="__PUBLIC__/common/js/jqPaginator.js"></script>
+	<!-- 下拉框 -->
+ 	<link rel="stylesheet" href="__PUBLIC__/common/css/chosen.css">
+	<script src="__PUBLIC__/common/js/chosen.jquery.min.js"></script>
+	
+	<script src="__PUBLIC__/common/js/jquery.form.js"></script>
+ 	<!-- 自定义的一些参数 -->
+ 	<link type="text/css" rel="stylesheet" href="__PUBLIC__/common/css/tipcss.css">
+ 	<script src="__PUBLIC__/common/js/zz.main.js"></script>
+ 	<script src="__PUBLIC__/common/js/moment.min.js"></script>
+	
+ 		<script type="text/javascript">
+		  $(function() {
+		    $('#dialog').dialog({
+				autoOpen: false,
+				modal: true,
+				height: 500,
+				width: 600,
+		    });
+		    $('#dialog_info').dialog({
+				autoOpen: false,
+				modal: true,
+				height: 200,
+				width: 400,
+		    });
+			$( "#btn_add" ).button()
+			.click(function() {
+			    $("#message").text("正在加载..");
+			    $('#iframe_test').attr('src','{$url}');
+			    $("#iframe_test").load(function(){
+			      	$("#message").text("");
+			        $( "#dialog" ).dialog( "open" );
+			    });
+			  });
+			$( "#btn_edit" ).button();
+			$( "#btn_del" ).button();
+	  	});
+		  function recoveryFaeEnv(id) {
+				if(window.confirm('确实要恢复该内容吗？')){
+				 $.ajax({
+					 type: "POST",
+					 url: '{:U(MODULE_NAME."/".CONTROLLER_NAME."/recoveryFaeEnv")}',
+					 data:  {id:""+id},
+					 dataType: "json",
+					 success: function(data){
+							if(data.type=="success"){
+								alert("恢复成功");
+								location.reload();
+							}else{
+								alert("error:"+data.context);	
+							}
+						},
+					error:function(data,text,errno){
+							  alert("操作失败:"+data.status+"\n"+data.readyState+"\n"+data.statusText+"|"+text+"|"+errno);
+					 }
+				 });
+				}
+		  	}
+		  function delFaeEnvTrach(id) {
+				if(window.confirm('确定要彻底删除该内容吗？')){
+				 $.ajax({
+					 type: "POST",
+					 url: '{:U(MODULE_NAME."/".CONTROLLER_NAME."/delFaeEnvTrach")}',
+					 data:  {id:""+id},
+					 dataType: "json",
+					 success: function(data){
+							if(data.type=="success"){
+								alert("删除成功");
+								location.reload();
+							}else{
+								alert("error:"+data.context);
+							}
+						},
+					error:function(data,text,errno){
+							  alert("操作失败:"+data.status+"\n"+data.readyState+"\n"+data.statusText+"|"+text+"|"+errno);
+					 }
+				 });
+				}
+			}	  
+</script>
+</head>
+<body>
+	<h3 style="text-align:center;">环境列表</h3>
+
+  <button id="btn_add">添加</button>
+  <button id="btn_edit">修改</button>
+  <button id="btn_del">删除</button>
+	<p><span id="message" style="color:green"></span></p>
+	<form action="{:U(MODULE_NAME)}" method="post">
+		<div id="users-contain" class="ui-widget">
+			<table class="ui-widget ui-widget-content">
+				<thead>
+					<tr  class="ui-widget-header ">
+						<th width="40px;"><input name="" type="checkbox" value="" checked="checked"><label for="checkbox">全选</label></th>
+						<th width="30px;">姓名</th>
+						<th width="65px;">建立时间</th>
+						<th width="20%">项目分支</th>
+						<th width="40px;">FAE区</th>
+						<th width="15%">路径</th>
+						<th >BASE库</th>
+						<th width="60px;">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<foreach name='data' item='v'>
+					<tr>
+						<td><input name="" type="checkbox" value=""></td>
+						<td>{:$user[$v['user_id']]}</td>
+						<td>{$v.date}</td>
+						<td>{$v.sub}</td>
+						<td>{:$faepc[$v['faepc_id']]}</td>
+						<td>{$v.path}</td>
+						<td>{$v.dists}</td>
+						<td>
+							<a href="javascript:recoveryFaeEnv({$v.id});">恢复</a>|
+							<a href="javascript:delFaeEnvTrach({$v.id})">彻底删除</a>
+						</td>
+					</tr>
+					</foreach>
+				</tbody>
+			</table>
+		</div>
+	</form>
+	<div style="display:none;overflow:hidden;padding:3px" id="dialog"><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" name="iframe_test" id="iframe_test" width="100%" height="100%"></iframe></div>
+<!-- 返回顶部 -->
+	<include file="Common/goto_top"/>
+</body>
+</html>

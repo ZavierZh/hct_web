@@ -1,0 +1,167 @@
+[ 2016-03-14T10:59:52+08:00 ] 127.0.0.1 /thinkphp/app.php
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000064s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.015207s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.015248s ]
+NOTIC: [2048] Declaration of Blog\Controller\IndexController::show() should be compatible with Think\Controller::show($content, $charset = '', $contentType = '', $prefix = '') /www/thinkphp/App/Blog/Controller/IndexController.class.php 第 0 行.
+SQL: SHOW COLUMNS FROM `think_cate` [ RunTime:0.0003s ]
+SQL: SELECT * FROM `think_cate` WHERE `pid` = 0 ORDER BY sort  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `think_cate` ORDER BY sort  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `think_blog` [ RunTime:0.0002s ]
+SQL: SELECT `id`,`title`,`time`,`click` FROM `think_blog` WHERE `cid` IN ('1') ORDER BY time DESC LIMIT 5   [ RunTime:0.0001s ]
+SQL: SELECT `id`,`title`,`time`,`click` FROM `think_blog` WHERE `cid` IN ('2') ORDER BY time DESC LIMIT 5   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`title`,`time`,`click` FROM `think_blog` WHERE `cid` IN ('15','14','16','3') ORDER BY time DESC LIMIT 5   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`title`,`time`,`click` FROM `think_blog` WHERE `cid` IN ('19','4') ORDER BY time DESC LIMIT 5   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`title`,`time`,`click` FROM `think_blog` WHERE `cid` IN ('18','17','5') ORDER BY time DESC LIMIT 5   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`title`,`time`,`click` FROM `think_blog` WHERE `cid` IN ('13','12','6') ORDER BY time DESC LIMIT 5   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`title`,`time`,`click` FROM `think_blog` WHERE `cid` IN ('20','21','22','7') ORDER BY time DESC LIMIT 5   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined variable: list /www/thinkphp/App/Blog/Controller/IndexController.class.php 第 42 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000082s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000163s ]
+SQL: SELECT * FROM `think_cate` ORDER BY sort  [ RunTime:0.0001s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000014s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.030744s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.027714s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.027732s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000077s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000090s ]
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Array to string conversion /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Array to string conversion /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Array to string conversion /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Array to string conversion /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Array to string conversion /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Array to string conversion /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Array to string conversion /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Array to string conversion /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Array to string conversion /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Array to string conversion /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+SQL: SELECT `id`,`title`,`click` FROM `think_blog` ORDER BY click DESC LIMIT 5   [ RunTime:0.0001s ]
+SQL: SELECT `id`,`title`,`click` FROM `think_blog` ORDER BY time DESC LIMIT 5   [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000009s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.033094s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.000885s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.001253s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000043s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.002062s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.000971s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.001253s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000253s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.002143s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000021s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000033s ]
+
+[ 2016-03-14T15:00:12+08:00 ] 127.0.0.1 /thinkphp/app.php
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000015s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000099s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000331s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000383s ]
+NOTIC: [2048] Declaration of Blog\Controller\IndexController::show() should be compatible with Think\Controller::show($content, $charset = '', $contentType = '', $prefix = '') /www/thinkphp/App/Blog/Controller/IndexController.class.php 第 0 行.
+SQL: SHOW COLUMNS FROM `think_cate` [ RunTime:0.0003s ]
+SQL: SELECT * FROM `think_cate` WHERE `pid` = 0 ORDER BY sort  [ RunTime:0.0000s ]
+SQL: SELECT * FROM `think_cate` ORDER BY sort  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `think_blog` [ RunTime:0.0002s ]
+SQL: SELECT `id`,`title`,`time`,`click` FROM `think_blog` WHERE `cid` IN ('1') ORDER BY time DESC LIMIT 5   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`title`,`time`,`click` FROM `think_blog` WHERE `cid` IN ('2') ORDER BY time DESC LIMIT 5   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`title`,`time`,`click` FROM `think_blog` WHERE `cid` IN ('15','14','16','3') ORDER BY time DESC LIMIT 5   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`title`,`time`,`click` FROM `think_blog` WHERE `cid` IN ('19','4') ORDER BY time DESC LIMIT 5   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`title`,`time`,`click` FROM `think_blog` WHERE `cid` IN ('18','17','5') ORDER BY time DESC LIMIT 5   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`title`,`time`,`click` FROM `think_blog` WHERE `cid` IN ('13','12','6') ORDER BY time DESC LIMIT 5   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`title`,`time`,`click` FROM `think_blog` WHERE `cid` IN ('20','21','22','7') ORDER BY time DESC LIMIT 5   [ RunTime:0.0000s ]
+NOTIC: [8] Undefined variable: list /www/thinkphp/App/Blog/Controller/IndexController.class.php 第 42 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000026s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000049s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000013s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.001359s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.001318s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.001340s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000081s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000096s ]
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Array to string conversion /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Array to string conversion /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Array to string conversion /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Array to string conversion /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Array to string conversion /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Array to string conversion /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Array to string conversion /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Array to string conversion /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Array to string conversion /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Use of undefined constant time - assumed 'time' /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [8] Array to string conversion /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+NOTIC: [2] date() expects parameter 2 to be long, string given /www/thinkphp/App/Runtime/Cache/Blog/cde3321290bd4b5b0afb96b765552410.php 第 48 行.
+SQL: SELECT `id`,`title`,`click` FROM `think_blog` ORDER BY click DESC LIMIT 5   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`title`,`click` FROM `think_blog` ORDER BY time DESC LIMIT 5   [ RunTime:0.0000s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000011s ]
+INFO: [ template_filter ] --END-- [ RunTime:-0.003399s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.001013s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.000867s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000050s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.001803s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.001112s ]
+INFO: [ view_parse ] --END-- [ RunTime:-0.000867s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000093s ]
+INFO: [ view_filter ] --END-- [ RunTime:-0.001897s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000032s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000046s ]
+

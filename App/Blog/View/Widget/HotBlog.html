@@ -1,0 +1,17 @@
+<dl>
+	<dt>热门博文</dt>
+	<foreach name='hotblog' item='v'>
+		<dd>
+			<a href="{:U('Blog/Show/index',array('id'=>$v['id']))}">{$v.title}</a>
+		</dd>
+	</foreach>
+</dl>
+
+<dl>
+	<dt>最新发布</dt>
+	<foreach name='newblog' item='v'>
+		<dd>
+			<a href="{:U('Blog/Show/index',array('id'=>$v['id']))}">{$v.title}</a>
+		</dd>
+	</foreach>
+</dl>

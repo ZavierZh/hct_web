@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <title>test</title>
+    <!-- <link type="text/css" rel="stylesheet" href="http://cdn.staticfile.org/twitter-bootstrap/3.1.1/css/bootstrap.min.css"/> -->
+
+<!-- <script type="text/javascript" src="http://192.168.8.117:9501/?js=0"></script> -->
+<style type="text/css">
+    .main{
+        margin: auto;
+        top: 30px;
+    }
+    .talk{
+        width: 600px;
+        height:400px;
+        border: 1px solid #fff;
+        background: #82DAEA;
+    }
+</style>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript">
+    var ws,dialog;
+    $(function(){
+        dialog = $("#dialog");
+        // return;
+        if (window.WebSocket || window.MozWebSocket){
+            ws = new WebSocket("ws://192.168.8.118:9501");
+            ws.onopen = function(evt) { 
+               dialog.append("<p>open:it's open,^ _ ^</p>");
+               dialog.append("<p>open;"+evt.data+"</p>");
+               // dialog.append("<p>open;"+obj2string(evt)+"</p>");
+            }; 
+            ws.onclose = function(evt) {
+               // dialog.append("<p>close:"+obj2string(evt)+"</p>");
+               dialog.append("<p>close:"+evt.data+"</p>");
+            }; 
+            ws.onmessage = function(evt) { 
+               // dialog.append("<p>mesg:"+obj2string(evt)+"</p>");
+               dialog.append("<p>sevr:"+ evt.data+"</p>");
+            }; 
+            ws.onerror = function(evt) { 
+               // dialog.append("<p>error:"+obj2string(evt)+"</p>");
+               dialog.append("<p>error:"+evt.data+"</p>");
+            }; 
+        }else{
+            alert("no websocket");
+        }
+    });
+    function sendmsg(){
+        var str = $('#in').val();
+        if (str != "")
+            ws.send(str);
+    }
+    function obj2string(o){ 
+        var r=[]; 
+        if(typeof o=="string"){ 
+            return "\""+o.replace(/([\'\"\\])/g,"\\$1").replace(/(\n)/g,"\\n").replace(/(\r)/g,"\\r").replace(/(\t)/g,"\\t")+"\""; 
+        } 
+        if(typeof o=="object"){ 
+            if(!o.sort){ 
+                for(var i in o){ 
+                    r.push(i+":"+obj2string(o[i])); 
+                } 
+                if(!!document.all&&!/^\n?function\s*toString\(\)\s*\{\n?\s*\[native code\]\n?\s*\}\n?\s*$/.test(o.toString)){ 
+                    r.push("toString:"+o.toString.toString()); 
+                } 
+                r="{"+r.join()+"}"; 
+            }else{ 
+                for(var i=0;i<o.length;i++){ 
+                    r.push(obj2string(o[i])) 
+                } 
+                r="["+r.join()+"]"; 
+            } 
+            return r; 
+        } 
+        return o.toString(); 
+    } 
+</script>
+</head>
+<body style="padding:10px;">
+
+<div class="main">
+    <div class="talk" id="dialog">
+        
+
+    </div>
+    <div>
+        <div><input type="text" name="in" id="in"></div>
+        <div><button onclick="sendmsg();">send</button></div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,309 @@
+<include file="Common/header" title="编译服务器"/>
+<style type="text/css">
+	table{
+		table-layout:fixed;
+	}
+	td{
+		word-break:break-all;
+		word-wrap:break-word;
+		/*overflow:visible;*/
+	}
+	.context_mian_other{
+		margin: auto;
+		margin-top: 20px;
+		min-width: 960px;
+		width: 90%;
+	}
+</style>
+ 	<!-- 下拉框 -->
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/common/css/tipcss.css">
+ 	<link type="text/css" rel="stylesheet" href="__PUBLIC__/common/css/tipcss.css">
+ 	<script src="__PUBLIC__/common/js/zz.main.js"></script>
+<script src="__PUBLIC__/common/js/admin_index.js"></script>
+<script type="text/javascript" src="http://192.168.3.60:9100/build.js"></script>
+<script type="text/javascript">
+	var init_opt={};
+	init_opt.dialog = {};
+	init_opt.dialog.id = "#dialog";
+	init_opt.dialog.iframe_id = "#iframe_dialog";
+	init_opt.dialog.height = 400;
+	init_opt.btn_add = {};
+	init_opt.btn_add.url='{$url}';
+	init_opt.btn_add.id = '#btn_add';
+
+	init_opt.edit_url = '{:U("showMoreBuild","",false)}';
+
+	init_opt.btn_del = {};
+	init_opt.btn_del.url='{:U("delBuildHandle")}';
+
+
+	var PC_TYPE={
+		'start' : 1, //程序准备中
+		'wait'  : 2, //等待服务器发送消息
+		'run'   : 3, //运行中
+		'lock'  : 4, //服务器锁定
+		'clilock':5, //客户端锁定
+
+		'finish': 7, //编译完成
+		'close' : 8, //运行被手动终止
+		'failed': 9, //编译失败/设置路径失败/...
+	};
+
+	function getStat(stat){
+		switch (stat){
+			case PC_TYPE['start']: 
+				return "客户端注册中";
+				break;
+			case PC_TYPE['wait']: 
+				return "空闲";
+				break;
+			case PC_TYPE['run']: 
+				return "运行中";
+				break;
+			case PC_TYPE['lock']: 
+				return "服务器锁定";
+				break;
+			case PC_TYPE['clilock']: 
+				return "客户端锁定";
+				break;
+			case PC_TYPE['finish']: 
+				return "编译完成";
+				break;
+			case PC_TYPE['close']: 
+				return "运行被手动终止";
+				break;
+			case PC_TYPE['failed']: 
+				return "编译失败";
+				break;
+			default: 
+				return "未知";
+				break;
+		}
+	}
+
+	var dialog;
+	function formatDate(time)   { 
+		var now = new Date(time * 1000);
+		// var   year=now.getYear();
+		var   month=now.getMonth()+1;
+		var   date=now.getDate(); 
+		var   hour=now.getHours();
+		var   minute=now.getMinutes();
+		// var   second=now.getSeconds();
+		return   month+"月"+date+"日<br/>"+hour+":"+minute;
+	} 
+
+	function getLocalTime(nS) { 
+		return new Date(parseInt(nS) * 1000).toLocaleString().substr(0,16);
+	}
+	// function loadiframe(url){
+	// 	html = '<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" id="iframe_dialog" width="100%" height="100%" src="'+url+'"></iframe>';
+	// 	dialog.html(html);
+	// }
+	function unlock_edit(id){
+		$.ajax({
+			url: '{:U("editBuildHandle")}',
+			type:"POST",
+			dataType: 'json',
+			data: {
+				id:""+id,
+				unlock: 1,
+				},
+			success: function(data){
+				location.reload();
+			},
+		});
+		// zz.sendto({
+		// 	url: '{:U("editBuildHandle")}',
+		// 	data: {
+		// 		id:""+id,
+		// 		unlock: 1,
+		// 		},
+		// });
+	}
+	function edit_data_other(id) {
+		if(isNaN(id)) return;
+
+		$("#message").text("正在加载..");
+		$("#loading").show();
+
+		dialog_edit.dialog('option',{
+			close: function(){
+				unlock_edit(id);
+			}
+		});
+		iframe_edit .attr('src',"{:U('editBuild')}"+"?id="+id);
+	  	iframe_edit.load(function(){
+	  		$("#message").text("");
+	  		$("#loading").hide();
+	  		dialog_edit.dialog("open");
+	 	 });
+	}
+	// new Date()  对象
+	function getNowFormatDate(date) {
+	    var seperator1 = "-";
+	    var seperator2 = ":";
+	    var month = date.getMonth() + 1;
+	    var strDate = date.getDate();
+	    if (month >= 1 && month <= 9) {
+	        month = "0" + month;
+	    }
+	    if (strDate >= 0 && strDate <= 9) {
+	        strDate = "0" + strDate;
+	    }
+	    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+	            + " " + date.getHours() + seperator2 + date.getMinutes()
+	            + seperator2 + date.getSeconds();
+	    return currentdate;
+	}
+
+	var dialog_edit,iframe_edit;
+	$(function (){
+
+		$("#now_time_id").html(getNowFormatDate(new Date()));
+
+		dialog_edit = $("#dialog_edit");
+		iframe_edit = $("#iframe_dialog_edit");
+		dialog_edit.dialog({
+	  		autoOpen: false,
+	  		modal: true,
+	  		height: init_opt.dialog.height,
+	  		width: 600,
+
+	  	});
+		dialog = $("#dialog");
+		if(isExitsVariable(build) && build != []){
+			var html='';
+			$.each(build, function (n, vv) { 
+				html+="<tr>";
+				html+="<td>"+vv.name+"<br>"+vv.ip+"</td>";
+				html+="<td>"+vv.username+"</td>";
+				html+="<td>"+vv['path']+"</td>";
+				if(vv['start_time'] == 0){
+					html+="<td>无</td>";
+				}else{
+					html+="<td>"+formatDate(vv['start_time'])+"</td>";
+				}
+				html+="<td>"+vv['more']+"</td>";
+				html+="<td>"+getStat(vv['stat'])+"</td>";
+				html+="</tr>";
+			});
+
+			$("#build").html(html);
+		}else{
+			// jAlert(JSON.);
+			jAlert('服务器编译进程未运行');
+		}
+		window.onbeforeunload = function(){
+			if (dialog_edit.dialog('isOpen')){
+				dialog_edit.dialog('close');
+			}
+		};
+		window.onunload = window.onbeforeunload;
+	 //  	iframe_obj = $("#iframe_dialog");
+		// $("#btn_add").click(function() {
+		// 	$("#message").text("正在加载..");
+		// 	$("#loading").show();
+		// 	iframe_obj.attr('src','{$url}');
+		// 	iframe_obj.load(function(){
+		// 		$("#message").text("");
+		// 		$("#loading").hide();
+		// 		// loadiframe('{$url}');
+		// 		dialog.dialog("open");
+		// 	});
+		// });
+	
+	});
+
+</script>
+
+
+ </head>
+ <body>
+
+
+<include file="Common/user"/>
+
+ 	<div class="context_mian_other">
+ 		<button id="btn_add">增加项目</button><span style="margin-left:30px;">刷新时间: <span id="now_time_id"></span></span>
+
+  		<div class="users-contain ui-widget">
+ 			<table class="ui-widget ui-widget-content">
+ 				<thead><tr style="background:#3FB2FF">
+ 				<th width="80px">机器名</th>
+ 				<th width="40px">提交者</th>
+ 				<th>项目</th>
+ 				<th width="60px">开始时间</th>
+ 				<th>过程</th>
+ 				<th width="40px">状态</th>
+ 				</tr></thead>
+ 				<tbody id="build">
+				</tbody>
+			</table>
+ 		</div>
+ 		<div>
+	 		<div style="margin-top:50px;display:inline;width:48%;" class="users-contain ui-widget fl">
+	 			<div>
+	 			<table class="ui-widget ui-widget-content"><tr><th style="background:#3FB2FF">已完成的项目<a href="#" class="fr">更多</a></th></tr></table>
+	 				
+	 			</div>
+	 			<table class="ui-widget ui-widget-content">
+	 				<tbody>
+	 				<tr>
+	 					<th width="40px">用户</th>
+	 					<th>项目</th>
+		 				<th width="30px">状态</th>
+	 					<th width="30px"></th>
+	 				</tr>
+					<foreach name="build" item="v">
+						<tr>
+							<td>{$v.name}</td>
+							<td>{$v.path}</td>
+							<td>{$v['stat'] == $PC_TYPE['finish']? '成功' : '失败'}</td>
+							<td><a href="javascript:edit_data({$v.id})">查看</a></td>
+						</tr>						
+					</foreach>
+	 				</tbody>
+	 			</table>
+	 		</div>
+
+	 		<div style="margin-top:50px;display:inline; width:48%;" class="users-contain ui-widget fr">
+	 			<table class="ui-widget ui-widget-content"><tr><th style="background:#3FB2FF">排队中的项目</th></tr></table>
+	 			<table class="ui-widget ui-widget-content">
+	 				<tbody id="hct_data">
+	 				<tr>
+	 					<th width="40px">用户</th>
+	 					<th>项目</th>
+	 					<th width="30px">状态</th>
+	 					<th width="60px">操作</th>
+	 				</tr>
+					<foreach name="wait_build" item="v">
+						<tr>
+							<td>{$v.name}</td>
+							<td>{$v.path}</td>
+							<td style="color:red">{$v['sort']?'优先':''}&nbsp;{$v['stat'] == 3 ? '编辑' : ''}</td>
+							<td>
+							<if condition="$login_id == $v['user_id']">
+								<a href="javascript:edit_data_other({$v.id})">编辑</a>
+								<a href="javascript:del_data({$v.id})">删除</a>
+							</if>
+							</td>
+						</tr>
+					</foreach>
+	 				</tbody>
+	 			</table>
+	 		</div>	 		
+ 		</div>
+ 	</div>
+		<div style="display:none;overflow:hidden;padding:3px" id="dialog">
+		<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" id="iframe_dialog" width="100%" height="100%"></iframe>
+		</div>
+
+		<div style="display:none;overflow:hidden;padding:3px" id="dialog_edit">
+		<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" id="iframe_dialog_edit" width="100%" height="100%"></iframe>
+		</div>
+
+	<include file="Common/goto_top"/>
+
+</body>
+</html>

@@ -1,0 +1,120 @@
+<include file="Common/header" title="{$title}"/>
+
+ 	<!-- 分页插件 -->
+	<script src="__PUBLIC__/common/js/jqPaginator.js"></script>
+	<!-- 下拉框 -->
+	<link rel="stylesheet" href="__PUBLIC__/common/css/select2.min.css">
+	<script src="__PUBLIC__/common/js/select2/select2.full.min.js"></script>
+
+	<!-- ajax异步提交 -->
+	<script src="__PUBLIC__/common/js/jquery.form.js"></script>
+ 	<!-- 自定义的一些参数 -->
+ 	<link type="text/css" rel="stylesheet" href="__PUBLIC__/common/css/tipcss.css">
+ 	<script src="__PUBLIC__/common/js/zz.main.js"></script>
+
+<script src="__PUBLIC__/common/js/admin_index.js"></script>
+<script src="__PUBLIC__/common/js/moment.min.js"></script>
+
+
+<script type="text/javascript">
+var init_opt={};
+init_opt.table = {};
+
+init_opt.table.id = "#hct_data";
+init_opt.table.checkbox_id = "#checkallid";
+
+zz.pageopt.normal_url = '{:U("EnvList")}';
+zz.pageopt.search_url = '{:U("searchFaeEnvHandle")}';
+$(function() {
+
+ $("#page_first,#page_second").hctPage({
+	totalCounts: {$total_counts|default=0},
+	visiblePages: 10,
+	pageSize: {$pageSize|default=20},
+	currentPage: {$pageCurrent|default=1},
+	onChangePage: zz.page_normal,
+ });
+
+});
+
+function search_show(){
+	$('#more_search').slideToggle(
+		function(){
+			if($(this).css("display") == "none"){
+				$(".header-top-search").show();
+				$("#detail_search span").hide();
+				$("#detail_search>button").text("详细搜索");
+			}else{
+				$("#detail_search span").show();
+				$(".header-top-search").hide();
+				$("#detail_search>button").text("收起搜索");
+			}
+		});
+}
+function change_env(faeenv_id,faepc,path){
+	parent.change_env(faeenv_id,faepc,path);
+	// location.href="{:U('changeEnvHandle')}"+"?id="+faeenv_id;
+}
+</script>
+</head>
+<body>
+    <!-- 主体内容 -->
+
+		<!-- 标题 -->
+		<h3 style="text-align:center;">{$title}</h3>
+		<!-- 详细搜索的具体内容 -->
+
+		<include file="Common/more_search"/>
+
+		<div class="tool_nav">
+	
+			<span id="detail_search">
+				<button onclick="search_show();">详细搜索</button>
+				<span>
+					<button onclick="search_prj('#search_form');">查询</button>
+					<button onclick="$('#more_search :button').click();">清空</button>
+				</span>
+			</span>
+			<div id="search_less" class="header-top-search fl">
+				<input name="sub" type="text" class="fl" placeholder="搜索项目">
+				<button class="clear fr" onclick="$('#search_less').find('[name]').val('')">清空</button>
+				<button class="search fr" onclick="search_prj('#search_less');"></button>
+			</div>
+		<!-- 		<button>我的环境</button>
+				<button>最新环境</button>
+				<button>所有环境</button> -->
+		</div>
+
+		<!-- 分页部分 -->
+		<div id="page_first" class="tool_nav"></div>
+		<!-- 消息提示 -->
+		<span id="search_rslt"></span>
+		<p><span id="message" style="color:green"></span></p>
+		<!-- 数据部分 -->
+		<div class="users-contain ui-widget"  style="margin-top:10px;">
+			<table class="ui-widget ui-widget-content  limit_max">
+				<thead>
+					<tr class="ui-widget-header ">
+						<th width="45px">姓名</th>
+						<th>日期</th>
+						<th>项目分支</th>
+						<th width="60px">FAE区</th>
+						<th >BASE库</th>
+						<th width="40px"></th>
+					</tr>
+				</thead>
+				<tbody id="hct_data">
+					<tr>
+						<td colspan="5">
+							<h3 style="text-align:center;"> 没有数据</h3>
+						</td>				
+					</tr>
+
+				</tbody>
+			</table>
+			</div>
+			<!-- 分页部分 -->
+		<div id="page_second" class="tool_nav"></div>
+	
+</body>
+</html>

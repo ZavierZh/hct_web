@@ -1,0 +1,198 @@
+<include file="Common/header" title="{$task.title}"/>
+
+<!-- 分页插件 -->
+<script src="__PUBLIC__/common/js/jqPaginator.js"></script>
+<!-- 下拉框 -->
+<link rel="stylesheet" href="__PUBLIC__/common/css/select2.min.css">
+<script src="__PUBLIC__/common/js/select2/select2.full.min.js"></script>
+<!-- url操作插件 -->
+<script src="__PUBLIC__/common/js/url.min.js"></script>
+
+<!-- ajax异步提交 -->
+<script src="__PUBLIC__/common/js/jquery.form.js"></script>
+<!-- 自定义的一些参数 -->
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/common/css/tipcss.css">
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/common/css/show.css">
+<script src="__PUBLIC__/common/js/zz.main.js"></script>
+<script src="__PUBLIC__/common/js/admin_index.js"></script>
+<script src="__PUBLIC__/common/js/moment.min.js"></script>
+
+<script type="text/javascript">
+var init_opt={};
+
+init_opt.dialog = {};
+
+init_opt.dialog.id = "#dialog";
+init_opt.dialog.iframe_id = "#iframe_dialog";
+init_opt.dialog.height = 500;
+init_opt.dialog.width = 800;
+
+init_opt.edit_url = '{:U("Debug/addDebugTask","",false)}';
+
+
+</script>
+
+</head>
+<body>
+	<div class="context_mian">
+
+		<!-- 标题 -->
+		<!-- 详细搜索的具体内容 -->
+
+		<div class="tool_nav">
+			
+			<div id="search_less" class="header-top-search fl">
+				<input name="sub" type="text" class="fl" placeholder="搜索项目">
+				<button class="clear fr" onclick="$('#search_less').find('[name]').val('')">清空</button>
+				<button class="search fr" onclick="search_prj('#search_less');"></button>
+			</div>
+		</div>
+		<!-- 消息提示 -->
+		<span id="search_rslt"></span>
+		<p><span id="message" style="color:green"></span></p>
+
+		<div class="main">
+			<!-- 按钮 -->
+			<div><a href="{:U('index')}" class="button"> 返回任务列表</a><button onclick="edit_data({$task.id})">回复此任务</button></div>
+
+			<div class='main-conent'>
+				<div class="title">
+					<div><a href="{:U('index')}">任务列表</a> &nbsp;\&nbsp;{$task.title}</div>
+				</div>
+				<table>
+					<tbody>
+						<tr>
+							<td class="info">
+								<ul>
+									<li>发布人: {$user.name}</li>
+									<li>发布于：{:formatTime($task['time'])}</li>
+									<li>电话  : {$user.phone}</li>
+									<li>邮箱  : {$user.email}</li>
+									<li>部门 : {$sector[$user['sector_id']]}</li>
+								</ul>
+							</td>
+
+							<td class='content'>
+								<table cellpadding="0" cellspacing="0" class="cgtl mbm" width="90%"> 
+									<caption>
+										任务信息
+									</caption> 
+									<tbody> 
+										<tr> 
+											<th>项目名:</th><td>{$task.sub}</td> 
+										</tr>
+										<tr>
+											<th>分支</th>
+											<td>{$task.base|default='无'}</td>
+										</tr>
+										<tr>
+											<th>FAE区</th><td>{$faepc[$faeenv['faepc_id']]|default='无'}</td>
+										</tr> 
+										<tr> 
+											<th>模块:</th>
+											<td>
+												<volist name="tasktype" id="v" empty="无">
+													{$type[$v['tasktype_id']]['type']}&nbsp;&nbsp;
+												</volist>
+											</td> 
+										</tr> 
+										<tr>
+											<th>附件:</th><td>无 </td> 
+										</tr> 
+									</tbody> 
+								</table> 
+
+								<div class="content">
+									{$task.content}
+								</div>
+								<div>
+									<a href="javascript:edit_data({$task.id})">回复</a>
+									&nbsp;<a href="#">编辑</a>
+								</div>
+							</td>
+						</tr>
+						<tr class="ad">
+							<td class="pls">
+							</td>
+							<td class="plc">
+							</td>
+						</tr>
+
+
+					</tbody>
+				</table>
+			</div>
+
+			<div class="main-conent">
+				<table>
+					<tbody>
+					<if condition="$faedebug == null">
+						<tr>
+							<td class="info info-sub">
+								
+							</td>				
+							<td class='content' style="padding:20px;">
+					<!-- 		<textarea type="text" name="comment" id="comment" rows="3" cols="40"></textarea> -->
+								<div style="margin:auto;height:40px;width:90%;border:1px solid #ccc;	line-height: 38px;padding-left:80px;">
+									<h3>暂无数据</h3>
+								</div>
+								<div style="margin-top:20px;margin-left:10%;">
+									<a href="javascript:edit_data({$task.id})" class="button">回复任务</a>
+								</div>
+							</td>
+						</tr>
+					<else />
+						<volist name="faedebug" id="v">
+							<tr>
+								<td class="info info-sub">
+									<ul>
+										<li>FAE: {$v.faename|default='未登记'}</li>
+										<li>回复于：{:formatTime($v['time'])}</li>
+										<li>电话 : {$v.faephone|default='未登记'}</li>
+										<li>邮箱 : {$v.faeemail|default='未登记'}</li>
+										<li>公司 : {$v.faecompany|default='未登记'}</li>
+									</ul>
+								</td>
+								<td class='content'>
+									<table cellpadding="0" cellspacing="0" class="cgtl mbm" width="90%"> 
+										<tbody> 
+											<tr>
+												<th>临时版本</th>
+												<td>{$v.path}</td>
+											</tr>
+											<tr> 
+												<th>附件:</th><td>无 </td> 
+											</tr> 
+										</tbody> 
+									</table> 
+
+									<div class="content">
+										{$v.comment|default="无备注"}
+									</div>
+									<div>
+										<a href="">回复</a>
+										&nbsp;<a href="#">编辑</a>
+									</div>
+								</td>
+							</tr>
+							<tr class="ad ad-sub">
+								<td class="pls">
+								</td>
+								<td class="plc">
+								</td>
+							</tr>
+						</volist>
+					</if>
+					</tbody>
+				</table>
+			</div>
+
+
+		</div>
+
+		<div style="display:none;overflow:hidden;padding:3px" id="dialog"><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" name="iframe_dialog" id="iframe_dialog" width="100%" height="100%"></iframe></div>
+	</div>
+	<!-- 返回顶部 -->
+	<include file="Common/goto_top"/>
+</body>
+</html>

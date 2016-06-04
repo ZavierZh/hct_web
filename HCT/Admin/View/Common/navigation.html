@@ -1,0 +1,27 @@
+</head>
+<body>
+<!--头部-->
+	<div class='top-list-wrap'>
+		<div class='top-list'>
+		</div>
+	</div>
+	<div class='top-search-wrap'>
+		<div class='top-search'>
+			<div href="" class='logo'>
+				<img src="__PUBLIC__/common/Images/logo.png"/>
+			</div>
+			<div class='search-wrap'>
+				<form action="" method='get'>
+					<input type="text" name='keyword' class='search-content'/>
+					<input type="submit" name='search' value='搜索'/>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!--
+		//这种要不了,和index方法冲突的变量名
+		$nav_cate = M('cate')->order('sort')->select();
+    	$nav_cate=node_merge($nav_cate);
+	-->
+	{~W('Common/navigation')}
+

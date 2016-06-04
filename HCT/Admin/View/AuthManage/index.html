@@ -1,0 +1,107 @@
+<include file="Common/header" title="{$title}"/>
+
+	<link rel="stylesheet" href="__PUBLIC__/admin/Css/node.css"/>
+	<title>admin</title>
+<script src="__PUBLIC__/common/js/zz.main.js"></script>
+
+
+<script type="text/javascript">
+  $(function() {
+    $('#dialog').dialog({
+		autoOpen: false,
+		modal: true,
+		height: 400,
+		width: 600,
+    });
+
+	$( "#wrap a[type='add']" ).click(function() {
+	    $("#message").text("正在加载..");
+	    $('#iframe_dialog').attr('src','{:U("addNode")}');
+	    $("#iframe_dialog").load(function(){
+	      	$("#message").text("");
+	        $( "#dialog" ).dialog( "open" );
+	    });
+	  });
+
+	
+});
+
+	function del(id) {
+		jConfirm('你确定这么做吗?\n数据将被删除', '警告', function(r) {
+			if(r == false) return;
+			zz.sendto({
+			url: '{:U("delNodeHandle")}',
+			data:  {id:""+id},
+			success: function(data){
+				if(data.type == "success"){
+					// zz.tip.toptip("操作成功",1);
+					location.reload();
+				}else{
+					jAlert("删除失败");
+					// jAlert(JSON.stringify(data));
+				}
+			}
+			});
+		});
+		return;
+	}
+
+
+	function add(url){
+		$("#message").text("正在加载..");
+	    $('#iframe_dialog').attr('src',url);
+	    $("#iframe_dialog").load(function(){
+	      	$("#message").text("");
+	        $( "#dialog" ).dialog("open");
+	    });
+	}
+	function edit(id){
+		$("#message").text("正在加载..");
+		$('#iframe_dialog').attr('src','{:U("editNode","",false)}/id/'+id);
+	    $("#iframe_dialog").load(function(){
+	      	$("#message").text("");
+	        $( "#dialog" ).dialog("open");
+	    });
+	}
+	</script>
+</head>
+<body>
+	<p><span id="message" style="color:green"></span></p>
+
+	<div id="wrap">
+	<a onclick="add(this.href);return false;" href="{:U('Admin/AuthManage/addNode')}" class="add_app" name='add'>添加应用</a>
+		<foreach name="node" item='app'>
+			<div class='app'>
+				<p>
+					<strong>{$app.title}</strong>
+					[<a onclick="add(this.href);return false;" href="{:U('Admin/AuthManage/addNode',array('pid'=>$app['id'],'level'=>2))}">
+					添加控制器</a>]
+					[<a onclick="edit({$app.id});return false;" href="javascript:">修改</a>]
+					[<a onclick="del({$app.id});return false;" href="javascript:">删除</a>]
+				</p>
+				<foreach name="app.child" item="action">
+					<dl>
+						<dt>
+							<strong>{$action.title}</strong>
+							[<a onclick="add(this.href);return false;" href="{:U('Admin/AuthManage/addNode',array('pid'=>$action['id'],'level'=>3))}">添加方法</a>]
+							[<a onclick="edit({$action.id});return false;" href="javascript:">修改</a>]
+							[<a onclick="del({$action.id});return false;" href="javascript:">删除</a>]
+							<foreach name="action.child" item="method">
+								<dd>
+									<span>{$method.title}</span>
+									[<a onclick="edit({$method.id});return false;" href="javascript:">修改</a>]
+									[<a onclick="del({$method.id});return false;" href="javascript:">删除</a>]
+								</dd>
+							</foreach>
+						</dt>
+					</dl>
+				</foreach>
+			</div>
+		</foreach>
+	</div>
+
+<div style="display:none;overflow:hidden;padding:3px" id="dialog">
+  <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" name="iframe_dialog" id="iframe_dialog" width="100%" height="100%"></iframe>
+  </div>
+</body>
+</html>
