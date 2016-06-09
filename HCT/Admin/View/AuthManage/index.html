@@ -73,24 +73,29 @@
 		<foreach name="node" item='app'>
 			<div class='app'>
 				<p>
-					<strong>{$app.title}</strong>
+					<strong>{$app.title}</strong><span>[{$app.name}]</span>
 					[<a onclick="add(this.href);return false;" href="{:U('Admin/AuthManage/addNode',array('pid'=>$app['id'],'level'=>2))}">
-					添加控制器</a>]
-					[<a onclick="edit({$app.id});return false;" href="javascript:">修改</a>]
-					[<a onclick="del({$app.id});return false;" href="javascript:">删除</a>]
+					添加分类</a>]
+					[<a href="javascript:edit({$app.id});">修改</a>]
+					[<a href="javascript:del({$app.id});">删除</a>]
 				</p>
 				<foreach name="app.child" item="action">
 					<dl>
 						<dt>
-							<strong>{$action.title}</strong>
+							<strong>{$action.title}</strong><span>[{$action.name}]</span>
 							[<a onclick="add(this.href);return false;" href="{:U('Admin/AuthManage/addNode',array('pid'=>$action['id'],'level'=>3))}">添加方法</a>]
-							[<a onclick="edit({$action.id});return false;" href="javascript:">修改</a>]
-							[<a onclick="del({$action.id});return false;" href="javascript:">删除</a>]
+							[<a href="javascript:edit({$action.id});">修改</a>]
+							[<a href="javascript:del({$action.id});">删除</a>]
 							<foreach name="action.child" item="method">
-								<dd>
-									<span>{$method.title}</span>
-									[<a onclick="edit({$method.id});return false;" href="javascript:">修改</a>]
-									[<a onclick="del({$method.id});return false;" href="javascript:">删除</a>]
+								<dd style="	border: 1px solid #ccc;background-color: #F1F1F1;margin:1px;border-radius:4px;">
+									<div style="display:inline-block;">
+										<div>{$method.title}</div>
+										<div style="color:#666;">{$method.name}</div>
+									</div>
+									<div style="display:inline-block;">
+										<div>[<a href="javascript:edit({$method.id});">修改</a>]</div>
+										<div>[<a href="javascript:del({$method.id});">删除</a>]</div>
+									</div>
 								</dd>
 							</foreach>
 						</dt>
