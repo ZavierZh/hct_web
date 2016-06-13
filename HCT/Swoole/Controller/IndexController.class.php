@@ -215,7 +215,7 @@ class IndexController extends Controller {
 			global $PC_TYPE;
 			switch($arv[0]){
 				case "build_stat":
-					$serv->tab->set($fd,array('more'=>$arv[1]));
+					$serv->tab->set($fd,array('more'=> substr($data,strpos($data,":") + 1)));
 					break;
 				// 向编译服务器发送的命令,编译服务器的返回结果	
 				case "re_start_build":
@@ -524,7 +524,6 @@ class IndexController extends Controller {
 	    	echo "[server] hct_wait_build no data\n";
 	    	return;
     	}
-    	unset($mysqli);
     	// 使等待 队列中的项目 锁定
     	// echo "web>>:".$str;
     	$str = "start_build:{$data['0']};{$data['1']}\n";
@@ -540,6 +539,7 @@ class IndexController extends Controller {
     		where `id` = ".$data[0]." limit 1;");
     	}
     	$mysqli->close();
+    	unset($mysqli);
     	unset($data);
     }
     

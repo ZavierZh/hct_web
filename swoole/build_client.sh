@@ -3,7 +3,7 @@
 RUN_DIR=`cd $(dirname $0);pwd`
 cd $RUN_DIR
 export FIFO_FILE=$RUN_DIR/data
-
+[ "$1" == "-t" ] && export t=y
 if [ ! -f build_client.config ];then
 	echo not found build_client.config
 	exit 1
@@ -81,32 +81,52 @@ if [ "$SERVER_IP" == "" ] || [ "$SERVER_PORT" == "" ] || [ "$BUILD_PC_NAME" == "
 	echo "error:./build_client.config  error"
 	exit 1
 fi
-
+while true;do
  ./middleware | \
 (
 function build(){
 	path="$1"
+	path=`echo $1| tr '/' ' '`
+	path=($path)
+	if [ ${#path[@]} == 3 ];then
+		BASE=${path[0]}
+		MAIN=${path[1]}
+		SUB=${path[2]}
+	elif [ ${#path[@]} == 5 ];then
+		if [ ${path[1]} == "dists" ] && [ ${path[2]} == "targets" ];then
+			BASE=${path[0]}
+			MAIN=${path[3]}
+			SUB=${path[4]}
+		else
+			echo "build_stat:项目设置错误" >$FIFO_FILE
+			return 1
+		fi
+	else
+		echo "build_stat:项目设置错误" >$FIFO_FILE
+		return 1
+	fi
 	run=1
 	local i=0
 	while ((i++ <= 10));do
 		echo "i:$i" 
 		case $i in
 			0)
-				echo "build_stat:update $path" >$FIFO_FILE
+				echo "build_stat:update $SUB" >$FIFO_FILE
 				;;
 			3)
-				echo "build_stat:build $path" >$FIFO_FILE
+				echo "build_stat:build $SUB" >$FIFO_FILE
 				;;
 			9)
-				echo "build_stat:tar $path" >$FIFO_FILE
+				echo "build_stat:tar $SUB" >$FIFO_FILE
 				;;
 		esac
 		sleep 2
 	done
 
-	echo "build_stat:$path.tar.gz" >$FIFO_FILE
+	LOCAL_IP=`ifconfig | head -n2 |tail -n1 |awk '{split($2,a,":");print a[2];}'`
+	echo "build_stat:success @ smb://$LOCAL_IP/download/$(date +%F)/${SUB}_$(date +%Y%m%d_%H%M)" >$FIFO_FILE
 	run=0
-
+	return 0
 }
 
 function recv_build(){
@@ -178,8 +198,11 @@ while read str ;do
 					# trap "e"  SIGUSR1
 					echo "start_time:`date +%s`" > $FIFO_FILE
 					# 编译脚本运行的地方
-					build "$path"
-					#./build.sh "$path"
+					if [ "$t" == y ];then
+						build "$path"
+					else
+						./build.sh "$path"
+					fi
 					ret=$?
 					kill -10 $run_uid
 					echo "end_time:$(date +%s);$ret" >$FIFO_FILE
@@ -237,5 +260,13 @@ done > $FIFO_FILE
 # kill时应该考虑子进程的循环杀死
 [ "$run_pid" != 0  ] &&  kill -9 $run_pid
 )
-
+exit_no=$?
+echo "exit:$?"
+if [ "$exit_no" != 0 ];then
+	sleep 5
+else
+	break
+fi
 wait
+
+done

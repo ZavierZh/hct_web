@@ -60,11 +60,12 @@ class UserManageController extends AuthCheckController {
     	 
     	$data = I("post.");
     	$user = new userModel();
-    	if($user->updateData($data)){
-    		$this->success('添加成功');
+    	if($user->save($data)){
+    		$this->success('修改成功');
     	}else{
-    		$this->error('添加失败');
-    	}  	
+    		$this->error('修改失败,'.$user->getError());
+    	}
+    	$user->flushData(); 	
     }
     
     public function delUserHandle($id){

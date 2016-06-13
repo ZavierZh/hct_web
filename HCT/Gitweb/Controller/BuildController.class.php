@@ -12,7 +12,7 @@ class BuildController extends AuthCheckController{
 			'run'   => 3, //运行中
 			'lock'  => 4, //服务器锁定
 			'clilock'=>5, //客户端锁定
-			'error' => 6, //
+	 		'error' => 6, //未知错误
 			'finish'=> 7, //编译完成
 			'close' => 8, //运行被手动终止
 			'failed'=> 9, //编译失败/设置路径失败/...
