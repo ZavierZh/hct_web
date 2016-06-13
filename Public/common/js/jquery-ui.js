@@ -10098,7 +10098,7 @@ var dialog = $.widget( "ui.dialog", {
 				var topOffset = $( this ).css( pos ).offset().top;
 				if ( topOffset < 0  ) {
 					$( this ).css( "top", pos.top - topOffset );
-				}else{ 
+				}else if(window == parent.window){ 
 					var h =  $(this).outerHeight();
 					if(document.documentElement.clientHeight > h){
 						$( this ).css( "top", ( window.pageYOffset + window.innerHeight/2 - h/2 ));

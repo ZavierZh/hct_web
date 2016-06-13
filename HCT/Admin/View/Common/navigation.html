@@ -1,27 +1,62 @@
-</head>
-<body>
-<!--头部-->
-	<div class='top-list-wrap'>
-		<div class='top-list'>
-		</div>
-	</div>
-	<div class='top-search-wrap'>
-		<div class='top-search'>
-			<div href="" class='logo'>
-				<img src="__PUBLIC__/common/Images/logo.png"/>
+<div class='top-nav-wrap'>
+	<ul class='nav-lv1'>
+		<li class='nor' id="Home_Index">
+			<a href="{:U('Home/Index/index')}">首页</a>
+		</li>
+		<li class='nor' id="Gitweb_Index">
+			<a href="{:U('Gitweb/Index/index')}">分支列表</a>
+			<div>
+				<div>
+					<a href="{:U('Gitweb/Index/check')}">项目配置查询</a>
+					<a href="{:U('Gitweb/Index/checkError')}">出错信息列表</a>
+				</div>
 			</div>
-			<div class='search-wrap'>
-				<form action="" method='get'>
-					<input type="text" name='keyword' class='search-content'/>
-					<input type="submit" name='search' value='搜索'/>
-				</form>
+	
+		</li>
+<!-- 		<li class='nor'>
+			<a href="{:U('Home/Task/index')}" class='top-cate'>任务</a>
+			<ul>
+				<li><a href="{:U('Home/Task/index')}">任务列表</a></li>
+				<li><a href="{:U('Home/Task/addTask')}">发布任务</a></li>
+			</ul>
+		</li> -->
+		<li class='nor' id="Home_FaeEnv">
+			<a href="{:U('Home/FaeEnv/index')}">FAE环境</a>
+			<div>
+				<div>
+					<a href="{:U('Home/FaeEnv/index')}">环境列表</a>
+					<a href="{:U('Home/FaeEnv/addFaeEnv')}">新增环境</a>
+					<a href="{:U('Home/FaeEnv/FaeEnvTrach')}">已删除</a>
+				</div>
 			</div>
-		</div>
-	</div>
-	<!--
-		//这种要不了,和index方法冲突的变量名
-		$nav_cate = M('cate')->order('sort')->select();
-    	$nav_cate=node_merge($nav_cate);
-	-->
-	{~W('Common/navigation')}
+		</li>
+		<if condition="isAuth('Home/UserManage/index')">
+		<li class='nor' id="Home_UserManage">
+			<a href="{:U('Home/UserManage/index')}">用户管理</a>
+<!-- 			<ul>
+				<li><a href="{:U('Home/User/index')}">用户管理</a></li>
+			</ul> -->
+		</li>		
+		</if>
+		<if condition="isAuth('Home/FaePC/index')">
+		<li class='nor' id="Home_FaePC">
+			<a href="{:U('Home/FaePC/index')}">FAE电脑</a>
+<!-- 			<ul>
+				<li><a href="{:U('Home/FaePC/index')}">FAE电脑</a></li>
+			</ul> -->
+		</li>
+		</if>
+		<li class='nor' id="Gitweb_Build">
+			<a href="{:U('Gitweb/Build/index')}">编译环境</a>
+		</li>
+<!-- 		<li class='nor'>
+			<a href="" class='top-cate'>其他</a>
+		</li> -->
+	</ul>
+</div>
+<script type="text/javascript">
+	$(function(){
+		$("#{$Think.MODULE_NAME}_{$Think.CONTROLLER_NAME}").addClass('cur');
+	});
+</script>
 

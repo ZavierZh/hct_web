@@ -45,7 +45,6 @@ zz.pageopt.normal_url = '{:U("FaeEnvlist")}';
 zz.pageopt.search_url = '{:U("searchFaeEnvHandle")}';
 
 $(function() {
-
 	$("#page_first,#page_second").hctPage({
 		totalCounts: {$total_counts|default=0},
 		visiblePages: 10,
@@ -97,7 +96,8 @@ function search_by_id(){
 </head>
 <body>
     <!-- 主体内容 -->
-<include file="Common/user"/>
+<include file="Common/user"/><include file="Common/navigation"/>
+
 
 	<div class="context_mian">
 		<!-- 标题 -->

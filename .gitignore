@@ -1,6 +1,14 @@
+<<<<<<< HEAD
 Uploads/*
 data/*
 *~
 HCT/Runtime
 \.project
+=======
+Uploads/*
+data/*
+*~
+HCT/Runtime
+\.project
+>>>>>>> home
 HCT/Common/Conf/config.php
