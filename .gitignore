@@ -1,0 +1,6 @@
+Uploads/*
+data/*
+*~
+HCT/Runtime
+\.project
+HCT/Common/Conf/config.php
