@@ -3,4 +3,6 @@ data/*
 *~
 HCT/Runtime
 \.project
+\.settings
+\.buildpath
 HCT/Common/Conf/config.php
